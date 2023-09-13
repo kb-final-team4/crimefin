@@ -92,20 +92,20 @@ export default {
   methods: {
     login() {
       console.log(this.memberId, this.password);
-      var url = "/user/login";
+      var url = "http://localhost:9999/user/login";
       var data = {
         memberId: this.memberId,
         password: this.password
       };
-
+      
       axios.post(url, data)
         .then(response => {
           console.log(response);
 
           // 로그인 성공 시 MainPage.vue로 이동
-          if (response.data.success) {
+          if (response.data.memberId) {
             var name = response.data.name
-            this.$router.push({ name: 'MainPage'  , params: name }); // 이동할 페이지의 이름, 이름 넘겨주기
+            this.$router.push({ name: 'MainPage'  , params: {name}}); // 이동할 페이지의 이름, 이름 넘겨주기
             
           }
         })
