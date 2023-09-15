@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 public interface PhishingService {
 
     public PhishingInfoVO isPhishingNumber(String number);
+
+    //public int isPhishingLink(String url) throws Exception;
 }
