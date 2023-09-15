@@ -55,13 +55,4 @@ public class MemberDAOImpl implements MemberDAO {
         return sqlSession.selectOne(NS + "isExistMemberId", memberId);
     }
 
-    @Override
-    public int isExistMemberEmail(String email) {
-        return sqlSession.selectOne(NS + "isExistMemberEmail", email);
-    }
-
-    @Override
-    public int isExistMemberPhone(String phone) {
-        return sqlSession.selectOne(NS + "isExistMemberPhone", phone);
-    }
 }

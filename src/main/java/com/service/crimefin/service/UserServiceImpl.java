@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService {
     public int deleteMember(MemberVO memberVO) {
         return memberDAO.deleteMember(memberVO);
     }
+
+    @Override
+    public int isExistMemberId(String memberId) {
+        return memberDAO.isExistMemberId(memberId);
+    }
 }

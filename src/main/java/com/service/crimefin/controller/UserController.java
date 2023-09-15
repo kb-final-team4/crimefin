@@ -157,4 +157,19 @@ public class UserController {
         }
     }
 
+    @GetMapping(value="/user/duplicate", params={"memberId"})
+    public ResponseEntity isExistUserId(@RequestParam String memberId) throws Exception{
+        System.out.println(memberId);
+
+        int result = userService.isExistMemberId(memberId);
+
+        if(result != 0) { //중복되는 경우
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        else //사용가능한 아이디인 경우
+        {
+            return new ResponseEntity(memberId, HttpStatus.OK);
+        }
+    }
+
 }

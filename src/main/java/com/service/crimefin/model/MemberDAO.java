@@ -15,7 +15,5 @@ public interface MemberDAO {
     public MemberVO login(MemberVO memberVO);
     public String findMemberId(MemberVO memberVO);
     public int isExistMemberId(String memberId);
-    public int isExistMemberEmail(String email);
-    public int isExistMemberPhone(String phone);
 
 }
