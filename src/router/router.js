@@ -10,6 +10,7 @@ import MainPage from '../components/MainPage.vue' // MainPage 컴포넌트 경�
 
 import PhishingNumber from "../components/PhishingNumber.vue";
 import PhishingNumberResult from "../components/PhishingNumberResult.vue";
+import toDoPage from "@/components/ToDoPage.vue";
 
 
 // AppBar 컴포넌트 경로 설정
@@ -47,7 +48,11 @@ const routes = [
     name: 'PhishingNumberResult',
     component: PhishingNumberResult
   },
-
+  {
+    path: '/whattodo',
+    name: 'ToDoPage',
+    component: toDoPage
+  }
 ]
 
 const router = new VueRouter({
