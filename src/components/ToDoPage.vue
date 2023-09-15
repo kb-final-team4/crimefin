@@ -23,10 +23,10 @@
                 <div id="map"></div>
                 <div class = "btn-center">
                   <div class="separate" v-show="policeMapDesc">
-                    주변의 경찰서를 보여드리고 있습니다.
+                    주변의 경찰서를 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
                   </div>
                   <div class="separate" v-show="bankMapDesc">
-                    주변의 은행을 보여드리고 있습니다.
+                    주변의 은행을 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
                   </div>
                     <v-btn class="red--text" @click="showBankMap">은행 찾기</v-btn>
                     <v-btn class="blue--text" @click="showPoliceMap">경찰서 찾기</v-btn>
@@ -137,7 +137,7 @@ export default {
       //checklist value 담아서 length 메서드 파라미터로 활용
       arr: [],
       // 로그인된 사용자 주소 여기다 넣기
-      userAddr: "서울 강남구 선릉로 428",
+      userAddr: "경기 수원시 영통구 광교동",
       //사용자 주소 좌표로 변환한 값
       kcoords: null,
       ps: null,
