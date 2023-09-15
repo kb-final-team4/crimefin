@@ -44,7 +44,8 @@ export default {
       //checklist value 담아서 length 메서드 파라미터로 활용
       arr: [],
       // 로그인된 사용자 주소 여기다 넣기
-      userAddr: "경기 수원시 영통구 광교동",
+      //this.$session.set('user_address', response.data.address)
+      userAddr: this.$session.get('user_address'),
       //사용자 주소 좌표로 변환한 값
       kcoords: null,
       ps: null,

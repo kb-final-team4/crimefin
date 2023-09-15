@@ -2,6 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import vuetify from './plugins/vuetify'
+import VueSession from 'vue-session'
+
+//세션 사용 세팅
+var sessionOptions = {
+  persist: true
+}
+Vue.use(VueSession, sessionOptions)
 
 Vue.config.productionTip = false
 
