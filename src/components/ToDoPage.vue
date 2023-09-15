@@ -32,7 +32,7 @@
                     <v-btn class="blue--text" @click="showPoliceMap">경찰서 찾기</v-btn>
                 </div>
               </div>
-              <!-- TODO 폰트랑 배경색 정하기, 회색배경에 흰글씨? -->
+
               <div v-show="isManual" id="manual" class="v-card v-sheet theme--dark">
                 <div class="v-card__title"><h2>대응 매뉴얼</h2></div>
                 <div class="v-card__text my-list">
@@ -243,7 +243,6 @@ export default {
       var kkmap = this.kmap;
       var kmarker = this.marker;
 
-      // TODO 유저 계좌 정보에서 사용하는 은행명 리스트 distinct로 뽑아와서 사용하는 은행만 검색하기
       this.ps.keywordSearch(this.userAddr + '은행', placesSearchCB);
 
       function placesSearchCB (data, status, pagination) {
