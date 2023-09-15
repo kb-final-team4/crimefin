@@ -11,6 +11,8 @@ import MainPage from '../components/MainPage.vue' // MainPage 컴포넌트 경�
 import PhishingNumber from "../components/PhishingNumber.vue";
 import PhishingNumberResult from "../components/PhishingNumberResult.vue";
 import toDoPage from "@/components/ToDoPage.vue";
+import ServiceInfo from "@/components/ServiceInfo.vue";
+import Agency from "@/components/Agency.vue";
 
 
 // AppBar 컴포넌트 경로 설정
@@ -52,6 +54,16 @@ const routes = [
     path: '/whattodo',
     name: 'ToDoPage',
     component: toDoPage
+  },
+  {
+    path: '/serviceinfo',
+    name: 'ServiceInfo',
+    component: ServiceInfo
+  },
+  {
+    path: '/closestagency',
+    name: 'Agency',
+    component: Agency
   }
 ]
 
