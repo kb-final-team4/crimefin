@@ -29,7 +29,6 @@
 
 <script>
 import AppBar from '../views/AppBar.vue';
-import axios from "axios"; // 상단바 컴포넌트 import
 export default {
   data() {
     return {
