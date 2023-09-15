@@ -7,5 +7,5 @@ public interface PhishingService {
 
     public PhishingInfoVO isPhishingNumber(String number);
 
-    //public int isPhishingLink(String url) throws Exception;
+    public int isPhishingLink(String url) throws Exception;
 }
