@@ -35,7 +35,7 @@
 	<!-- 멤버 상세정보 업데이트 하기 (비밀번호 빼고)-->
 	<update id="updateMember" parameterType="memberVO">
 		UPDATE member
-		SET email = #{email}, name = #{name}, phone = #{phone}, address = #{address}
+		SET email = #{email}, name = #{name}, address = #{address}
 		WHERE member_id=#{memberId}
 	</update>
 

@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
-@Controller
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:9999" }, allowCredentials = "true")
+@RestController
 public class UserController {
 
     @Autowired
@@ -38,7 +39,6 @@ public class UserController {
         }
     }
 
-    //여기서부턴 프론트엔드 작업 후 확인해보는 것 필요, postman은 동작
     @GetMapping(value = "/user", params = {"name", "phone"})
     public ResponseEntity findUserId(@RequestParam String name, @RequestParam String phone) throws Exception{
 
@@ -86,7 +86,6 @@ public class UserController {
         vo.setMemberId((String) requestJsonHashMap.get("memberId"));
         vo.setEmail((String) requestJsonHashMap.get("email"));
         vo.setName((String) requestJsonHashMap.get("name"));
-        vo.setPhone((String) requestJsonHashMap.get("phone"));
         vo.setAddress((String) requestJsonHashMap.get("address"));
 
         //DB update
@@ -109,6 +108,7 @@ public class UserController {
 
         //MemberVO pvo = (MemberVO) req.getSession().getAttribute("userInfo");
         //session에서 userInfo 받아왔다고 가정하고 메서드 진행
+        //session에 비밀번호 담아두지 않는걸로 확정되면 DB에서 가져오기
         MemberVO pvo = new MemberVO();
         pvo.setMemberId("test0912");
         pvo.setPassword("1234");
@@ -144,7 +144,7 @@ public class UserController {
         //MemberVO pvo = (MemberVO) req.getSession().getAttribute("userInfo");
         //session에서 userInfo 받아왔다고 가정하고 메서드 진행
         MemberVO pvo = new MemberVO();
-        pvo.setMemberId("test3");
+        pvo.setMemberId("test0913");
         pvo.setPassword((String) requestJsonHashMap.get("password")); //사용자가 입력창에 입력한 패스워드
 
         //DB delete
