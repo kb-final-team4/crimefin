@@ -1,9 +1,9 @@
 <template>
     <v-app-bar app color="navy" height="128" dark>
         <!-- 로고 이미지를 클릭하면 메인페이지로 이동합니다. -->
-        <v-router-link :to="{ name: 'MainPage' }">
+        <router-link to="/main">
           <v-img src="../assets/CRIME.png" alt="로고" height="120" width="240"/>
-        </v-router-link>
+        </router-link>
     
         <!-- 버튼 그룹 -->
         <v-btn-toggle v-model="selectedButton" class="ml-4" >
@@ -34,7 +34,7 @@
       return {
         selectedButton: null,
         menuOpen: false,
-        loggedInUser: 'test', // 로그인한 사용자 이름을 설정합니다.
+        loggedInUser: this.$session.get('loginMemberName'), // 로그인한 사용자 이름을 설정합니다.
       };
     },
     methods: {
