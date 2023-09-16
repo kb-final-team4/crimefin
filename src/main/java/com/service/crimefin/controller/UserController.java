@@ -1,6 +1,10 @@
 package com.service.crimefin.controller;
 
 import com.service.crimefin.domain.MemberVO;
+import com.service.crimefin.dto.MessageDTO;
+import com.service.crimefin.dto.SendNumResponseDTO;
+import com.service.crimefin.dto.SmsResponseDTO;
+import com.service.crimefin.service.SmsService;
 import com.service.crimefin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -11,14 +15,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Random;
 
 @CrossOrigin(origins = { "http://localhost:3000", "http://localhost:9999" }, allowCredentials = "true")
 @RestController
 public class UserController {
 
+    private static final String prefixMessage = "Crime-Fin 서비스\n인증번호 : ";
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private SmsService smsService;
 
     @PostMapping("/user/login")
     public ResponseEntity login(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpSession session) throws Exception{
@@ -170,6 +183,74 @@ public class UserController {
         {
             return new ResponseEntity(memberId, HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/user/sendNum")
+    public ResponseEntity sendNum(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpSession session) throws Exception {
+        //json 객체로 넘어온 값 phoneNum을 저장
+        String phoneNum = (String) requestJsonHashMap.get("phoneNum");
+        System.out.println("phoneNum = " + phoneNum);
+
+        MessageDTO messageDTO = new MessageDTO();
+
+        Random random = new Random(); //랜덤 함수 선언
+        int createNum = 0;            //1자리 난수
+        String ranNum = "";           //1자리 난수 형변환 변수
+        int letter = 4;               //난수 자릿수: 4
+        String resultNum = "";        //결과 난수
+
+        for (int i = 0; i < letter; i++) {
+            createNum = random.nextInt(9);   //0부터 9까지 올 수 있는 1자리 난수 생성
+            ranNum = Integer.toString(createNum);  //1자리 난수를 String으로 형변환
+            resultNum += ranNum;                   //생성된 난수(문자열)을 원하는 수(letter)만큼 더하며 나열
+        }
+
+        messageDTO.setTo(phoneNum);
+        messageDTO.setContent(prefixMessage+resultNum);
+        SmsResponseDTO smsResponseDTO = smsService.sendSms(messageDTO);
+
+        //ResponseEntity에 현재시간, 인증번호 저장
+        Timestamp startTime = new Timestamp(System.currentTimeMillis());
+
+        SendNumResponseDTO dto = new SendNumResponseDTO();
+        dto.setResultNum(resultNum);
+        dto.setStartTime(startTime);
+
+        session.setAttribute("dto", dto);
+        return new ResponseEntity(HttpStatus.OK);
+
+    }
+
+    @GetMapping(value = "/user/checkNum", params={"authNum"})
+    public ResponseEntity checkNum(@RequestParam String authNum, HttpSession session) throws IOException {
+        //session에서 authNum과 당시 시각을 가져옴
+        SendNumResponseDTO dto = (SendNumResponseDTO) session.getAttribute("dto");
+        String num = dto.getResultNum();
+        Timestamp startTime = dto.getStartTime();
+        Date endTime = new Date();
+
+        //시간이 3분 이내인지 확인
+        //인증번호가 일치하는지 확인
+        System.out.println("startTime = " + startTime);
+        System.out.println("endTime = " + endTime);
+        System.out.println("startTime.getTime = " + startTime.getTime());
+        System.out.println("endTime.getTime" + endTime.getTime());
+        long diff = endTime.getTime() - startTime.getTime();
+        System.out.println("diff is = " + diff);
+        long sec = diff / 1000;
+        System.out.println("sec");
+        if (sec > 180) {
+            System.out.println("time over");
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } else if (authNum.equals(num)){
+            System.out.println("success");
+            return new ResponseEntity(authNum, HttpStatus.OK);
+        }
+        else {
+            System.out.println("authNum is not matched");
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        
     }
 
 }
