@@ -19,24 +19,28 @@
           </v-flex>
           <v-flex>
             <v-col>
-              <div v-show="isMap" class="toggleArea">
-                <div id="map"></div>
-                <div class = "btn-center">
-                  <div class="separate" v-show="policeMapDesc">
-                    주변의 경찰서를 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
-                  </div>
-                  <div class="separate" v-show="bankMapDesc">
-                    주변의 은행을 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
-                  </div>
+              <v-row>
+                <div class="white--text text-h6 mx-auto" v-show="policeMapDesc">
+                  주변의 경찰서를 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
+                </div>
+                <div class="white--text text-h6 mx-auto" v-show="bankMapDesc">
+                  주변의 은행을 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
+                </div>
+              </v-row>
+              <v-row>
+                <div v-show="isMap" class="toggleArea">
+                  <div id="map"></div>
+                  <div class = "btn-center">
                     <v-btn class="red--text" @click="showBankMap">은행 찾기</v-btn>
                     <v-btn class="blue--text" @click="showPoliceMap">경찰서 찾기</v-btn>
+                  </div>
                 </div>
-              </div>
-
+              </v-row>
+              <v-row>
               <div v-show="isManual" id="manual" class="v-card v-sheet theme--dark">
                 <div class="v-card__title"><h2>대응 매뉴얼</h2></div>
-                <div class="v-card__text my-list">
-                  <ul class="card-content">
+                <div class="v-card__text my-list card-content">
+                  <ul>
                     <li>1. 입금 금융회사 또는 송금 금융회사콜센터에 즉시 전화하여 피해신고 및 모든 계좌 지급정지 신청
                       (경찰청 112 및 금감원 1332)</li>
                     <li>2. 비행기 모드로 전환 후 휴대전화 초기화</li>
@@ -89,6 +93,8 @@
                   </ul>
                 </div>
               </div>
+              </v-row>
+              <v-row>
               <div v-show="isChecklist" class="v-card v-sheet theme--dark" id="checklist">
                 <div class="v-card__title"><h2>체크 리스트</h2></div>
                 <div class="v-card__text my-list card-content">
@@ -111,6 +117,7 @@
                   <v-btn @click="saveCheckList">체크리스트 저장</v-btn>
                 </div>
               </div>
+              </v-row>
             </v-col>
           </v-flex>
         </v-layout>
@@ -138,7 +145,7 @@ export default {
       arr: [],
       // 로그인된 사용자 주소 여기다 넣기
       //this.$session.set('user_address', response.data.address)
-      userAddr: this.$session.get('user_address'),
+      userAddr: null,
       //사용자 주소 좌표로 변환한 값
       kcoords: null,
       ps: null,
@@ -225,12 +232,19 @@ export default {
 
     },
     showBankMap(){
+      this.userAddr = this.$session.get('loginMemberAddress');
       this.policeMapDesc = false;
       this.bankMapDesc = true;
 
       this.isMap = true;
       this.isChecklist = false;
       this.isManual = false;
+
+      this.geocoder.addressSearch(this.userAddr, (result, status) => {
+        if (status === kakao.maps.services.Status.OK)
+          this.kcoords = new kakao.maps.LatLng(result[0].y, result[0].x);
+      });
+      console.log("showBankMap coords : "+this.kcoords);
 
       var mapContainer = document.getElementById("map");
       const options = {
@@ -270,12 +284,19 @@ export default {
       }
     },
     showPoliceMap(){
+      this.userAddr = this.$session.get('loginMemberAddress');
       this.policeMapDesc = true;
       this.bankMapDesc = false;
 
       this.isMap = true;
       this.isChecklist = false;
       this.isManual = false;
+
+      this.geocoder.addressSearch(this.userAddr, (result, status) => {
+        if (status === kakao.maps.services.Status.OK)
+          this.kcoords = new kakao.maps.LatLng(result[0].y, result[0].x);
+      });
+      console.log("showPoliceMap coords : "+this.kcoords);
 
       var mapContainer = document.getElementById("map");
       const options = {
@@ -311,17 +332,6 @@ export default {
             position: new kakao.maps.LatLng(data[i].y, data[i].x)
           });
         }
-
-        // 이거 고치기
-        // 마커에 클릭이벤트를 등록합니다
-        kakao.maps.event.addListener(kmarker, 'click', function() {
-          var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-          console.log("클릭이벤트 infowindow : "+infowindow);
-          // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-          infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-          infowindow.open(kkmap, kmarker);
-        });
-
       }
     },
     showManual(){
@@ -384,7 +394,7 @@ export default {
   justify-content: center;
 }
 .separate{
-  margin: 10px 20px 50px 0px;
+  margin: 10px 20px 100px 0px;
   color: whitesmoke;
   line-height: 1.8;
   font-size: 16px;

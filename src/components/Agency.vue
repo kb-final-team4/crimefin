@@ -6,19 +6,23 @@
         <v-layout column align-center>
           <v-flex>
             <v-col>
+              <v-row>
+                <div class="mx-auto white--text text-h6" v-show="policeMapDesc">
+                  주변의 경찰서를 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
+                </div>
+                <div class="mx-auto white--text text-h6" v-show="bankMapDesc">
+                  주변의 은행을 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
+                </div>
+              </v-row>
+              <v-row>
               <div v-show="isMap" class="toggleArea">
                 <div id="map"></div>
                 <div class = "btn-center">
-                  <div class="separate" v-show="policeMapDesc">
-                    주변의 경찰서를 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
-                  </div>
-                  <div class="separate" v-show="bankMapDesc">
-                    주변의 은행을 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
-                  </div>
                   <v-btn class="red--text" @click="showBankMap">은행 찾기</v-btn>
                   <v-btn class="blue--text" @click="showPoliceMap">경찰서 찾기</v-btn>
                 </div>
               </div>
+              </v-row>
             </v-col>
           </v-flex>
         </v-layout>
@@ -44,8 +48,7 @@ export default {
       //checklist value 담아서 length 메서드 파라미터로 활용
       arr: [],
       // 로그인된 사용자 주소 여기다 넣기
-      //this.$session.set('user_address', response.data.address)
-      userAddr: this.$session.get('user_address'),
+      userAddr: this.$session.get('loginMemberAddress'),
       //사용자 주소 좌표로 변환한 값
       kcoords: null,
       ps: null,
@@ -71,6 +74,7 @@ export default {
 
       document.head.appendChild(script);
       console.log("카카오맵 api 로딩함");
+      this.userAddr = this.$session.get('loginMemberAddress');
     }
   },
   methods: {
@@ -93,6 +97,7 @@ export default {
 
     },
     showBankMap(){
+      console.log("showBankMap userAddress", this.userAddr);
       this.showMap();
       this.policeMapDesc = false;
       this.bankMapDesc = true;
@@ -131,6 +136,7 @@ export default {
       }
     },
     showPoliceMap(){
+      console.log("showPoliceMap userAddress", this.userAddr);
       this.showMap();
       this.policeMapDesc = true;
       this.bankMapDesc = false;
@@ -181,6 +187,8 @@ export default {
       this.geocoder = new kakao.maps.services.Geocoder();
       this.ps = new kakao.maps.services.Places();
       this.bounds = new kakao.maps.LatLngBounds();
+
+      console.log("initMap userAddr : "+this.userAddr);
 
       this.geocoder.addressSearch(this.userAddr, (result, status) => {
         if (status === kakao.maps.services.Status.OK)
