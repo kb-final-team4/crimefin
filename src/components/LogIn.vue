@@ -106,7 +106,12 @@ export default {
           if (response.data.memberId) {
             var name = response.data.name
             this.$router.push({ name: 'MainPage'  , params: {name}}); // 이동할 페이지의 이름, 이름 넘겨주기
-            
+            this.$session.set('loginMemberId', response.data.memberId);
+            this.$session.set('loginMemberEmail', response.data.email);
+            this.$session.set('loginMemberAddress', response.data.address);
+            this.$session.set('loginMemberName', response.data.name);
+            this.$session.set('loginMemberPhone', response.data.phone);
+            this.$session.set('loginMemberMessageOk', response.data.messageOk);
           }
         })
         .catch(error => {
