@@ -1,5 +1,6 @@
 package com.service.crimefin.controller;
 
+import com.service.crimefin.domain.ChecklistVO;
 import com.service.crimefin.domain.PhishingInfoVO;
 import com.service.crimefin.service.PhishingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:9999" }, allowCredentials = "true")
 @Controller
 public class PhishingController {
 
@@ -41,6 +43,24 @@ public class PhishingController {
 
         return new ResponseEntity(result, HttpStatus.OK);
 
+    }
+
+    @PostMapping("/phishing/check")
+    public ResponseEntity saveChecklist(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception{
+        System.out.println("BE : saveCheckList mem id : "+ requestJsonHashMap.get("memberId"));
+        System.out.println("BE : saveCheckList idx : " + requestJsonHashMap.get("idx"));
+
+        ChecklistVO pvo = new ChecklistVO();
+        pvo.setMemberId((String) requestJsonHashMap.get("memberId"));
+        pvo.setIdx((int) requestJsonHashMap.get("idx"));
+
+        System.out.println();
+
+        int rst = phishingService.insertChecklist(pvo);
+        if(rst > 0)
+            return new ResponseEntity(HttpStatus.OK);
+        else
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

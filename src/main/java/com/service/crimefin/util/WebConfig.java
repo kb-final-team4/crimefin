@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("GET","POST","PUT","DELETE")
                 .allowedOrigins("http://localhost:3000", "http://localhost:9999")
                 .allowedHeaders("*")
-                .allowCredentials(false)
+                .allowCredentials(true)
                 .maxAge(86400);
 //        addMapping - CORS를 적용할 url의 패턴을 정의 (/* 로 모든 패턴을 가능하게 함)
 //        allowedOrigins - 허용할 origin을 정의 ( 로 모든 origin을 허용, 여러개도 지정가능)
