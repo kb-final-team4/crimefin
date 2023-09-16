@@ -181,16 +181,6 @@ export default {
     },
     saveCheckList() {
       var url = "http://localhost:9999/phishing/check";
-      var typeToNum = 0;
-
-      //이 페이지까지 맨 처음에 type이 타고 넘어왔다는 가정 하에 작성함.
-      if(this.$route.params.type === 'phone')
-        typeToNum = 1;
-      else if(this.$route.params.type === 'message')
-        typeToNum = 2;
-      else
-        typeToNum = 3;
-
       //this.kmemberId = this.$route.params.memberInfo.memberId;
       this.kmemberId = 'test';
 
@@ -198,7 +188,6 @@ export default {
         // this.$route.params.memberInfo.memberId
         // 로그인에서 쭉 받아왔으면 MainPage -> PhishingNumber -> PhishingNumberResult -> ai조회결과페이지 -> ToDoPage(여기)
         memberId: this.kmemberId,
-        type: {typeToNum},
         //순서대로 체크하는 거니까 length + 1 받아오면 다음에 할 번호로는 저장됨
         //마이페이지에서 불러올땐 체크리스트 데이터를 v-show 사용해서 조건주기 (idx포함해서 끝까지 true, 나머지 false해서 안 뜨게)
         idx: this.arr.length + 1,
