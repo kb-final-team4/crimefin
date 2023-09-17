@@ -2,11 +2,11 @@
   <v-app>
     <!-- 상단바 컴포넌트 import -->
     <AppBar />
-    <v-main>
+    <v-main v-bind:style="{background : '#444766'}">
       <v-container>
         <v-row>
           <v-col cols="5" class="item-box" v-bind:style="{background : '#2c3e50'}">
-            <v-sheet height="600px">
+            <v-sheet height="570px">
               <v-col>
                 <v-row>
                   <div class="v-card__title text-center mx-auto text--h6">
@@ -22,7 +22,7 @@
                 </v-row>
                 <br><v-divider></v-divider><br>
                 <v-row>
-                  <v-card width="400px" class="mx-auto account-list">
+                  <v-card width="370px" class="mx-auto account-list">
                     <div class="v-card__text text-center"
                          v-if="accountInfoList != null"
                          v-for="item in accountInfoList">
@@ -34,7 +34,7 @@
             </v-sheet>
           </v-col>
           <v-col cols="7" class="item-box" v-bind:style="{background : '#2c3e50'}">
-            <v-sheet height="600px">
+            <v-sheet height="570px">
               <v-col>
                 <v-row>
                   <v-col :cols="1"></v-col>
@@ -63,7 +63,7 @@
                   <!-- todo 동적 apexchart 태그 렌더링? -->
                   <div class="chart-wrap mx-auto">
                     <div id="chart2">
-                      <apexchart id="myChart2" type="line" width="580" height="350" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
+                      <apexchart id="myChart2" type="line" width="580" height="300" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
                     </div>
                   </div>
                 </v-row>
@@ -184,7 +184,8 @@ export default {
       }],
       bankingChartOptions: {
         chart: {
-          height: 350,
+          id : "bankingchart1",
+          height: 300,
           type: 'line',
           zoom: {
             enabled: false
@@ -237,14 +238,14 @@ export default {
       this.bankingWithdrawlList = [null,"10000", null, "20000", null, "1000000"];
       this.bankingWithdrawlToList = [null,"ocl", null, "ocl2", null, "나쁜놈"];
 
-      this.bankingChartOptions.xaxis.categories = this.bankingDateList;
+      //this.bankingChartOptions.xaxis.categories = this.bankingDateList;
       console.log("getBankingDaily bankingChartOptions.xaxis.categories : " + this.bankingChartOptions.xaxis.categories);
 
       this.bankingBalanceList = ['1020000', '1010000', '1050000', '1030000', '1050000', '50000'];
       for(let j = 0; j < this.bankingBalanceList.length; j++){
         this.bankingBalanceList[j] = parseInt(this.bankingBalanceList[j]);
       }
-      this.bankingSeries.data = this.bankingBalanceList;
+      //this.bankingSeries.data = this.bankingBalanceList;
       console.log("getBankingDaily bankingSeries.data "+ this.bankingSeries.data);
 
       this.bankingInfoList = new Array(this.bankingDateList.length);
@@ -259,19 +260,17 @@ export default {
         }
       }
 
-      //todo 리렌더링 고치기
-      //Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'nodeType')
-      console.log("getBankingDaily myChart "+document.querySelectorAll('#Chart2'));
-      //if())
-        //document.querySelector('#myChart2').destroy();
-      var chart = new ApexCharts(document.querySelectorAll('#Chart2'), this.bankingChartOptions);
-      chart.updateSeries([
-        {
-          name : "잔고",
-          data : this.bankingBalanceList
+      //차트 리렌더링
+      /*console.log("ApexCharts exec start");
+      ApexCharts.exec("bankingchart1", "updateOptions", {
+        series : {
+          name : "balance",
+          data :  this.bankingBalanceList
+        },
+        xaxis : {
+          categories: this.bankingDateList
         }
-      ]);
-      chart.render();
+      });*/
 
       /*axios.post(url, data)
           .then(response => {
@@ -368,12 +367,12 @@ export default {
 </script>
 
 <style >
-.banking-list {
-  height: calc(100vh - 85vh);
+.account-list {
+  height: calc(100vh - 64vh);
   overflow-y: auto;
 }
-.account-list {
-  height: calc(100vh - 60vh);
+.banking-list {
+  height: calc(100vh - 85vh);
   overflow-y: auto;
 }
 </style>

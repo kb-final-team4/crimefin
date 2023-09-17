@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <AppBar/>
-    <v-main>
+    <v-main v-bind:style="{background : '#444766'}">
       <v-container id="rightArea" fluid>
         <v-layout column align-center>
           <v-flex>

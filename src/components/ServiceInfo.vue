@@ -3,7 +3,7 @@
     <!-- 상단바 컴포넌트 import -->
     <AppBar />
 
-    <v-main>
+    <v-main v-bind:style="{background : '#444766'}">
       <v-container fluid>
         <v-col>
           <v-row class="white--text" v-bind:style="{ backgroundColor: '#263d63' }">
@@ -19,7 +19,7 @@
           </v-row>
           <v-row>
             <v-col>
-            <div class="v-card__title justify-center subtitle text-h4">
+            <div class="v-card__title justify-center white--text subtitle text-h4">
               <br></br>피싱, 생각보다 가까이 있습니다
             </div>
 
@@ -84,7 +84,7 @@
               </div>
               <v-row no-gutters>
                 <div class="row justify-space-around" >
-                  <v-card class="mx-auto" width="300" height="300" tile>
+                  <v-card v-bind:style="{background : '#444766'}" class="mx-auto white--text" width="300" height="300" tile>
                     <v-col>
                       <div class="text-center v-card__title justify-center">
                         1. 스팸 번호 판단
@@ -94,7 +94,7 @@
                       </div>
                     </v-col>
                   </v-card>
-                  <v-card class="mx-auto" width="300" height="300" tile>
+                  <v-card v-bind:style="{background : '#444766'}" class="mx-auto white--text" width="300" height="300" tile>
                     <v-col>
                       <div class="text-center v-card__title justify-center">
                         2. 피싱 링크 판단
@@ -104,7 +104,7 @@
                       </div>
                     </v-col>
                   </v-card>
-                  <v-card class="mx-auto" width="300" height="300" tile>
+                  <v-card v-bind:style="{background : '#444766'}" class="mx-auto white--text" width="300" height="300" tile>
                     <v-col>
                       <div class="text-center v-card__title justify-center">
                         3.AI 분석
@@ -114,7 +114,7 @@
                       </div>
                     </v-col>
                   </v-card>
-                  <v-card class="mx-auto" width="300" height="300" tile>
+                  <v-card v-bind:style="{background : '#444766'}" class="mx-auto white--text" width="300" height="300" tile>
                     <v-col>
                       <div class="text-center v-card__title justify-center">
                         4. 각종 애프터 케어
