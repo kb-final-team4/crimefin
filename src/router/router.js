@@ -13,6 +13,7 @@ import PhishingNumberResult from "../components/PhishingNumberResult.vue";
 import toDoPage from "@/components/ToDoPage.vue";
 import ServiceInfo from "@/components/ServiceInfo.vue";
 import Agency from "@/components/Agency.vue";
+import DashBoard from "@/components/DashBoard.vue";
 
 
 // AppBar 컴포넌트 경로 설정
@@ -64,6 +65,11 @@ const routes = [
     path: '/closestagency',
     name: 'Agency',
     component: Agency
+  },
+  {
+    path: '/dashboard',
+    name: 'DashBoard',
+    component: DashBoard
   }
 ]
 
