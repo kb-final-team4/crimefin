@@ -7,7 +7,7 @@
       <v-container>
         <v-row>
           <v-col cols="5" class="item-box" v-bind:style="{background : '#2c3e50'}">
-            <v-sheet height="700px">
+            <v-sheet height="600px">
               <v-col>
                 <v-row>
                   <v-col :cols="2"></v-col>
@@ -45,7 +45,7 @@
           </v-col>
 
           <v-col cols="7" class="item-box" v-bind:style="{background : '#2c3e50'}">
-            <v-sheet height="700px">
+            <v-sheet height="600px">
               <v-col>
                 <v-row>
                   <v-col :cols="4">
@@ -63,13 +63,16 @@
                   </v-select>
                   </v-col>
                   <v-col class="mx-auto" :cols="1">
-                    <router-link to="/알림상세페이지"><v-img src="../assets/bell.png" width="50px" height="50px"></v-img></router-link>
+                    <router-link to="/알림상세페이지">
+                      <v-img src="../assets/bell.png" width="30px" height="30px">
+                      </v-img>
+                    </router-link>
                   </v-col>
                 </v-row>
                 <v-row>
                   <div class="chart-wrap mx-auto">
                     <div id="chart">
-                      <apexchart type="line" width="1000" height="350" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
+                      <apexchart type="line" width="580" height="350" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
                     </div>
                   </div>
                 </v-row>
@@ -82,8 +85,8 @@
 
                         <v-form @submit.prevent="getBankingDaily">
                           <v-row class="d-flex">
-                          <v-text-field v-model="bankingStartDate" label="시작일자"></v-text-field>
-                          <v-text-field v-model="bankingEndDate" label="종료일자"></v-text-field>
+                          <v-text-field height="10px" v-model="bankingStartDate" label="시작일자"></v-text-field>
+                          <v-text-field height="10px" v-model="bankingEndDate" label="종료일자"></v-text-field>
                           <v-btn type="submit" color="primary" block outlined>조회하기</v-btn>
                           </v-row>
                         </v-form>
@@ -289,11 +292,11 @@ export default {
 
 <style >
 .banking-list {
-  height: calc(100vh - 87vh);
+  height: calc(100vh - 85vh);
   overflow-y: auto;
 }
 .account-list {
-  height: calc(100vh - 76vh);
+  height: calc(100vh - 67vh);
   overflow-y: auto;
 }
 </style>
