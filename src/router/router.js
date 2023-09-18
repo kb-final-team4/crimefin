@@ -14,7 +14,7 @@ import PhishingLink from "../components/PhishingLink.vue";
 import PhishingLinkResult from "../components/PhishingLinkResult.vue";
 import AICheck from "../components/AICheck.vue";
 
-import toDoPage from "..components/ToDoPage.vue";
+import toDoPage from "../components/ToDoPage.vue";
 import ServiceInfo from "../components/ServiceInfo.vue";
 import Agency from "../components/Agency.vue";
 import DashBoard from "../components/DashBoard.vue";
