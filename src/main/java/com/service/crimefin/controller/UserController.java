@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -186,10 +187,11 @@ public class UserController {
     }
 
     @PostMapping("/user/sendNum")
-    public ResponseEntity sendNum(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpSession session) throws Exception {
+    public ResponseEntity sendNum(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest req) throws Exception {
+        System.out.println("인증번호 요청 들어옴");
         //json 객체로 넘어온 값 phoneNum을 저장
-        String phoneNum = (String) requestJsonHashMap.get("phoneNum");
-        System.out.println("phoneNum = " + phoneNum);
+        String phone = (String) requestJsonHashMap.get("phone");
+        System.out.println("phone = " + phone);
 
         MessageDTO messageDTO = new MessageDTO();
 
@@ -205,7 +207,7 @@ public class UserController {
             resultNum += ranNum;                   //생성된 난수(문자열)을 원하는 수(letter)만큼 더하며 나열
         }
 
-        messageDTO.setTo(phoneNum);
+        messageDTO.setTo(phone);
         messageDTO.setContent(prefixMessage+resultNum);
         SmsResponseDTO smsResponseDTO = smsService.sendSms(messageDTO);
 
@@ -216,13 +218,19 @@ public class UserController {
         dto.setResultNum(resultNum);
         dto.setStartTime(startTime);
 
+        HttpSession session= req.getSession(true); //세션 있으면 기존 세션 반환, 없으면 세션 새로 만듬
         session.setAttribute("dto", dto);
+        System.out.println("인증 번호 요청 세션 아이디 : " +session.getId());
         return new ResponseEntity(HttpStatus.OK);
 
     }
 
     @GetMapping(value = "/user/checkNum", params={"authNum"})
-    public ResponseEntity checkNum(@RequestParam String authNum, HttpSession session) throws IOException {
+    public ResponseEntity checkNum(@RequestParam String authNum, HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
+        System.out.println("인증번호 확인 :" + authNum);
+        System.out.println("인증 번호 확인 세션 아이디 : " +session.getId());
+
         //session에서 authNum과 당시 시각을 가져옴
         SendNumResponseDTO dto = (SendNumResponseDTO) session.getAttribute("dto");
         String num = dto.getResultNum();
