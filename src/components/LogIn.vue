@@ -5,11 +5,11 @@
         <v-card >
           <v-card-title class="text-center" >
             <div id="logo" height="50px"><v-img src="../assets/CRIME.png"></v-img></div>
-            <h2 class="mb-4">LOGIN</h2>
+            <!-- <h2 class="mb-4">LOGIN</h2> -->
           </v-card-title>
-          
+
           <v-card-text>
-            
+
             <v-form @submit.prevent="login" class="mx-auto" max-width="80%">
               <v-text-field
                 v-model="memberId"
@@ -35,49 +35,86 @@
                 depressed
               >
                 로그인
-              </v-btn> 
-
-              <router-link to="/main"><v-btn
-                color="primary"
-                class="mt-4"
-                block
-                outlined
-                depressed
-              >
-                로그인
-              </v-btn></router-link>
+              </v-btn>
             </v-form>
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn text color="primary" class="mr-2">아이디/비밀번호 찾기</v-btn><br>
+            <v-btn text color="primary" class="mr-2" @click="modal=true">아이디 찾기</v-btn><br>
           </v-card-actions>
-          <!-- 가로선 추가 -->
-          <hr class="separator my-6">
-          <!-- 카카오 로그인 버튼 (노란색) -->
-          <v-row justify="center">
-            <v-col cols="12">
-              <v-btn color="yellow darken-2" class="mt-1" block outlined depressed>카카오 로그인</v-btn>
-            </v-col>
-          </v-row>
-
-          <!-- 네이버 로그인 버튼 (연두색으로 수정) -->
-          <v-row justify="center">
-            <v-col cols="12">
-              <v-btn color="lime" class="mt-4" block outlined depressed>네이버 로그인</v-btn>
-            </v-col>
-          </v-row>
-
-          <!-- 구글 로그인 버튼 (크기 조절) -->
-          <v-row justify="center">
-            <v-col cols="12">
-              <v-btn color="yellow darken-2" class="mt-4" block outlined depressed style="max-width: 200px;">구글 로그인</v-btn>
-            </v-col>
-          </v-row>
+          <v-card-actions class="justify-center">
+            <v-btn text color="primary" class="mr-2" @click="modal2=true">비밀번호 찾기</v-btn><br>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
+
+    <div class="black-bg" v-if="modal==true" >
+            <div class="white-bg">
+                <h4 class="title">아이디 찾기</h4>
+                <v-col cols="8" >
+                <v-text-field label="이름" id="name" v-model="name" required outlined></v-text-field>
+                </v-col>
+                <v-col cols="8" >
+                <v-text-field label="전화번호" id="phone" v-model="phone" required outlined></v-text-field>
+                </v-col>
+                <v-btn variant="tonal" type="button" @click="findUserId" class="btn-findId">아이디 찾기</v-btn>
+                <v-btn variant="tonal" type="button" @click="modal=false" class="btn-close">닫기</v-btn>
+            </div>
+        </div>
+
+        <div class="black-bg2" v-if="modal2==true" >
+            <div class="white-bg2">
+                <h4 class="title2">비밀번호 찾기</h4>
+                <v-col cols="8" >
+                <v-text-field label="아이디" id="id" v-model="memberId" required outlined></v-text-field>
+                </v-col>
+                <v-col cols="8" >
+                <v-text-field label="전화번호" id="phone" v-model="phone" required outlined></v-text-field>
+                <v-btn variant="tonal" type="button" @click="requestVerificationCode" class="btn-verificate" >인증번호 받기</v-btn>
+                </v-col>
+                <v-col cols="8" >
+                <v-text-field label="인증번호 입력" id="verification" class="verification" v-model="verification" required outlined></v-text-field>
+                <v-btn variant="tonal" type="button" @click="confirmVerficationCode" class="btn-permit">확인</v-btn>
+                </v-col>
+                <!-- 실제 실행시킬 떄는 @click="navigate" 로 바꾸기 -->
+            </div>
+        </div>
+
+        <div class="black-bg-success" v-if="showSuccessModal" @click="showSuccessModal = false">
+          <div class="white-bg-success">
+            <h4 class="title-success">아이디 찾기 성공</h4>
+            <p>아이디: {{ foundUserId }}</p>
+            <v-btn variant="tonal" type="button" @click="closeSuccessModal" class="btn-close-success">닫기</v-btn>
+          </div>
+        </div>
+
+        <div class="black-bg4" v-if="modal4==true" >
+            <div class="white-bg4">
+                <h4 class="title">비밀번호 변경</h4>
+                <v-col cols="8" >
+                <v-text-field label="아이디" id="id" v-model="memberId" required outlined></v-text-field>
+                </v-col>
+
+                <v-col cols="8" >
+                <v-text-field label="새로운 비밀번호" id="newPassword" v-model="newPassword" required outlined></v-text-field>
+                </v-col>
+
+                <v-col cols="8" >
+                <v-text-field label="비밀번호 확인" id="passwordConfirm" v-model="passwordConfirm" required outlined></v-text-field>
+                </v-col>
+
+                <v-btn variant="tonal" type="button" @click="changePassword" class="btn-change">비밀번호 변경</v-btn>
+
+            </div>
+        </div>
+
   </v-container>
+
+
+
+
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -87,9 +124,137 @@ export default {
     return {
       memberId: '',
       password: '',
+      modal : false,
+      modal2: false,
+      name:'',
+      phone:'',
+      userId:'',
+      verification:'',
+      foundUserId: '', // 아이디 찾기 성공 후 표시할 아이디
+      showSuccessModal: false, // 성공 모달 창을 보여주기 위한 상태 변수
+      modal4 : false,
+      password:'',
+      newpassword:'',
+      passwordConfirm:'',
     };
   },
+
   methods: {
+    async changePassword() {
+      // 현재 비밀번호, 새로운 비밀번호, 비밀번호 확인을 가져옴
+      const memberId = this.memberId;
+      const newPassword = this.newPassword;
+      const confirmPassword = this.passwordConfirm;
+
+      // 여기에서 비밀번호 변경 로직을 구현합니다.
+      // 예를 들어, 서버로 요청을 보내고 비밀번호 변경을 처리합니다.
+      try {
+        const response = await axios.put('http://localhost:9999/user/pwd', {
+          memberId,
+          newPassword,
+          confirmPassword,
+        });
+        console.log(memberId);
+        if (response.status === 200) {
+          alert('비밀번호가 성공적으로 변경되었습니다.');
+          this.modal4 = false; // 모달을 닫는다거나 다른 작업을 수행할 수 있음
+          this.modal2=false;
+        } else {
+          alert('비밀번호 변경에 실패했습니다.');
+        }
+      } catch (error) {
+        console.error('비밀번호 변경 중 오류 발생:', error);
+        alert('비밀번호 변경 중 오류 발생');
+      }
+        },
+
+
+    async findUserId() {
+        axios.get('http://localhost:9999/user', {
+          params:{
+            name: this.name,
+            phone: this.phone,
+          },
+        })
+          .then((response)=>{
+            if (response.status === 200) {
+              this.userId = response.data;
+              console.log(this.userId);
+              // 아이디를 찾았을 때 foundUserId에 값을 설정하고 모달 창을 보이도록 상태 변수 설정
+              this.foundUserId = this.userId;
+              this.showSuccessModal = true;
+            }
+            else {
+              alert('아이디를 찾을 수 없습니다.');
+            }
+            console.log('아이디 찾기 성공', response);
+          })
+          .catch((error)=>{
+            console.error('아이디찾기 오류', error);
+          });
+    },
+    
+
+
+    // 모달 창을 닫는 메서드
+    closeSuccessModal() {
+      this.showSuccessModal = false;
+    },
+
+    async navigate(){
+      if(this.verification==this.verificationcode){
+        this.modal4 = true;
+      }else{
+        alert('인증번호가 일치하지 않습니다.');
+      }
+    },
+
+    //인증 번호 요청
+    async requestVerificationCode(){
+      try{
+        const response = await axios.post('http://localhost:9999/user/sendNum',{
+          memberId: this.memberId,
+          phone:this.phone,
+        });
+
+        if(response.status===200){
+          console.log(response);
+          //this.memberId = memberId;
+          console.log("아이디는 " + this.memberId);
+          alert('인증번호를 받았습니다:'+this.verificationcode);
+        }else{
+          alert('인증번호를 받을 수 없습니다.');
+        }
+
+      }catch(error){
+        console.error('인증번호 요청 중 오류 발생:',error);
+        alert('인증번호 요청 중 오류 발생');
+      }
+    },
+    //인증번호 확인
+    async confirmVerficationCode() {
+        axios.get('http://localhost:9999/user/checkNum', {
+          params:{
+            authNum:this.verification,
+          },
+        })
+          .then((response)=>{
+            if (response.status === 200) {
+              alert('인증 번호 확인 성공');
+              // 아이디를 찾았을 때 foundUserId에 값을 설정하고 모달 창을 보이도록 상태 변수 설정
+              //this.foundUserId = this.userId;
+              this.modal4=true;
+            }
+            else {
+              alert('인증번호가 틀립니다');
+            }
+            console.log('인증번호 확인 성공', response);
+          })
+          .catch((error)=>{
+            console.error('인증번호 찾기 오류', error);
+          });
+    },
+    
     login() {
       console.log(this.memberId, this.password);
       var url = "http://localhost:9999/user/login";
@@ -122,11 +287,12 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .logo{
   display: inline-block;
 }
-/* 페이지의 가운데에 위치하도록 스타일 조정 */
+
 .d-flex {
   display: flex;
 }
@@ -147,21 +313,135 @@ export default {
   height: 100vh;
 }
 
-/* 가로선 스타일 */
-.separator {
+
+body{
+        margin:0;
+    }
+    div{
+        box-sizing: border-box;
+    }
+  .black-bg {
+    width: 100%; 
+  height:100%;
+  background: rgba(0,0,0,0.5);
+  position: fixed; 
+  padding: 20px;
+}
+
+.black-bg2{
+  width: 100%; 
+  height:100%;
+  background: rgba(0,0,0,0.5);
+  position: fixed; 
+  padding: 20px;
+
+}
+
+nav{
+  text-align: center;
+}
+.white-bg {
+
+
+position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+            border-radius: 8px;
+            width: 790px;
+}
+
+.white-bg-success{
+  position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    border-radius: 8px;
+    width: 790px;
+}
+
+.white-bg2 {
+
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    border-radius: 8px;
+    width: 790px;
+} 
+
+
+.black-bg-success {
   width: 100%;
-  border: 1px solid #000; /* 원하는 색상과 두께로 변경 가능 */
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  padding: 20px;
+  z-index: 9999; 
 }
 
-/* 카카오 로그인 버튼 스타일 (노란색) */
-.v-btn[color="yellow darken-2"] {
-  background-color: #FFEB00; /* 원하는 노란색으로 변경 가능 */
-  color: #000; /* 버튼 텍스트 색상 (검정색 등)으로 변경 가능 */
+
+#name{
+    position: absolute;
+    top:30px;
+    bottom:50px;
 }
 
-/* 네이버 로그인 버튼 스타일 (연두색으로 수정) */
-.v-btn[color="lime"] {
-  background-color: #00CC00; /* 원하는 연두색으로 변경 가능 */
-  color: #000; /* 버튼 텍스트 색상을 흰색으로 지정 */
+
+.black-bg4 {
+    width: 100%; height:100%;
+    background: rgba(0,0,0,0.5);
+    position: fixed; padding: 20px;
+    }
+    .white-bg4 {
+      position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    border-radius: 8px;
+    width: 790px;
+    }
+
+.title{
+    justify-content: center;
 }
+
+
+#name{
+    position: absolute;
+    top:30px;
+    bottom:50px;
+}
+
+
+
 </style>
