@@ -41,6 +41,7 @@ export default {
   background-color: black; /* 왼쪽 섹션 배경색을 검정색으로 설정 */
   overflow-y: scroll; /* 세로 스크롤을 허용하는 스타일 */
   height: 100vh; /* 화면 높이에 맞게 설정 (설정에 따라 조정 가능) */
+  width:full;
 
 }
 
