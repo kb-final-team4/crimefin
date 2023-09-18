@@ -6,7 +6,7 @@
       <v-container>
         <v-row>
           <v-col cols="5" class="item-box" v-bind:style="{background : '#2c3e50'}">
-            <v-sheet height="570px">
+            <v-sheet height="570px" v-bind:style="{background : '#90dbf5'}">
               <v-col>
                 <v-row>
                   <div class="v-card__title text-center mx-auto text--h6">
@@ -22,39 +22,38 @@
                 </v-row>
                 <br><v-divider></v-divider><br>
                 <v-row>
-                  <v-card width="370px" class="mx-auto account-list">
-                    <div class="v-card__text text-center"
+                  <v-card width="370px" class="mx-auto account-list" v-bind:style="{background : '#7ab9cf'}">
+<!--                    <div class="v-card__text text-center"
                          v-if="accountInfoList != null"
                          v-for="item in accountInfoList">
                       {{ item }}
-                    </div>
-<!--                <v-col :cols="1"></v-col>
-                    <v-col :cols="3">
-                      &lt;!&ndash; 은행 이미지 파일 여기에 v-if accountinfoList != null, v-for 써서 넣기 &ndash;&gt;
-                      <div class="v-card__text"
-                           v-if="accountInfoList != null"
-                           v-for="img in bankImgArr ">
-                        {{img}}
-                      </div>
-                    </v-col>
-                    <v-col :cols="7">
-                        &lt;!&ndash;  잔고 원
-                              (은행명) 계좌 번호
-                        &ndash;&gt;
-                        <div class="v-card__text"
-                             v-if="accountInfoList != null"
-                             v-for="accountInfo in accountInfoList">
-                          {{ accountInfo }}
-                        </div>
-                    </v-col>
-                    <v-col :cols="1" v-bind:style="{background : ''}"></v-col>-->
+                    </div>-->
+                  <div class="v-card__text text-center white--text"
+                       v-if="accountInfosList != null"
+                       v-for="item in accountInfosList"
+                       v-bind:style="{height : '60px'}"
+                  >
+                  <v-row>
+                  <v-col :cols="3">
+                    <img :src="getImgUrl(item[0])" v-bind:alt="item[0]" height="40px" width="40px"/>
+                  </v-col>
+                  <v-col :cols="8">
+                    <v-row v-bind:style="{paddingTop : '10px'}">
+                      {{item[1]}}<br>
+                    </v-row>
+                    <v-row>
+                      {{item[2]}}
+                    </v-row>
+                  </v-col>
+                  </v-row>
+                  </div>
                   </v-card>
                 </v-row>
               </v-col>
             </v-sheet>
           </v-col>
           <v-col cols="7" class="item-box" v-bind:style="{background : '#2c3e50'}">
-            <v-sheet height="570px">
+            <v-sheet height="570px" v-bind:style="{background : '#90dbf5'}">
               <v-col>
                 <v-row>
                   <v-col :cols="1"></v-col>
@@ -89,7 +88,7 @@
                   <v-col :cols="1">
                   </v-col>
                   <v-col :cols="3">
-                    <v-sheet class="mx-auto" height="100px">
+                    <v-sheet class="mx-auto" height="100px" v-bind:style="{background : '#90dbf5'}">
                         <v-form @submit.prevent="getBankingDaily">
                           <v-row class="d-flex">
                             <v-col :cols="1"></v-col>
@@ -101,7 +100,7 @@
                                 <v-text-field type="datetime-local" height="10px" v-model="bankingEndDate" label="종료일자"></v-text-field>
                               </v-row>
                               <v-row>
-                                <v-btn type="submit" color="primary" block outlined>조회하기</v-btn>
+                                <v-btn type="submit" color="white" v-bind:style="{background : '#444766'}" block outlined>조회하기</v-btn>
                               </v-row>
                             </v-col>
                             <v-col :cols="1"></v-col>
@@ -110,8 +109,8 @@
                     </v-sheet>
                   </v-col>
                   <v-col :cols="7">
-                  <v-card class="banking-list">
-                    <div class="v-card__text"
+                  <v-card class="banking-list" v-bind:style="{background : '#7ab9cf'}">
+                    <div class="v-card__text white--text"
                          v-if="bankingInfoList != null"
                          v-for="item in bankingInfoList">
                       {{ item }}
@@ -159,15 +158,6 @@ export default {
   },
   data: function() {
     return {
-      /*
-        NOTICE_ID   NOT NULL VARCHAR2(20)
-        MEMBER_ID   NOT NULL VARCHAR2(20)
-        TIME                 TIMESTAMP(6)
-        ACCOUNT_NUM          VARCHAR2(20)
-        BANK_NAME            VARCHAR2(20)
-        DEPOSIT              NUMBER
-        WITHDRAWL            NUMBER
-     */
       modal : false, //알림 모달창 열고닫을때 씀
       noticeInfoList : null, //알림 표현용 리스트
 
@@ -179,7 +169,8 @@ export default {
       memberId : this.$session.get('loginMemberId'),
 
 
-      accountInfoList : null, //계좌 정보 리턴받아서 스트링 합쳐서 만든 프론트 표현용 스트링 배열
+      accountInfosList : null, // [bankImgArr[i], balanceArr[i], (bankNameArr[i]+accountNumArr[i])]
+      accountInfoList : null, //계좌 정보 리턴받아서 (은행이름) 계좌번호 표시하는것
       balancePercentageArr : null, //계좌별 잔고 리턴받은거 다 합친 값중에 100%로 했을때 각자 얼마인지 계산한 int 배열
       //계좌 정보 리스트 받았을때 계좌 번호 들어가는 배열
       accountNumArr : null,
@@ -441,35 +432,41 @@ export default {
 
       //console.log("getTotalAccountList balanceArr after"+this.balanceArr);
 
+      console.log("getTotalAccountList this.bankNameArr "+this.bankNameArr);
+
       this.accountInfoList = new Array(this.accountNumArr.length);
-      //var startImgtag = "<v-img src=\"";
-      //var endImgtag = "\" width=\"30px\" height=\"30px\"><" + "\/v-img>";
+      this.accountInfosList = new Array(this.accountNumArr.length);
+      this.bankImgArr = new Array(this.accountNumArr.length);
       let k;
       for(k = 0; k< this.accountNumArr.length; k++){
-        this.accountInfoList[k] = "("+this.bankNameArr[k] + ") " + this.accountNumArr[k]+ " "+this.balanceArr[k]+"원 ";
+        this.accountInfoList[k] = "("+this.bankNameArr[k]+") "+ this.accountNumArr[k];
 
-       /* if(this.bankNameArr[k]==="하나은행")
-          this.bankImgArr[k] = startImgtag+"../assets/bank_hana.png"+endImgtag;
-        else if(this.bankNameArr[k].equals("카카오뱅크"))
-          this.bankImgArr[k] = startImgtag+"../assets/bank_kakao.png"+endImgtag;
-        else if(this.bankNameArr[k].equals("국민은행"))
-          this.bankImgArr[k] = startImgtag+"../assets/bank_kb.png"+endImgtag;
-        else if(this.bankNameArr[k].equals("기업은행"))
-          this.bankImgArr[k] = startImgtag+"../assets/bank_kiub.png"+endImgtag;
-        else if(this.bankNameArr[k].equals("농협은행"))
-          this.bankImgArr[k] = startImgtag+"../assets/bank_nonghyup.png"+endImgtag;
-        else if(this.bankNameArr[k].equals("새마을은행"))
-          this.bankImgArr[k] = startImgtag+"../assets/bank_saemaeul.png"+endImgtag;
-        else if(this.bankNameArr[k].equals("신한은행"))
-          this.bankImgArr[k] = startImgtag+"../assets/bank_shinhan.png"+endImgtag;
-        else if(this.bankNameArr[k].equals("토스뱅크"))
-          this.bankImgArr[k] = startImgtag+"../assets/bank_toss.png"+endImgtag;
-        else if(this.bankNameArr[k].equals("우리은행"))
-          this.bankImgArr[k] = startImgtag+"../assets/bank_woori.png"+endImgtag;
+        if(this.bankNameArr[k]==="하나은행")
+          this.bankImgArr[k] = "bank_hana";
+        else if(this.bankNameArr[k] === "카카오뱅크")
+          this.bankImgArr[k] = "bank_kakao";
+        else if(this.bankNameArr[k] === "국민은행")
+          this.bankImgArr[k] = "bank_kb";
+        else if(this.bankNameArr[k] === "기업은행")
+          this.bankImgArr[k] = "bank_kiub";
+        else if(this.bankNameArr[k] === "농협은행")
+          this.bankImgArr[k] = "bank_nonghyup";
+        else if(this.bankNameArr[k] === "새마을은행")
+          this.bankImgArr[k] = "bank_saemaeul";
+        else if(this.bankNameArr[k] === "신한은행")
+          this.bankImgArr[k] = "bank_shinhan";
+        else if(this.bankNameArr[k] === "토스뱅크")
+          this.bankImgArr[k] = "bank_toss";
+        else if(this.bankNameArr[k] === "우리은행")
+          this.bankImgArr[k] = "bank_woori";
         else
-          this.bankImgArr[k] =startImgtag+"../assets/won.png"+endImgtag;*/
+          this.bankImgArr[k] ="won";
+
+        this.accountInfosList[k] = [this.bankImgArr[k], this.balanceArr[k]+"원", this.accountInfoList[k]];
       }
       this.accountChartOptions.labels = this.accountNumArr;
+
+      console.log("getTotalAccountList accountInfosList " + this.accountInfosList);
 
       /*axios.get(url)
           .then(response => {
@@ -500,6 +497,11 @@ export default {
     // 모달 창을 닫는 메서드
     closeSuccessModal() {
       this.showSuccessModal = false;
+    },
+    //이미지 url 삽입용
+    getImgUrl(bank) {
+      var images = require.context('../assets/', false, /\.png$/)
+      return images('./' + bank + ".png")
     },
   },
 };
