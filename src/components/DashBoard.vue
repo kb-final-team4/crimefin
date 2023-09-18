@@ -28,6 +28,26 @@
                          v-for="item in accountInfoList">
                       {{ item }}
                     </div>
+<!--                <v-col :cols="1"></v-col>
+                    <v-col :cols="3">
+                      &lt;!&ndash; 은행 이미지 파일 여기에 v-if accountinfoList != null, v-for 써서 넣기 &ndash;&gt;
+                      <div class="v-card__text"
+                           v-if="accountInfoList != null"
+                           v-for="img in bankImgArr ">
+                        {{img}}
+                      </div>
+                    </v-col>
+                    <v-col :cols="7">
+                        &lt;!&ndash;  잔고 원
+                              (은행명) 계좌 번호
+                        &ndash;&gt;
+                        <div class="v-card__text"
+                             v-if="accountInfoList != null"
+                             v-for="accountInfo in accountInfoList">
+                          {{ accountInfo }}
+                        </div>
+                    </v-col>
+                    <v-col :cols="1" v-bind:style="{background : ''}"></v-col>-->
                   </v-card>
                 </v-row>
               </v-col>
@@ -53,17 +73,15 @@
                   </v-select>
                   </v-col>
                   <v-col class="mx-auto" :cols="1">
-                    <router-link to="/알림상세페이지">
-                      <v-img src="../assets/bell.png" width="30px" height="30px">
-                      </v-img>
-                    </router-link>
+                    <v-img src="../assets/bell.png" width="30px" height="30px" @click="openNoticelist">
+                    </v-img>
                   </v-col>
                 </v-row>
                 <v-row>
-                  <!-- todo 동적 apexchart 태그 렌더링? -->
+                  <!-- todo 동적 apexchart 태그 re-rendering -->
                   <div class="chart-wrap mx-auto">
                     <div id="chart2">
-                      <apexchart id="myChart2" type="line" width="580" height="300" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
+                      <apexchart id = "bankingchart1" type="line" width="580" height="300" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
                     </div>
                   </div>
                 </v-row>
@@ -74,9 +92,19 @@
                     <v-sheet class="mx-auto" height="100px">
                         <v-form @submit.prevent="getBankingDaily">
                           <v-row class="d-flex">
-                          <v-text-field type="datetime-local" height="10px" v-model="bankingStartDate" label="시작일자"></v-text-field>
-                          <v-text-field type="datetime-local" height="10px" v-model="bankingEndDate" label="종료일자"></v-text-field>
-                          <v-btn type="submit" color="primary" block outlined>조회하기</v-btn>
+                            <v-col :cols="1"></v-col>
+                            <v-col :cols="10">
+                              <v-row>
+                                <v-text-field type="datetime-local" height="10px" v-model="bankingStartDate" label="시작일자"></v-text-field>
+                              </v-row>
+                              <v-row>
+                                <v-text-field type="datetime-local" height="10px" v-model="bankingEndDate" label="종료일자"></v-text-field>
+                              </v-row>
+                              <v-row>
+                                <v-btn type="submit" color="primary" block outlined>조회하기</v-btn>
+                              </v-row>
+                            </v-col>
+                            <v-col :cols="1"></v-col>
                           </v-row>
                         </v-form>
                     </v-sheet>
@@ -97,6 +125,23 @@
             </v-sheet>
           </v-col>
         </v-row>
+
+        <div class="outer-bg" v-if="this.modal !== false" >
+          <div class="modal-bg">
+            <h4 class="v-card__title text-center white--text">나의 알림 리스트</h4>
+            <v-card>
+              <div class="v-card__text white--text"
+                   v-bind:style="{background : '#353257'}"
+                   v-if="noticeInfoList != null"
+                   v-for="notice in noticeInfoList">
+                {{ notice }}
+              </div>
+            </v-card>
+            <br>
+            <v-btn v-bind:style="{background : '#332b57'}" variant="tonal" type="button" @click="modal=false" class="white--text btn-close">닫기</v-btn>
+          </div>
+        </div>
+
       </v-container>
     </v-main>
 
@@ -114,6 +159,23 @@ export default {
   },
   data: function() {
     return {
+      /*
+        NOTICE_ID   NOT NULL VARCHAR2(20)
+        MEMBER_ID   NOT NULL VARCHAR2(20)
+        TIME                 TIMESTAMP(6)
+        ACCOUNT_NUM          VARCHAR2(20)
+        BANK_NAME            VARCHAR2(20)
+        DEPOSIT              NUMBER
+        WITHDRAWL            NUMBER
+     */
+      modal : false, //알림 모달창 열고닫을때 씀
+      noticeInfoList : null, //알림 표현용 리스트
+
+      noticeTimeArr : null, //알림 시간 리스트
+      noticeBankNameArr : null, //알림 은행명 리스트
+      noticeDepositArr : null, //알림 입금 리스트
+      noticeWithdrawlArr : null, //알림 출금 리스트
+
       memberId : this.$session.get('loginMemberId'),
 
 
@@ -123,6 +185,7 @@ export default {
       accountNumArr : null,
       bankNameArr : null, //계좌 정보 리스트 받았을 때 은행 명 들어가는 배열
       balanceArr : null, //계좌 정보 리스트 받았을 때 계좌 잔고 들어가는 배열
+      bankImgArr : null, //왼쪽에 계좌목록에 표기할 은행 아이콘 이름 리스트 가지고 있는 배열
 
       //왼쪽 차트 데이터들
       //왼쪽 도넛 차트랑 왼쪽 아래 조회 메서드 만들기 -> 했음
@@ -179,12 +242,12 @@ export default {
       //세션에 바인딩된 memberId 보내고 시작시각 종료시각 입력한거 보내기
       //거래시각 별로 bankingSeries에 잔고 저장하고 xaxis의 categories에 배열로 거래시각 저장하기
       bankingSeries: [{
-        name: "잔고",
-        data: [100000, 41000, 35000, 51000, 49000, 62000, 69000, 91000, 148000]
+        name: '테스트',
+        //data: [100000, 41000, 35000, 51000, 49000, 62000, 69000, 91000, 148000]
+        data : ['1020000', '1010000', '1050000', '1030000', '1050000', '50000']
       }],
       bankingChartOptions: {
         chart: {
-          id : "bankingchart1",
           height: 300,
           type: 'line',
           zoom: {
@@ -204,7 +267,8 @@ export default {
           },
         },
         xaxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+          //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+          categories: ["2023-09-10","2023-09-11","2023-09-12","2023-09-13","2023-09-14", "2023-09-15"],
         }
       },
 
@@ -212,12 +276,58 @@ export default {
   },
   created() {
     this.getTotalAccountList();
-    //this.getBankingDaily();
+    this.getBankingDaily();
   },
   mounted() {
 
   },
   methods: {
+    /*
+    NOTICE_ID   NOT NULL VARCHAR2(20)
+    MEMBER_ID   NOT NULL VARCHAR2(20)
+    TIME                 TIMESTAMP(6)
+    ACCOUNT_NUM          VARCHAR2(20)
+    BANK_NAME            VARCHAR2(20)
+    DEPOSIT              NUMBER
+    WITHDRAWL            NUMBER
+     */
+    openNoticelist(){
+      this.modal = true;
+      /*
+      noticeTimeArr : null, //알림 시간 리스트
+      noticeBankNameArr : null, //알림 은행명 리스트
+      noticeDepositArr : null, //알림 입금 리스트
+      noticeWithdrawlArr : null, //알림 출금 리스트
+       */
+      var url = "http://localhost:9999/asset/dashboard/notice";
+      var data = {
+        memberId : this.memberId,
+        accountNum : this.accountNumDropdown
+      }
+
+      this.noticeTimeArr = ['2023-09-10','2023-09-13','2023-09-15'];
+      this.noticeBankNameArr = ['국민은행', '국민은행', '국민은행'];
+      this.noticeDepositArr = [null, null, 10000000];
+      this.noticeWithdrawlArr = [9000000,100000000, null];
+
+      this.noticeInfoList = new Array(this.noticeTimeArr.length);
+      for(let i = 0; i< this.noticeTimeArr.length; i++)
+      {
+        if(this.noticeDepositArr[i]!==null)
+          this.noticeInfoList[i] = this.noticeTimeArr[i]+" "+this.noticeBankNameArr[i]+" "+this.noticeDepositArr[i]+"원이 입금되었습니다.";
+        else
+          this.noticeInfoList[i] = this.noticeTimeArr[i]+" "+this.noticeBankNameArr[i]+" "+this.noticeWithdrawlArr[i]+"원이 빠져나갔습니다.";
+      }
+
+      /*axios.post(url,data)
+          .then(response => {
+
+          })
+          .catch(error => {
+            console.log(error);
+          });*/
+    },
+
     getBankingDaily(){
       var url = "http://localhost:9999/asset/dashboard/time";
       var data ={
@@ -238,18 +348,20 @@ export default {
       this.bankingWithdrawlList = [null,"10000", null, "20000", null, "1000000"];
       this.bankingWithdrawlToList = [null,"ocl", null, "ocl2", null, "나쁜놈"];
 
-      //this.bankingChartOptions.xaxis.categories = this.bankingDateList;
+      this.bankingChartOptions.xaxis.categories = this.bankingDateList;
       console.log("getBankingDaily bankingChartOptions.xaxis.categories : " + this.bankingChartOptions.xaxis.categories);
 
       this.bankingBalanceList = ['1020000', '1010000', '1050000', '1030000', '1050000', '50000'];
       for(let j = 0; j < this.bankingBalanceList.length; j++){
         this.bankingBalanceList[j] = parseInt(this.bankingBalanceList[j]);
       }
-      //this.bankingSeries.data = this.bankingBalanceList;
-      console.log("getBankingDaily bankingSeries.data "+ this.bankingSeries.data);
+      //console.log("getBankingDaily bankingSeries.data before"+ this.bankingSeries.data);
+      this.bankingSeries.data = this.bankingBalanceList;
+      console.log("getBankingDaily bankingSeries.data after"+ this.bankingSeries.data);
 
       this.bankingInfoList = new Array(this.bankingDateList.length);
       for(let i = 0; i<this.bankingDateList.length; i++){
+        //오른쪽차트 아래에 표기하는 곳
         //입금
         if(this.bankingDepositList[i] != null){
           this.bankingInfoList[i] = this.bankingDateList[i]+" 입금 "+this.bankingDepositNameList[i]+" +"+this.bankingDepositList[i]+"원 잔고 : "+this.bankingBalanceList[i];
@@ -260,41 +372,40 @@ export default {
         }
       }
 
-      //차트 리렌더링
+      //차트 리렌더링 -- 안됨
       /*console.log("ApexCharts exec start");
-      ApexCharts.exec("bankingchart1", "updateOptions", {
+      console.log("ApexCharts exec this.bankingBalanceList " +this.bankingBalanceList );
+      console.log("ApexCharts exec this.bankingDateList "+this.bankingDateList);*/
+      //console.log("ApexCharts re-rendering : rightChart "+document.getElementById("bankingchart1"));
+      /*var rightChart = new ApexCharts(document.getElementById("bankingchart1"), this.bankingChartOptions);
+      //rightChart.destroy();
+      rightChart.updateSeries({
+        data : this.bankingBalanceList
+      });
+      rightChart.updateOptions({
+        xaxis: {
+          categories: this.bankingDateList
+        }
+      });
+      rightChart.render();*/
+      /*ApexCharts.exec("bankingchart1", "updateOptions", {
+        chartOptions: {
+          xaxis: {
+            categories: this.bankingDateList
+          }
+        }
+      });
+      ApexCharts.exec("bankingchart1", "updateSeries", {
         series : {
           name : "balance",
           data :  this.bankingBalanceList
-        },
-        xaxis : {
-          categories: this.bankingDateList
         }
       });*/
 
+      //대시보드 백 완성되면 여기 풀기
       /*axios.post(url, data)
           .then(response => {
-            /!*
-             백엔드단에서 무조건 날짜 순으로 정렬해서 주기
 
-              response.data 가서 입금 출금 구별해서 적고
-              response.data가서 날짜들 꺼내와서 bankingDateInfoList에 저장,
-              //일자 , 입금인지 출금인지, 액수, 잔고
-              let depositMap = new Map();
-              let withdrawlMap = new Map();
-
-              if(deposit이면)
-                depositMap.add('날짜', 'deposit amount')
-               else (withdrawl이면)
-                withdrawlMap = new Map();
-
-              foreach(item in bankingDateInfo)
-                만약 키(item)가 depositMap에 키로 존재하면
-                bankingInfoList.add(item + " 입금 " + 'deposit amount');
-                만약 키(item)가 withdrawlMap에 키로 존재하면
-                bankingInfoList.add(item + " 출금 " + 'withdrawl amount');
-
-             *!/
           })
           .catch(error => {
             console.error(error);
@@ -331,8 +442,32 @@ export default {
       //console.log("getTotalAccountList balanceArr after"+this.balanceArr);
 
       this.accountInfoList = new Array(this.accountNumArr.length);
-      for(let k = 0; k< this.accountNumArr.length; k++){
-        this.accountInfoList[k] = this.bankNameArr[k] + " " + this.accountNumArr[k] + " " + this.balanceArr[k]+"원";
+      //var startImgtag = "<v-img src=\"";
+      //var endImgtag = "\" width=\"30px\" height=\"30px\"><" + "\/v-img>";
+      let k;
+      for(k = 0; k< this.accountNumArr.length; k++){
+        this.accountInfoList[k] = "("+this.bankNameArr[k] + ") " + this.accountNumArr[k]+ " "+this.balanceArr[k]+"원 ";
+
+       /* if(this.bankNameArr[k]==="하나은행")
+          this.bankImgArr[k] = startImgtag+"../assets/bank_hana.png"+endImgtag;
+        else if(this.bankNameArr[k].equals("카카오뱅크"))
+          this.bankImgArr[k] = startImgtag+"../assets/bank_kakao.png"+endImgtag;
+        else if(this.bankNameArr[k].equals("국민은행"))
+          this.bankImgArr[k] = startImgtag+"../assets/bank_kb.png"+endImgtag;
+        else if(this.bankNameArr[k].equals("기업은행"))
+          this.bankImgArr[k] = startImgtag+"../assets/bank_kiub.png"+endImgtag;
+        else if(this.bankNameArr[k].equals("농협은행"))
+          this.bankImgArr[k] = startImgtag+"../assets/bank_nonghyup.png"+endImgtag;
+        else if(this.bankNameArr[k].equals("새마을은행"))
+          this.bankImgArr[k] = startImgtag+"../assets/bank_saemaeul.png"+endImgtag;
+        else if(this.bankNameArr[k].equals("신한은행"))
+          this.bankImgArr[k] = startImgtag+"../assets/bank_shinhan.png"+endImgtag;
+        else if(this.bankNameArr[k].equals("토스뱅크"))
+          this.bankImgArr[k] = startImgtag+"../assets/bank_toss.png"+endImgtag;
+        else if(this.bankNameArr[k].equals("우리은행"))
+          this.bankImgArr[k] = startImgtag+"../assets/bank_woori.png"+endImgtag;
+        else
+          this.bankImgArr[k] =startImgtag+"../assets/won.png"+endImgtag;*/
       }
       this.accountChartOptions.labels = this.accountNumArr;
 
@@ -361,7 +496,11 @@ export default {
           .catch(error => {
             console.error(error);
           });*/
-    }
+    },
+    // 모달 창을 닫는 메서드
+    closeSuccessModal() {
+      this.showSuccessModal = false;
+    },
   },
 };
 </script>
@@ -374,6 +513,30 @@ export default {
 .banking-list {
   height: calc(100vh - 85vh);
   overflow-y: auto;
+}
+.outer-bg {
+  width: 200%;
+  height:200%;
+  background: #444766;
+  position: fixed;
+  padding: 20px;
+}
+.modal-bg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: #525157;
+  border-radius: 8px;
+  width: 500px;
+
+  padding: 30px;
 }
 </style>
   
