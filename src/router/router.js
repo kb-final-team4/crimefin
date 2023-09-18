@@ -10,10 +10,14 @@ import MainPage from '../components/MainPage.vue' // MainPage 컴포넌트 경�
 
 import PhishingNumber from "../components/PhishingNumber.vue";
 import PhishingNumberResult from "../components/PhishingNumberResult.vue";
-import toDoPage from "@/components/ToDoPage.vue";
-import ServiceInfo from "@/components/ServiceInfo.vue";
-import Agency from "@/components/Agency.vue";
-import DashBoard from "@/components/DashBoard.vue";
+import PhishingLink from "../components/PhishingLink.vue";
+import PhishingLinkResult from "../components/PhishingLinkResult.vue";
+import AICheck from "../components/AICheck.vue";
+
+import toDoPage from "..components/ToDoPage.vue";
+import ServiceInfo from "../components/ServiceInfo.vue";
+import Agency from "../components/Agency.vue";
+import DashBoard from "../components/DashBoard.vue";
 
 
 // AppBar 컴포넌트 경로 설정
@@ -50,6 +54,24 @@ const routes = [
     path: '/phishingnumresult',
     name: 'PhishingNumberResult',
     component: PhishingNumberResult
+  },
+  {
+    path: '/phishingLink',
+    name: 'PhishingLink',
+    component: PhishingLink,
+    props: true,
+  },
+  {
+    path: '/phishingLinkresult',
+    name: 'PhishingLinkResult',
+    component: PhishingLinkResult,
+    props: true,
+  },
+  {
+    path: '/aicheck',
+    name: 'AICheck',
+    component: AICheck,
+    props: true,
   },
   {
     path: '/whattodo',
