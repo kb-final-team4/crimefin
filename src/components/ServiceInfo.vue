@@ -3,14 +3,16 @@
     <!-- 상단바 컴포넌트 import -->
     <AppBar />
 
-    <v-main v-bind:style="{background : '#444766'}">
+    <v-main v-bind:style="{background : '#DDE6ED'}">
       <v-container fluid>
         <v-col>
-          <v-row class="white--text" v-bind:style="{ backgroundColor: '#263d63' }">
-            <div class="v-card__title text-h2">
+          <v-row v-bind:style="{ backgroundColor: '#9DB2BF', color : 'white'}">
+            <div class="v-card__title text-h2"
+                 v-bind:style="{color : '#27374D'}">
               Crime-Fin?
             </div>
-            <div class="v-card__text text-left text-h6">
+            <div class="v-card__text text-left text-h6"
+                 v-bind:style="{color : '#27374D'}">
               금융과 관련하여 발생하는 범죄(Financial Crime)를<br>
               Fin(Finish) 하자는 취지로 지어진 이름입니다.<br>
               저희는 자체적으로 구성한 피싱 정보 데이터베이스를 기반으로<br>
@@ -19,13 +21,14 @@
           </v-row>
           <v-row>
             <v-col>
-            <div class="v-card__title justify-center white--text subtitle text-h4">
+            <div class="v-card__title justify-center subtitle text-h4"
+                 v-bind:style="{color : '#27374D'}">
               <br></br>피싱, 생각보다 가까이 있습니다
             </div>
 
             <v-row class="separate">
               <div class="row justify-space-around"  >
-                <v-card class="mx-auto white--text" width="300" height="300" color="#263d63" tile>
+                <v-card class="mx-auto white--text" width="300" height="300" color="#9DB2BF" tile>
                   <v-col>
                     <div class="text-center text-h5">
                       <br>피해건수
@@ -41,7 +44,7 @@
                     </div>
                   </v-col>
                 </v-card>
-                <v-card class="mx-auto white--text" width="300" height="300" color="#263d63" tile>
+                <v-card class="mx-auto white--text" width="300" height="300" color="#9DB2BF" tile>
                   <v-col>
                     <div class="text-center text-h5">
                       <br>피해액
@@ -57,7 +60,7 @@
                     </div>
                   </v-col>
                 </v-card>
-                <v-card class="mx-auto white--text" width="300" height="300" color="#263d63" tile>
+                <v-card class="mx-auto white--text" width="300" height="300" color="#9DB2BF" tile>
                   <v-col>
                     <div class="text-center text-h5">
                       <br>범죄 피해 증가율
@@ -77,24 +80,25 @@
             </v-row>
             </v-col>
           </v-row>
-          <v-row  class="white--text separate" v-bind:style="{ backgroundColor: '#263d63' }">
+          <v-row  class="white--text separate" v-bind:style="{ backgroundColor: '#9DB2BF' }">
             <v-col>
-              <div class="v-card__title justify-center subtitle text-h4">
+              <div class="v-card__title justify-center subtitle text-h4"
+              v-bind:style="{color : '#27374D'}">
                 주요 기능
               </div>
               <v-row no-gutters>
                 <div class="row justify-space-around" >
-                  <v-card v-bind:style="{background : '#444766'}" class="mx-auto white--text" width="300" height="300" tile>
+                  <v-card v-bind:style="{background :'#526D82'}" class="mx-auto" width="300" height="300" tile>
                     <v-col>
-                      <div class="text-center v-card__title justify-center">
+                      <div class="text-center v-card__title white--text justify-center">
                         1. 스팸 번호 판단
                       </div>
-                      <div class="v-card__text">
+                      <div class="v-card__text white--text">
                         &nbsp;&nbsp;저희가 자체적으로 생성한 피싱 번호 데이터베이스를 이용하여 사용자는 번호를 입력하기만 하면 그 번호가 피싱과 연관된 스팸 번호인지 바로 알 수 있습니다.
                       </div>
                     </v-col>
                   </v-card>
-                  <v-card v-bind:style="{background : '#444766'}" class="mx-auto white--text" width="300" height="300" tile>
+                  <v-card v-bind:style="{background : '#526D82'}" class="mx-auto white--text" width="300" height="300" tile>
                     <v-col>
                       <div class="text-center v-card__title justify-center">
                         2. 피싱 링크 판단
@@ -104,7 +108,7 @@
                       </div>
                     </v-col>
                   </v-card>
-                  <v-card v-bind:style="{background : '#444766'}" class="mx-auto white--text" width="300" height="300" tile>
+                  <v-card v-bind:style="{background : '#526D82'}" class="mx-auto white--text" width="300" height="300" tile>
                     <v-col>
                       <div class="text-center v-card__title justify-center">
                         3.AI 분석
@@ -114,7 +118,7 @@
                       </div>
                     </v-col>
                   </v-card>
-                  <v-card v-bind:style="{background : '#444766'}" class="mx-auto white--text" width="300" height="300" tile>
+                  <v-card v-bind:style="{background : '#526D82'}" class="mx-auto white--text" width="300" height="300" tile>
                     <v-col>
                       <div class="text-center v-card__title justify-center">
                         4. 각종 애프터 케어

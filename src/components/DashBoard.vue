@@ -2,11 +2,11 @@
   <v-app>
     <!-- 상단바 컴포넌트 import -->
     <AppBar />
-    <v-main v-bind:style="{background : '#444766'}">
+    <v-main v-bind:style="{background : '#102C57'}">
       <v-container>
         <v-row>
-          <v-col cols="5" class="item-box" v-bind:style="{background : '#2c3e50'}">
-            <v-sheet height="570px" v-bind:style="{background : '#90dbf5'}">
+          <v-col cols="5" class="item-box" v-bind:style="{background : '#DAC0A3'}">
+            <v-sheet height="570px" v-bind:style="{background : '#EADBC8'}">
               <v-col>
                 <v-row>
                   <div class="v-card__title text-center mx-auto text--h6">
@@ -22,13 +22,8 @@
                 </v-row>
                 <br><v-divider></v-divider><br>
                 <v-row>
-                  <v-card width="370px" class="mx-auto account-list" v-bind:style="{background : '#7ab9cf'}">
-<!--                    <div class="v-card__text text-center"
-                         v-if="accountInfoList != null"
-                         v-for="item in accountInfoList">
-                      {{ item }}
-                    </div>-->
-                  <div class="v-card__text text-center white--text"
+                  <v-card width="370px" class="mx-auto account-list" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
+                  <div class="v-card__text text-center"
                        v-if="accountInfosList != null"
                        v-for="item in accountInfosList"
                        v-bind:style="{height : '60px'}"
@@ -52,8 +47,8 @@
               </v-col>
             </v-sheet>
           </v-col>
-          <v-col cols="7" class="item-box" v-bind:style="{background : '#2c3e50'}">
-            <v-sheet height="570px" v-bind:style="{background : '#90dbf5'}">
+          <v-col cols="7" class="item-box" v-bind:style="{background : '#DAC0A3'}">
+            <v-sheet height="570px" v-bind:style="{background : '#EADBC8'}">
               <v-col>
                 <v-row>
                   <v-col :cols="1"></v-col>
@@ -88,7 +83,7 @@
                   <v-col :cols="1">
                   </v-col>
                   <v-col :cols="3">
-                    <v-sheet class="mx-auto" height="100px" v-bind:style="{background : '#90dbf5'}">
+                    <v-sheet class="mx-auto" height="100px" v-bind:style="{background : '#EADBC8'}">
                         <v-form @submit.prevent="getBankingDaily">
                           <v-row class="d-flex">
                             <v-col :cols="1"></v-col>
@@ -109,8 +104,8 @@
                     </v-sheet>
                   </v-col>
                   <v-col :cols="7">
-                  <v-card class="banking-list" v-bind:style="{background : '#7ab9cf'}">
-                    <div class="v-card__text white--text"
+                  <v-card class="banking-list" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
+                    <div class="v-card__text"
                          v-if="bankingInfoList != null"
                          v-for="item in bankingInfoList">
                       {{ item }}
@@ -127,17 +122,17 @@
 
         <div class="outer-bg" v-if="this.modal !== false" >
           <div class="modal-bg">
-            <h4 class="v-card__title text-center white--text">나의 알림 리스트</h4>
+            <h4 class="v-card__title text-center" v-bind:style="{color : 'gray'}">나의 알림 리스트</h4>
             <v-card>
-              <div class="v-card__text white--text"
-                   v-bind:style="{background : '#353257'}"
+              <div class="v-card__text"
+                   v-bind:style="{background : '#F8F0E5', color : 'gray'}"
                    v-if="noticeInfoList != null"
                    v-for="notice in noticeInfoList">
                 {{ notice }}
               </div>
             </v-card>
             <br>
-            <v-btn v-bind:style="{background : '#332b57'}" variant="tonal" type="button" @click="modal=false" class="white--text btn-close">닫기</v-btn>
+            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="modal=false" class="btn-close">닫기</v-btn>
           </div>
         </div>
 
@@ -233,7 +228,7 @@ export default {
       //세션에 바인딩된 memberId 보내고 시작시각 종료시각 입력한거 보내기
       //거래시각 별로 bankingSeries에 잔고 저장하고 xaxis의 categories에 배열로 거래시각 저장하기
       bankingSeries: [{
-        name: '테스트',
+        name: '잔고',
         //data: [100000, 41000, 35000, 51000, 49000, 62000, 69000, 91000, 148000]
         data : ['1020000', '1010000', '1050000', '1030000', '1050000', '50000']
       }],
@@ -519,7 +514,7 @@ export default {
 .outer-bg {
   width: 200%;
   height:200%;
-  background: #444766;
+  background: #102C57;
   position: fixed;
   padding: 20px;
 }
@@ -534,7 +529,7 @@ export default {
   align-items: center;
   justify-content: center;
 
-  background: #525157;
+  background: #DAC0A3;
   border-radius: 8px;
   width: 500px;
 
