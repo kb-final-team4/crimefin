@@ -10,7 +10,7 @@
             <div class="v-card__title text-h2">
               Crime-Fin?
             </div>
-            <div class="v-card__text text-h6">
+            <div class="v-card__text text-left text-h6">
               금융과 관련하여 발생하는 범죄(Financial Crime)를<br>
               Fin(Finish) 하자는 취지로 지어진 이름입니다.<br>
               저희는 자체적으로 구성한 피싱 정보 데이터베이스를 기반으로<br>
