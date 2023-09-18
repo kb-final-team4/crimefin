@@ -36,6 +36,16 @@
               >
                 로그인
               </v-btn>
+              <!-- 임시 로그인 버튼 -->
+              <router-link to="/main"><v-btn
+                color="primary"
+                class="mt-4"
+                block
+                outlined
+                depressed
+              >
+                로그인
+              </v-btn></router-link>
             </v-form>
           </v-card-text>
           <v-card-actions class="justify-center">
