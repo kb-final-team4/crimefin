@@ -24,6 +24,11 @@ import ExperienceMessageGame from "@/components/ExperienceMessageGame.vue";
 import ExperienceTypeGame from "@/components/ExperienceTypeGame.vue";
 import ExperienceVoiceGame from "@/components/ExperienceVoiceGame.vue";
 
+import MyPage from "../components/MyPage.vue";
+import ChangeInfo from "../components/ChangeInfo";
+import ChangePassword from "../components/ChangePassword.vue";
+import MemberResign from "../components/MemberResign.vue";
+
 
 // AppBar 컴포넌트 경로 설정
 
@@ -125,6 +130,26 @@ const routes = [
     path: '/expvoicegame',
     name: 'ExperienceVoiceGame',
     component: ExperienceVoiceGame
+  },
+  {
+    path: '/mypage',
+    name: 'ChangeInfo',
+    component: ChangeInfo
+  },
+  {
+    path: '/changeinfo',
+    name: 'ChangeInfo',
+    component: ChangeInfo
+  },
+  {
+    path: '/changepassword',
+    name: 'ChangePassword',
+    component: ChangePassword
+  },
+  {
+    path: '/memberresign',
+    name: 'MemberResign',
+    component: MemberResign
   }
 ]
 

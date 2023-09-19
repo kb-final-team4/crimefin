@@ -67,9 +67,11 @@
                 <v-col cols="8" >
                 <v-text-field label="전화번호" id="phone" v-model="phone" required outlined></v-text-field>
                 </v-col>
-                <v-btn variant="tonal" type="button" @click="findUserId" class="btn-findId">아이디 찾기</v-btn>
+                <v-row class="d-flex justify-center">
+                <v-btn variant="tonal" type="button" @click="findUserId" class="btn-findId" style="margin-right:30px;">아이디 찾기</v-btn>
                 <v-btn variant="tonal" type="button" @click="modal=false" class="btn-close">닫기</v-btn>
-            </div>
+              </v-row>
+              </div>
         </div>
 
         <div class="black-bg2" v-if="modal2==true" >
@@ -366,6 +368,8 @@ position: fixed;
             background: white;
             border-radius: 8px;
             width: 790px;
+
+            padding-bottom: 30px;
 }
 
 .white-bg-success{
@@ -400,6 +404,8 @@ position: fixed;
     background: white;
     border-radius: 8px;
     width: 790px;
+
+
 } 
 
 
@@ -451,6 +457,7 @@ position: fixed;
     top:30px;
     bottom:50px;
 }
+
 
 
 

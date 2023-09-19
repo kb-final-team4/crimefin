@@ -21,7 +21,7 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item @click="goTo('MyPage')" >마이페이지</v-list-item>
+            <v-list-item @click="goTo('ChangeInfo')" >마이페이지</v-list-item>
             <v-list-item @click="goTo('DashBoard')" >자산/대시보드</v-list-item>
           </v-list>
         </v-menu>
