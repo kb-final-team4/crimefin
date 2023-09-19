@@ -55,7 +55,6 @@
 		AND password = #{password}
 	</select>
 
-	<!-- 아래 세 개는 필요해지면 테스트 예정, 아직 안 돌려봄 -->
 	<!--아이디 찾기 -->
 	<select id="selectMemberId" parameterType="memberVO" resultType="String">
 		SELECT
@@ -68,18 +67,6 @@
 		SELECT COUNT(member_id)
 		FROM member
 		WHERE member_id LIKE #{VALUE}
-	</select>
-	<!-- 이메일 중복확인 -->
-	<select id="isExistMemberEmail" parameterType="String" resultType="int">
-		SELECT COUNT(email)
-		FROM member
-		WHERE email LIKE #{VALUE}
-	</select>
-	<!-- 전화번호 중복확인 -->
-	<select id="isExistMemberPhone" parameterType="String" resultType="int">
-		SELECT COUNT(phone)
-		FROM member
-		WHERE phone LIKE #{VALUE}
 	</select>
 
 </mapper>
