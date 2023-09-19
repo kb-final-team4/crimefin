@@ -35,7 +35,7 @@ public class UserController {
     private SmsService smsService;
 
     @PostMapping("/user/login")
-    public ResponseEntity login(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpSession session) throws Exception{
+    public ResponseEntity login(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request) throws Exception{
         String memberId = (String) requestJsonHashMap.get("memberId");
         String password = (String) requestJsonHashMap.get("password");
         System.out.println("id : "+ memberId + " pw : "+ password);
@@ -46,6 +46,7 @@ public class UserController {
         MemberVO rvo = userService.login(memberVO);
 
         if (rvo != null) { //로그인 성공
+            HttpSession session = request.getSession(true);
             session.setAttribute("userInfo", rvo);
             return new ResponseEntity(rvo, HttpStatus.OK);
         } else { //로그인 실패
@@ -116,49 +117,41 @@ public class UserController {
 
     @PutMapping("/user/pwd")
     public ResponseEntity updateUserPassword(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception {
-        String nowPw = (String) requestJsonHashMap.get("password");
-        String newPw = (String) requestJsonHashMap.get("newPw");
-        String newPwConfirm = (String) requestJsonHashMap.get("newPwConfirm");
+        System.out.println("비밀번호 변경 요청 들어옴");
+        String memberId = (String) requestJsonHashMap.get("memberId");
+        String newPw = (String) requestJsonHashMap.get("newPassword");
+        String newPwConfirm = (String) requestJsonHashMap.get("confirmPassword");
 
-        //MemberVO pvo = (MemberVO) req.getSession().getAttribute("userInfo");
-        //session에서 userInfo 받아왔다고 가정하고 메서드 진행
-        //session에 비밀번호 담아두지 않는걸로 확정되면 DB에서 가져오기
-        MemberVO pvo = new MemberVO();
-        pvo.setMemberId("test0912");
-        pvo.setPassword("1234");
-        
+        System.out.println("아이디 = "+memberId);
+        System.out.println("newPw = "+newPw);
+        System.out.println("nowPwConfirm = "+newPwConfirm);
+
         boolean flag = true;
-        if(pvo.getPassword().equals(nowPw)) {
-            if(newPw.equals(newPwConfirm)) { //password 재설정해도 되는 상황
+        if(newPw.equals(newPwConfirm)) { //password 재설정해도 되는 상황
 
-                MemberVO memberVO = new MemberVO();
-                memberVO.setMemberId(pvo.getMemberId());
-                memberVO.setPassword(newPw);
+            MemberVO memberVO = new MemberVO();
+            memberVO.setMemberId(memberId);
+            memberVO.setPassword(newPw);
 
-                //DB update
-                int result = userService.updateMemberPassword(memberVO);
-                if(result != 0) {
-                    return new ResponseEntity(pvo.getMemberId(), HttpStatus.OK);
-                }
-                else {
-                    return new ResponseEntity(HttpStatus.NO_CONTENT);
-                }
+            //DB update
+            int result = userService.updateMemberPassword(memberVO);
+            if(result != 0) {
+                return new ResponseEntity(memberId, HttpStatus.OK);
             }
-            else { //새 비밀번호랑 새 비밀번호 확인이랑 안 맞음
+            else {
                 return new ResponseEntity(HttpStatus.NO_CONTENT);
             }
         }
-        else { //현재 비밀번호랑 로그인 비밀번호 안맞음
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        else { //새 비밀번호랑 새 비밀번호 확인이랑 안 맞음
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
     }
 
     @PostMapping(value = "/user/withdrawal")
-    public ResponseEntity deleteUser(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception{
-        //MemberVO pvo = (MemberVO) req.getSession().getAttribute("userInfo");
-        //session에서 userInfo 받아왔다고 가정하고 메서드 진행
-        MemberVO pvo = new MemberVO();
-        pvo.setMemberId("test0913");
+    public ResponseEntity deleteUser(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request) throws Exception{
+
+        HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
+        MemberVO pvo = (MemberVO) session.getAttribute("userInfo");
         pvo.setPassword((String) requestJsonHashMap.get("password")); //사용자가 입력창에 입력한 패스워드
 
         //DB delete
