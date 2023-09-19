@@ -133,8 +133,8 @@ const routes = [
   },
   {
     path: '/mypage',
-    name: 'MyPage',
-    component: MyPage
+    name: 'ChangeInfo',
+    component: ChangeInfo
   },
   {
     path: '/changeinfo',
