@@ -6,6 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Repository
 public class BankingDAOImpl implements BankingDAO {
     @Autowired
@@ -16,5 +19,9 @@ public class BankingDAOImpl implements BankingDAO {
     @Override
     public int insertBanking(BankingVO bankingVO) {
         return sqlSession.insert(NS+"insertBanking", bankingVO);
+    }
+
+    @Override
+    public List<BankingVO> getBanking(HashMap map) { return sqlSession.selectList(NS + "getBanking", map);
     }
 }

@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class AccountDAOImpl implements AccountDAO{
     @Autowired
@@ -18,7 +20,10 @@ public class AccountDAOImpl implements AccountDAO{
     }
 
     @Override
-    public int deleteAccount(AccountVO accountVO) {
-        return sqlSession.delete(NS+"deleteAccount", accountVO);
+    public int deleteAccount(AccountVO accountVO) { return sqlSession.delete(NS+"deleteAccount", accountVO);
+    }
+
+    @Override
+    public List<AccountVO> getAccounts(String memberId) {return sqlSession.selectList(NS+"getAccounts", memberId);
     }
 }
