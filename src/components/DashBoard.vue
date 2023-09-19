@@ -67,7 +67,9 @@
                   </v-select>
                   </v-col>
                   <v-col class="mx-auto" :cols="1">
-                    <v-img src="../assets/bell.png" width="30px" height="30px" @click="openNoticelist">
+                    <v-img src="../assets/bell.png" width="30px" height="30px" @click="openNoticelist" style="margin-bottom:10px;">
+                    </v-img>
+                    <v-img src="../assets/add.png" width="30px" height="30px" @click="openaddlist">
                     </v-img>
                   </v-col>
                 </v-row>
@@ -136,6 +138,63 @@
           </div>
         </div>
 
+        <div class="outer-bg2" v-if="this.modal2 !== false" >
+          <div class="modal-bg2">
+            <h4 class="v-card__title text-center" v-bind:style="{color : 'gray'}">계좌 등록</h4>
+            <v-card>
+                  <v-row>
+                    <v-col cols="8">
+                      <v-text-field v-model="accountId" label="아이디" variant="solo" class="t-field"></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="8">
+                      <v-text-field v-model="bankName" label="은행명" variant="solo" class="t-field"></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="8">
+                      <v-text-field v-model="accountNum" label="계좌번호" variant="solo" class="t-field"></v-text-field>
+                    </v-col>
+                    <v-col cols="1" >
+                      <v-btn class="button" @click="authenticateAccount">인증</v-btn>
+                    </v-col>
+                  </v-row>
+                  
+                  <v-row>
+                    <!-- <div v-if="isAuthenticated"> -->
+                    <v-col cols="8">
+                      <v-text-field label="입금자명" variant="solo" class="t-field"></v-text-field>
+                    </v-col>
+                    <v-col cols="1">
+                      <v-btn class="button" @click="saveAccountInfo">확인</v-btn>
+                    </v-col>
+                    <!-- </div> -->
+                  </v-row>
+                  <v-row>
+                    <v-col cols="8">
+                      <v-text-field label="계좌별명" variant="solo" class="t-field"></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="8">
+                      <v-text-field label="limit" variant="solo" class="t-field"></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-card>
+            <br>
+            <v-row class="d-flex justify-end">
+            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="" class="btn-close" style="margin-right:30px;">등록</v-btn>
+            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="modal2=false" class="btn-close">닫기</v-btn>
+          </v-row>
+          </div>
+        </div>
+
+
+
+
+
+
       </v-container>
     </v-main>
 
@@ -153,7 +212,16 @@ export default {
   },
   data: function() {
     return {
+      accountId: "", // 아이디 입력 값
+      bankName: "", // 은행명 입력 값
+      accountNum: "", // 계좌번호 입력 값
+      isAuthenticated: false, // 인증 여부
+      accountNickname: "", // 계좌 별명 입력 값
+      accountLimit: "", // Limit 입력 값
+
+
       modal : false, //알림 모달창 열고닫을때 씀
+      modal2: false,
       noticeInfoList : null, //알림 표현용 리스트
 
       noticeTimeArr : null, //알림 시간 리스트
@@ -260,6 +328,52 @@ export default {
 
     }
   },
+methods:{
+  async authenticateAccount() {
+    try {
+      // 여기에서 백엔드와 통신하여 입금자명 인증을 수행합니다.
+      const response = await axios.post("/api/authenticate-account", {
+        accountId: this.accountId,
+        bankName: this.bankName,
+        accountNum: this.accountNum,
+      });
+
+      // 인증이 성공하면 isAuthenticated 값을 true로 설정합니다.
+      if (response.data.success) {
+        this.isAuthenticated = true;
+        alert("계좌 정보가 성공적으로 인증되었습니다.");
+      } else {
+        // 인증 실패 시 메시지를 표시하거나 다른 처리를 수행할 수 있습니다.
+        alert("계좌 정보를 확인하세요. 인증에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("계좌 인증 중 오류 발생:", error);
+      // 오류 처리를 원하는 대로 수행할 수 있습니다.
+    }
+  },
+
+
+  async saveAccountInfo() {
+    try {
+      // 계좌 정보를 로컬 스토리지에 저장합니다.
+      const accountInfo = {
+        accountId: this.accountId,
+        bankName: this.bankName,
+        accountNum: this.accountNum,
+      };
+
+      // 로컬 스토리지에 저장합니다. ********** 이 부분 로컬 말고 백엔드랑 연동하는 걸로 수정
+      localStorage.setItem('accountInfo', JSON.stringify(accountInfo));
+
+      // 저장이 완료되면 메시지를 표시합니다.
+      alert("계좌 정보가 성공적으로 저장되었습니다.");
+    } catch (error) {
+      console.error("계좌 정보 저장 중 오류 발생:", error);
+      // 오류 처리를 원하는 대로 수행할 수 있습니다.
+    }
+  },
+},
+
   created() {
     this.getTotalAccountList();
     this.getBankingDaily();
@@ -277,7 +391,12 @@ export default {
     DEPOSIT              NUMBER
     WITHDRAWL            NUMBER
      */
-    openNoticelist(){
+    
+    openaddlist(){
+      this.modal2=true;
+    },
+    
+     openNoticelist(){
       this.modal = true;
       /*
       noticeTimeArr : null, //알림 시간 리스트
@@ -518,7 +637,17 @@ export default {
   position: fixed;
   padding: 20px;
 }
-.modal-bg {
+
+.outer-bg2 {
+  width: 200%;
+  height:350%;
+  background: #102C57;
+  position: fixed;
+  padding: 40px;
+  margin-bottom: 30px;
+}
+
+.modal-bg{
   position: fixed;
   top: 50%;
   left: 50%;
@@ -531,9 +660,40 @@ export default {
 
   background: #DAC0A3;
   border-radius: 8px;
-  width: 500px;
+  width: 790px;
 
-  padding: 30px;
+  /* padding: 30px; */
 }
+
+.modal-bg2{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: #DAC0A3;
+  border-radius: 8px;
+  width: 790px;
+
+  padding-bottom: 30px;
+}
+
+.t-field{
+  width:550px;
+  background-color: white;
+  margin-top:0%;
+  padding-left:40px;
+}
+
+.button{
+  position:absolute;
+  margin-top:5px;
+}
+
 </style>
   
