@@ -1,6 +1,8 @@
 package com.service.crimefin.service;
 
+import com.service.crimefin.domain.ChecklistVO;
 import com.service.crimefin.domain.PhishingInfoVO;
+import com.service.crimefin.model.ChecklistDAO;
 import com.service.crimefin.model.PhishingInfoDAO;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,6 +13,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.sql.SQLException;
 import java.util.Base64;
 import java.util.Set;
 
@@ -19,6 +22,9 @@ public class PhishingServiceImpl implements PhishingService {
 
     @Autowired
     private PhishingInfoDAO phishingInfoDAO;
+
+    @Autowired
+    private ChecklistDAO checklistDAO;
 
     @Override
     public PhishingInfoVO isPhishingNumber(String phoneNum) {
@@ -100,5 +106,10 @@ public class PhishingServiceImpl implements PhishingService {
             return 2;
         }
 
+    }
+
+    @Override
+    public int insertChecklist(ChecklistVO checklistVO) throws SQLException {
+        return checklistDAO.insertChecklist(checklistVO);
     }
 }
