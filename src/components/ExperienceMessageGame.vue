@@ -34,11 +34,11 @@
           </v-row>
 
           <!-- 게임 : 직장인 -->
-          <v-row id="playGame" v-if="isPlaying === true && isWorkerGame === true">
+          <v-row class="playGame" v-if="isPlaying === true && isWorkerGame === true">
             <v-col :cols="1"></v-col>
             <v-col :cols ="5">
               <!-- 질문 렌더링 -->
-              <v-sheet id="questArea">
+              <v-sheet class="questArea">
                 <v-row v-if="score===0">
                   [신세계백화점] 추석 이벤트 선물 발송되었습니다. 앱 설치 후 위탁 장소를 지정해 주세요. ssg.li.nk/23dbcES2F
                 </v-row>
@@ -51,34 +51,16 @@
               </v-sheet>
             </v-col>
             <v-col :cols="5">
-              <v-sheet id="answerArea">
-                <v-row id="goodAnswer">
-                  <!--
-                    좋은 대답
-
-                   -->
+              <v-sheet class="answerArea">
+                <v-row class="goodAnswer">
                   <v-btn v-if="score===0" @click="questReply(0)" >1. (링크 확인) </v-btn>
                   <v-btn v-if="score===1" @click="questReply(1)" >1. 회사 이벤트라면 주소 정보가 있어서 따로 인증이 필요없을텐데요?</v-btn>
-
                   <v-btn v-if="score===2" @click="questReply(0)" >1. 네 인증 후 다시 연락드리겠습니다. </v-btn>
                 </v-row>
-                <v-row id="badAnswer">
-                  <!--
-                    나쁜 대답
-                    이거 누르면 바로 예방실패 뜸
-
-                    isAnswered = true;
-                   -->
+                <v-row class="badAnswer">
                   <v-btn v-if="score===0" @click="questReply(1)" >2. 저 응모한적 없는데요.</v-btn>
                   <v-btn v-if="score===1" @click="questReply(0)" >2. (링크를 눌러 앱을 설치한다) </v-btn>
                   <v-btn v-if="score===2" @click="questReply(1)" >2. 인사과에 연락해서 확인 먼저 해 볼게요.</v-btn>
-                </v-row>
-                <v-row>
-                  <!--
-                    다음 문제로
-                    위에꺼 둘중 하나골라야(isAnswered가 true면)
-                    questArea에 다음 질문 붙음
-                   -->
                 </v-row>
               </v-sheet>
             </v-col>
@@ -86,23 +68,23 @@
           </v-row>
 
           <!-- 게임 : 부모님 -->
-          <v-row id="playGame" v-if="isPlaying === true && isParentsGame === true">
+          <v-row class="playGame" v-if="isPlaying === true && isParentsGame === true">
             <v-col :cols ="7">
               <!-- 질문 렌더링 -->
-              <v-sheet id="questArea">
+              <v-sheet class="questArea">
 
               </v-sheet>
             </v-col>
             <v-col :cols="5">
-              <v-sheet id="answerArea">
-                <v-row id="goodAnswer">
+              <v-sheet class="answerArea">
+                <v-row class="goodAnswer">
                   <!--
                     좋은 대답
 
                    -->
                   <v-btn></v-btn>
                 </v-row>
-                <v-row id="badAnswer">
+                <v-row class="badAnswer">
                   <!--
                     나쁜 대답
                     이거 누르면 바로 예방실패 뜸
@@ -120,23 +102,23 @@
           </v-row>
 
           <!-- 게임 : 노인 -->
-          <v-row id="playGame" v-if="isPlaying === true && isElderlyGame === true">
+          <v-row class="playGame" v-if="isPlaying === true && isElderlyGame === true">
             <v-col :cols ="7">
               <!-- 질문 렌더링 -->
-              <v-sheet id="questArea">
+              <v-sheet class="questArea">
 
               </v-sheet>
             </v-col>
             <v-col :cols="5">
-              <v-sheet id="answerArea">
-                <v-row id="goodAnswer">
+              <v-sheet class="answerArea">
+                <v-row class="goodAnswer">
                   <!--
                     좋은 대답
 
                    -->
                   <v-btn @click="questReply(1)" >good answer</v-btn>
                 </v-row>
-                <v-row id="badAnswer">
+                <v-row class="badAnswer">
                   <!--
                     나쁜 대답
                     이거 누르면 바로 예방실패 뜸
