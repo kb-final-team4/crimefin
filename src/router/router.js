@@ -19,6 +19,10 @@ import toDoPage from "../components/ToDoPage.vue";
 import ServiceInfo from "../components/ServiceInfo.vue";
 import Agency from "../components/Agency.vue";
 import DashBoard from "../components/DashBoard.vue";
+import ExperienceLobby from "@/components/ExperienceLobby.vue";
+import ExperienceMessageGame from "@/components/ExperienceMessageGame.vue";
+import ExperienceTypeGame from "@/components/ExperienceTypeGame.vue";
+import ExperienceVoiceGame from "@/components/ExperienceVoiceGame.vue";
 
 
 // AppBar 컴포넌트 경로 설정
@@ -101,6 +105,26 @@ const routes = [
     path: '/dashboard',
     name: 'DashBoard',
     component: DashBoard
+  },
+  {
+    path: '/explobby',
+    name: 'ExperienceLobby',
+    component: ExperienceLobby
+  },
+  {
+    path: '/expmessagegame',
+    name: 'ExperienceMessageGame',
+    component: ExperienceMessageGame
+  },
+  {
+    path: '/exptypegame',
+    name: 'ExperienceTypeGame',
+    component: ExperienceTypeGame
+  },
+  {
+    path: '/expvoicegame',
+    name: 'ExperienceVoiceGame',
+    component: ExperienceVoiceGame
   }
 ]
 
