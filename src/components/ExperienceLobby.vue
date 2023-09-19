@@ -47,7 +47,7 @@ export default {
 
 <style scoped>
 .exp-container{
-  background: #9DB2BF;
+  background: #DDE6ED;
   border-radius: 20px;
   padding: 30px;
 }
