@@ -1,34 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="sql.banking.mapper">
-    <!--거래내역 등록-->
-    <insert id="insertBanking" parameterType="bankingVO">
-        INSERT INTO BANKING(
-            banking_id,
-            account_num,
-            member_id,
-            banking_date,
-            deposit,
-            deposit_name,
-            withdrawl,
-            withdrawl_to,
-            balance)
-        VALUES
-        (#{bankingId},#{accountId},#{memberId},#{bankingDate},#{deposit},#{depositName},#{withdrawl},#{withdrawl_to},#{balance})
-    </insert>
+	<!--거래내역 등록-->
+	<insert id="insertBanking" parameterType="bankingVO">
+		INSERT INTO banking
+		(banking_id,
+		 member_id,
+		 account_id,
+		 banking_date,
+		 deposit,
+		 deposit_name,
+		 withdrawal,
+		 withdrawal_to)
+		VALUES
+			(#{bankingId}, #{memberId}, #{accountId}, sysdate, #{deposit}, #{depositName}, #{withdrawal}, #{withdrawalTo})
+	</insert>
 
-    <!-- 계좌 삭제   -->
+	<!--거래내역 조회-->
+	<!--사용자, 계좌 아이디 구분없이 전체 거래 조회-->
+	<select id="getBanking" resultType="BankingVO">
+		SELECT
+			banking_id, member_id, account_id, banking_date, deposit, deposit_name, withdrawal, withdrawal_to
+		FROM banking
+	</select>
 
-    <!-- 계좌별 거래 내역 -->
-    <select id="getBanking" parameterType="hashmap" resultType="bankingVO">
-    SELECT b.banking_date, b.deposit, b.deposit_name, b.withdrawal,b.withdrawal_to, b.balance
-    FROM ACCOUNT a JOIN BANKING b ON a.member_id = b.member_id
-    WHERE  b.account_num = #{accountNum}
-    AND (b.BANKING_DATE BETWEEN TO_DATE(#{startDate},'YY/MM/DD') AND TO_DATE(#{endDate},'YY/MM/DD') + 0.99999)
+	<!--사용자 아이디로 거래 내역 조회-->
+	<select id="getBankingByMemberId" parameterType="BankingVO" resultType="BankingVO">
+		SELECT
+			banking_id, member_id, account_id, banking_date, deposit, deposit_name, withdrawal, withdrawal_to
+		FROM banking
+		WHERE member_id = #{memberId}
+	</select>
 
-    </select>
+	<!--거래 아이디별 거래 내역 조회-->
+	<select id="getBankingByAccountId" parameterType="BankingVO" resultType="BankingVO">
+		SELECT
+			banking_id, member_id, account_id, banking_date, deposit, deposit_name, withdrawal, withdrawal_to
+		FROM banking
+		WHERE account_id = #{accountId}
+	</select>
+
+	<!--거래내역 수정-->
+
+	<!--거래내역 삭제-->
 
 
 </mapper>
