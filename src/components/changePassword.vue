@@ -13,7 +13,7 @@
 
         <v-divider></v-divider>
 
-        <v-list-item link to="/changeinfo2">
+        <v-list-item link to="/changeinfo">
         <v-list-item-icon>
           <v-icon>mdi-account</v-icon>
         </v-list-item-icon>
