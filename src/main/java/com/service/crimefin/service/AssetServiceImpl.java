@@ -7,6 +7,9 @@ import com.service.crimefin.model.BankingDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+
 @Service
 public class AssetServiceImpl implements AssetService {
     @Autowired
@@ -29,4 +32,12 @@ public class AssetServiceImpl implements AssetService {
     public int insertBanking(BankingVO bankingVO) {
         return bankingDAO.insertBanking(bankingVO);
     }
+
+    @Override
+    public List<AccountVO> getAccounts(String memberId) {return accountDAO.getAccounts(memberId); }
+
+    @Override
+    public List<BankingVO> getBanking(HashMap map) { return bankingDAO.getBanking(map); }
+
+
 }

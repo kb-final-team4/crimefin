@@ -21,5 +21,14 @@
 
     <!-- 계좌 삭제   -->
 
+    <!-- 계좌별 거래 내역 -->
+    <select id="getBanking" parameterType="hashmap" resultType="bankingVO">
+    SELECT b.banking_date, b.deposit, b.deposit_name, b.withdrawal,b.withdrawal_to, b.balance
+    FROM ACCOUNT a JOIN BANKING b ON a.member_id = b.member_id
+    WHERE  b.account_num = #{accountNum}
+    AND (b.BANKING_DATE BETWEEN TO_DATE(#{startDate},'YY/MM/DD') AND TO_DATE(#{endDate},'YY/MM/DD') + 0.99999)
+
+    </select>
+
 
 </mapper>
