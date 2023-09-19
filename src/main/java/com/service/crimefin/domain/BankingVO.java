@@ -5,23 +5,23 @@ public class BankingVO {
     private String memberId; //사용자 아이디
     private String accountId; //계좌 아이디
     private String bankingDate; //거래 일자s
-    private String deposit; //예금액
+    private int deposit; //예금액
     private String depositName; //입금자 명
-    private String withDrawl; //출금액
-    private String withDrawlTo; //출금
+    private int withdrawal; //출금액
+    private String withdrawalTo; //출금
 
 
     public BankingVO() {}
 
-    public BankingVO(String bankingId, String memberId, String accountId, String bankingDate, String deposit, String depositName, String withDrawl, String withDrawlTo) {
+    public BankingVO(String bankingId, String memberId, String accountId, String bankingDate, int deposit, String depositName, int withdrawal, String withdrawalTo) {
         this.bankingId = bankingId;
         this.memberId = memberId;
         this.accountId = accountId;
         this.bankingDate = bankingDate;
         this.deposit = deposit;
         this.depositName = depositName;
-        this.withDrawl = withDrawl;
-        this.withDrawlTo = withDrawlTo;
+        this.withdrawal = withdrawal;
+        this.withdrawalTo = withdrawalTo;
     }
 
     public String getBankingId() {
@@ -32,11 +32,11 @@ public class BankingVO {
         this.bankingId = bankingId;
     }
 
-    public String getUserId() {
+    public String getMemberId() {
         return memberId;
     }
 
-    public void setUserId(String memberId) {
+    public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
 
@@ -56,11 +56,11 @@ public class BankingVO {
         this.bankingDate = bankingDate;
     }
 
-    public String getDeposit() {
+    public int getDeposit() {
         return deposit;
     }
 
-    public void setDeposit(String deposit) {
+    public void setDeposit(int deposit) {
         this.deposit = deposit;
     }
 
@@ -72,33 +72,33 @@ public class BankingVO {
         this.depositName = depositName;
     }
 
-    public String getWithDrawl() {
-        return withDrawl;
+    public int getWithdrawal() {
+        return withdrawal;
     }
 
-    public void setWithDrawl(String withDrawl) {
-        this.withDrawl = withDrawl;
+    public void setWithdrawal(int withdrawal) {
+        this.withdrawal = withdrawal;
     }
 
-    public String getWithDrawlTo() {
-        return withDrawlTo;
+    public String getWithdrawalTo() {
+        return withdrawalTo;
     }
 
-    public void setWithDrawlTo(String withDrawlTo) {
-        this.withDrawlTo = withDrawlTo;
+    public void setWithdrawalTo(String withdrawalTo) {
+        this.withdrawalTo = withdrawalTo;
     }
 
     @Override
     public String toString() {
-        return "TradeVO{" +
+        return "BankingVO{" +
                 "bankingId='" + bankingId + '\'' +
                 ", memberId='" + memberId + '\'' +
                 ", accountId='" + accountId + '\'' +
                 ", bankingDate='" + bankingDate + '\'' +
                 ", deposit='" + deposit + '\'' +
                 ", depositName='" + depositName + '\'' +
-                ", withDrawl='" + withDrawl + '\'' +
-                ", withDrawlTo='" + withDrawlTo + '\'' +
+                ", withdrawal='" + withdrawal + '\'' +
+                ", withdrawalTo='" + withdrawalTo + '\'' +
                 '}';
     }
 }

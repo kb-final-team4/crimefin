@@ -2,15 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="sql.transaction.mapper">
+<mapper namespace="sql.banking.mapper">
 	<!--거래내역 등록-->
 	<insert id="insertBanking" parameterType="bankingVO">
-		INSERT INTO banking(
-
+		INSERT INTO banking
+		(banking_id,
+		 member_id,
+		 account_id,
+		 banking_date,
+		 deposit,
+		 deposit_name,
+		 withdrawal,
+		 withdrawal_to)
 		VALUES
-
+			(#{bankingId}, #{memberId}, #{accountId}, sysdate, #{deposit}, #{depositName}, #{withdrawal}, #{withdrawalTo})
 	</insert>
+
 	<!--거래내역 조회-->
+	<!--사용자, 계좌 아이디 구분없이 전체 거래 조회-->
+	<select id="getBanking" resultType="BankingVO">
+		SELECT
+			banking_id, member_id, account_id, banking_date, deposit, deposit_name, withdrawal, withdrawal_to
+		FROM banking
+	</select>
+
+	<!--사용자 아이디로 거래 내역 조회-->
+	<select id="getBankingByMemberId" parameterType="BankingVO" resultType="BankingVO">
+		SELECT
+			banking_id, member_id, account_id, banking_date, deposit, deposit_name, withdrawal, withdrawal_to
+		FROM banking
+		WHERE member_id = #{memberId}
+	</select>
+
+	<!--거래 아이디별 거래 내역 조회-->
+	<select id="getBankingByAccountId" parameterType="BankingVO" resultType="BankingVO">
+		SELECT
+			banking_id, member_id, account_id, banking_date, deposit, deposit_name, withdrawal, withdrawal_to
+		FROM banking
+		WHERE account_id = #{accountId}
+	</select>
 
 	<!--거래내역 수정-->
 
