@@ -26,7 +26,7 @@
                 required
                 type="password"
               ></v-text-field>
-              <!-- <v-btn
+              <v-btn
                 type="submit"
                 color="primary"
                 class="mt-4"
@@ -35,7 +35,7 @@
                 depressed
               >
                 로그인
-              </v-btn> -->
+              </v-btn> 
 
               <router-link to="/main"><v-btn
                 color="primary"
