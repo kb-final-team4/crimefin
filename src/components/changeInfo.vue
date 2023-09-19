@@ -3,7 +3,7 @@
     <v-app>
     <AppBar fixed/>
     <div>
-      <v-navigation-drawer :width="350" app>
+      <v-navigation-drawer app>
         <app-bar /> 
    
       <v-list>

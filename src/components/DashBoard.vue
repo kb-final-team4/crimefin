@@ -69,7 +69,9 @@
                   <v-col class="mx-auto" :cols="1">
                     <v-img src="../assets/bell.png" width="30px" height="30px" @click="openNoticelist" style="margin-bottom:10px;">
                     </v-img>
-                    <v-img src="../assets/add.png" width="30px" height="30px" @click="openaddlist">
+                    <v-img src="../assets/add.png" width="30px" height="30px" @click="openaddlist" style="margin-bottom:10px;">
+                    </v-img>
+                    <v-img src="../assets/delete.png" width="30px" height="30px" @click="openaddlist" style="margin-bottom:10px;">
                     </v-img>
                   </v-col>
                 </v-row>

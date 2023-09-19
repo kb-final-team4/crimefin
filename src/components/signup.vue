@@ -123,7 +123,6 @@
     name:'App',
     data() {
       return {
-        menuBar:['CRIME FIN?', '경찰서/은행 찾기', '디지털 체험관'],
         user: {
           memberId:'',
           password: '',
