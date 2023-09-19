@@ -72,7 +72,7 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity registerUser(@RequestBody HashMap<String, Object> requestJsonHashMap) throws Exception{
+    public ResponseEntity registerUser(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpSession session) throws Exception{
         MemberVO vo = new MemberVO();
         vo.setMemberId((String) requestJsonHashMap.get("memberId"));
         vo.setEmail((String) requestJsonHashMap.get("email"));
