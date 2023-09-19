@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.banking.mapper">
+    <!--거래내역 등록-->
+    <insert id="insertBanking" parameterType="bankingVO">
+        INSERT INTO BANKING(
+            banking_id,
+            account_num,
+            member_id,
+            banking_date,
+            deposit,
+            deposit_name,
+            withdrawl,
+            withdrawl_to,
+            balance)
+        VALUES
+        (#{bankingId},#{accountId},#{memberId},#{bankingDate},#{deposit},#{depositName},#{withdrawl},#{withdrawl_to},#{balance})
+    </insert>
+
+    <!-- 계좌 삭제   -->
+
+
+</mapper>

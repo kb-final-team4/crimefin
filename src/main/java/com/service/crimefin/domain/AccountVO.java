@@ -6,6 +6,16 @@ public class AccountVO {
     private String accountNum; //계좌 번호
     private String bankName; //은행명
     private int balance; //잔고
+    private int limit;//위험 알림 제한 금액
+
+    public AccountVO(String accountId, String memberId, String accountNum, String bankName, int balance, int limit) {
+        this.accountId = accountId;
+        this.memberId = memberId;
+        this.accountNum = accountNum;
+        this.bankName = bankName;
+        this.balance = balance;
+        this.limit = limit;
+    }
 
     public AccountVO() {}
 
@@ -25,11 +35,11 @@ public class AccountVO {
         this.accountId = accountId;
     }
 
-    public String getUserId() {
+    public String getMemberId() {
         return memberId;
     }
 
-    public void setUserId(String memberId) {
+    public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
 
@@ -57,6 +67,14 @@ public class AccountVO {
         this.balance = balance;
     }
 
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
     @Override
     public String toString() {
         return "AccountVO{" +
@@ -65,6 +83,7 @@ public class AccountVO {
                 ", accountNum='" + accountNum + '\'' +
                 ", bankName='" + bankName + '\'' +
                 ", balance=" + balance +
+                ", limit=" + limit +
                 '}';
     }
 }
