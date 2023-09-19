@@ -3,25 +3,27 @@ package com.service.crimefin.domain;
 public class BankingVO {
     private String bankingId; //거래 아이디
     private String memberId; //사용자 아이디
-    private String accountId; //계좌 아이디
-    private String bankingDate; //거래 일자s
+    private String accountNum; //계좌 번호
+    private String bankingDate; //거래 일자
     private int deposit; //예금액
     private String depositName; //입금자 명
     private int withdrawal; //출금액
     private String withdrawalTo; //출금
+    private int balance; //잔고
 
 
     public BankingVO() {}
 
-    public BankingVO(String bankingId, String memberId, String accountId, String bankingDate, int deposit, String depositName, int withdrawal, String withdrawalTo) {
+    public BankingVO(String bankingId, String memberId, String accountNum, String bankingDate, int deposit, String depositName, int withdrawal, String withdrawalTo, int balance) {
         this.bankingId = bankingId;
         this.memberId = memberId;
-        this.accountId = accountId;
+        this.accountNum = accountNum;
         this.bankingDate = bankingDate;
         this.deposit = deposit;
         this.depositName = depositName;
         this.withdrawal = withdrawal;
         this.withdrawalTo = withdrawalTo;
+        this.balance = balance;
     }
 
     public String getBankingId() {
@@ -32,20 +34,12 @@ public class BankingVO {
         this.bankingId = bankingId;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public String getAccountNum() {
+        return accountNum;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 
     public String getBankingDate() {
@@ -88,17 +82,34 @@ public class BankingVO {
         this.withdrawalTo = withdrawalTo;
     }
 
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
     @Override
     public String toString() {
         return "BankingVO{" +
                 "bankingId='" + bankingId + '\'' +
                 ", memberId='" + memberId + '\'' +
-                ", accountId='" + accountId + '\'' +
+                ", accountNum='" + accountNum + '\'' +
                 ", bankingDate='" + bankingDate + '\'' +
-                ", deposit='" + deposit + '\'' +
+                ", deposit=" + deposit +
                 ", depositName='" + depositName + '\'' +
-                ", withdrawal='" + withdrawal + '\'' +
+                ", withdrawal=" + withdrawal +
                 ", withdrawalTo='" + withdrawalTo + '\'' +
+                ", balance=" + balance +
                 '}';
     }
 }

@@ -17,6 +17,7 @@
         <mapper resource="mapper/member_mapper.xml"/>
         <mapper resource="mapper/phishinginfo_mapper.xml"/>
         <mapper resource="mapper/history_mapper.xml"/>
+        <mapper resource="mapper/account_mapper.xml"/>
         <mapper resource="mapper/banking_mapper.xml"/>
         <mapper resource="mapper/checklist_mapper.xml"/>
     </mappers>
