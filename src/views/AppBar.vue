@@ -9,7 +9,7 @@
         <v-btn-toggle v-model="selectedButton" class="ml-4" >
           <v-btn @click="navigateTo('ServiceInfo')" dark>CrimeFin?</v-btn>
           <v-btn @click="navigateTo('Agency')" dark>가까운 기관 조회</v-btn>
-          <v-btn @click="navigateTo('DigitalExp')" dark>디지털 체험관</v-btn>
+          <v-btn @click="navigateTo('ExperienceLobby')" dark>디지털 체험관</v-btn>
         </v-btn-toggle>
     
         <!-- 로그인한 사용자 정보 및 토글 버튼 -->
