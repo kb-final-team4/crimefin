@@ -31,15 +31,29 @@
                 <div v-show="isMap" class="toggleArea">
                   <div id="map"></div>
                   <div class = "btn-center">
-                    <v-btn class="red--text" @click="showBankMap">은행 찾기</v-btn>
-                    <v-btn class="blue--text" @click="showPoliceMap">경찰서 찾기</v-btn>
+                    <v-col :cols="3"></v-col>
+                    <v-col :cols="3">
+                      <v-btn class="red--text" @click="showBankMap">은행 찾기</v-btn>
+                    </v-col>
+                    <v-col :cols="3">
+                      <v-btn class="blue--text" @click="showPoliceMap">경찰서 찾기</v-btn>
+                    </v-col>
+                    <v-col :cols="3"></v-col>
                   </div>
                 </div>
               </v-row>
               <v-row>
-              <div v-show="isManual" id="manual" class="v-card v-sheet theme--dark">
+              <div v-show="isManual" id="manual" class="v-card v-sheet theme--dark list-container">
+                <v-row>
+                <v-col :cols="10">
                 <div class="v-card__title"><h2>대응 매뉴얼</h2></div>
-                <div class="v-card__text my-list card-content">
+                </v-col>
+                <v-col :cols="2">
+                  <input type="range" min="10" max="40" v-model="changeableFontSize">
+                </v-col>
+                </v-row>
+                <v-row>
+                  <div v-bind:style="{fontSize : `${changeableFontSize}px`}" class="noscroll-content v-card__text text-left my-list card-content">
                   <ul>
                     <li>1. 입금 금융회사 또는 송금 금융회사콜센터에 즉시 전화하여 피해신고 및 모든 계좌 지급정지 신청
                       (경찰청 112 및 금감원 1332)</li>
@@ -92,30 +106,36 @@
                     </li>
                   </ul>
                 </div>
+                </v-row>
               </div>
               </v-row>
               <v-row>
-              <div v-show="isChecklist" class="v-card v-sheet theme--dark" id="checklist">
-                <div class="v-card__title"><h2>체크 리스트</h2></div>
-                <div class="v-card__text my-list card-content">
-                <input type="checkbox" v-model="arr" value="1">
-                1. 입금 금융회사 또는 송금 금융회사콜센터에 즉시 전화하여 피해신고 및 모든 계좌 지급정지  신청<br>
-                <input type="checkbox" v-model="arr" value="2">
-                2. 비행기 모드로 전환 후 휴대전화 초기화<br>
-                <input type="checkbox" v-model="arr" value="3">
-                3. 금감원 개인정보 노출자 사고예방시스템 (pd.fss.or.kr) 접속<br>
-                <input type="checkbox" v-model="arr" value="4">
-                4. 개인정보 노출사실을 등록, 본인 계좌 지급정지 신청<br>
-                <input type="checkbox" v-model="arr" value="5">
-                5. 금융결제원 계좌정보통합관리서비스(www.payinfo.or.kr) 접속<br>
-                <input type="checkbox" v-model="arr" value="6">
-                6. 본인 계좌 지급정지 메뉴에서 은행권, 제2금융권, 증권사 클릭, 지급정지를 신청할 계좌를 선택 후 지급정지 신청<br>
-                <input type="checkbox" v-model="arr" value="7">
-                7. 사건사고사실확인원 등 증빙서류와 함께 지급정지 신청한 영업점에 피해구제신청 서면접수<br>
+
+              <div v-show="isChecklist" class="v-card v-sheet theme--dark list-container">
+                <v-row>
+                  <v-col :cols="10">
+                    <div class="v-card__title"><h2>체크리스트</h2></div>
+                  </v-col>
+                  <v-col :cols="2">
+                    <input type="range" min="10" max="40" v-model="changeableFontSize">
+                  </v-col>
+                </v-row>
+                <v-row>
+                <div v-bind:style="{fontSize : `${changeableFontSize}px`}" class="noscroll-content v-card__text text-left my-list card-content">
+                1. 입금 금융회사 또는 송금 금융회사콜센터에 즉시 전화하여 피해신고 및 모든 계좌 지급정지  신청&nbsp;&nbsp;<input type="checkbox" v-model="arr" value="1"><br>
+                2. 비행기 모드로 전환 후 휴대전화 초기화&nbsp;&nbsp;<input type="checkbox" v-model="arr" value="2"><br>
+                3. 금감원 개인정보 노출자 사고예방시스템 (pd.fss.or.kr) 접속&nbsp;&nbsp;<input type="checkbox" v-model="arr" value="3"><br>
+                4. 개인정보 노출사실을 등록, 본인 계좌 지급정지 신청&nbsp;&nbsp;<input type="checkbox" v-model="arr" value="4"><br>
+                5. 금융결제원 계좌정보통합관리서비스(www.payinfo.or.kr) 접속&nbsp;&nbsp;<input type="checkbox" v-model="arr" value="5"><br>
+                6. 본인 계좌 지급정지 메뉴에서 은행권, 제2금융권, 증권사 클릭, 지급정지를 신청할 계좌를 선택 후 지급정지 신청&nbsp;&nbsp;<input type="checkbox" v-model="arr" value="6"><br>
+                7. 사건사고사실확인원 등 증빙서류와 함께 지급정지 신청한 영업점에 피해구제신청 서면접수&nbsp;&nbsp;<input type="checkbox" v-model="arr" value="7"><br>
                 </div>
+                </v-row>
+                <v-row>
                 <div id="checklistSaveBtn" class = "btn-center">
                   <v-btn @click="saveCheckList">체크리스트 저장</v-btn>
                 </div>
+                </v-row>
               </div>
               </v-row>
             </v-col>
@@ -132,6 +152,8 @@ import axios from "axios"; // 상단바 컴포넌트 import
 export default {
   data() {
     return {
+      changeableFontSize: 10, //큰글씨 설정 변수
+
       policeMapDesc: false,
       bankMapDesc: false,
       isManual: false,
@@ -374,7 +396,7 @@ export default {
   justify-content: center;
   height: 500px;
 }
-#checklist{
+.list-container{
   padding: 30px 30px 30px 30px;
 }
 .btn-center{
@@ -397,5 +419,11 @@ export default {
   list-style: none;
   line-height: 1.8;
   font-size: 16px;
+}
+ul{
+  list-style-type: none;
+}
+.noscroll-content::-webkit-scrollbar{
+  display: none;
 }
 </style>
