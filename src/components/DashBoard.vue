@@ -198,7 +198,7 @@
             <v-card>
                   <v-row>
                     <v-col cols="10">
-                      <v-text-field v-model="accountId" label="아이디" variant="solo" class="t-field3"></v-text-field>
+                      <v-text-field v-model="memberId" label="아이디" variant="solo" class="t-field3"></v-text-field>
                     </v-col>
                   </v-row>
                   <v-row>
@@ -215,7 +215,7 @@
                 </v-card>
             <br>
             <v-row class="d-flex justify-end">
-            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="deleteAccountInfo" class="btn-close" style="margin-right:30px;">삭제</v-btn>
+            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="deleteAccount" class="btn-close" style="margin-right:30px;">삭제</v-btn>
             <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="modal3=false" class="btn-close">닫기</v-btn>
           </v-row>
           </div>
@@ -445,6 +445,24 @@ export default {
     }catch(error){
       console.error('입금자 명이 일치하지 않습니다.!!', error);
       alert('계좌 등록 중 오류 발생');
+    }
+  },
+
+  deleteAccount(){
+    console.log(99);
+    try{
+      const response = axios.delete('http://localhost:9999/asset',{
+        data:{ //delte요청은 data로 묶어서 보내야함
+          memberId:this.memberId,
+          bankName:this.bankName,
+          accountNum:this.accountNum,
+        },
+      });
+      console.log(response);
+
+    }catch(error){
+      console.error('계좌 삭제 중 오류 발생', error);
+      alert('계좌 삭제 중 오류 발생');
     }
   },
 
