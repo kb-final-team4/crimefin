@@ -5,7 +5,7 @@
     <v-main v-bind:style="{background : '#102C57'}">
       <v-container>
         <v-row>
-          <v-col cols="5" class="item-box" v-bind:style="{background : '#DAC0A3'}">
+          <v-col cols="4" class="item-box" v-bind:style="{background : '#DAC0A3'}">
             <v-sheet height="570px" v-bind:style="{background : '#EADBC8'}">
               <v-col>
                 <v-row>
@@ -22,7 +22,7 @@
                 </v-row>
                 <br><v-divider></v-divider><br>
                 <v-row>
-                  <v-card width="370px" class="mx-auto account-list noscroll-content" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
+                  <v-card width="300px" class="mx-auto account-list noscroll-content" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
                   <div class="v-card__text text-center"
                        v-if="accountInfosList != null"
                        v-for="item in accountInfosList"
@@ -33,10 +33,10 @@
                     <img :src="getImgUrl(item[0])" v-bind:alt="item[0]" height="40px" width="40px"/>
                   </v-col>
                   <v-col :cols="8">
-                    <v-row v-bind:style="{paddingTop : '10px'}">
+                    <v-row v-bind:style="{paddingTop : '10px', fontSize: '16px'}">
                       {{item[1]}}<br>
                     </v-row>
-                    <v-row>
+                    <v-row v-bind:style="{fontSize: '12px'}">
                       {{item[2]}}
                     </v-row>
                   </v-col>
@@ -47,13 +47,12 @@
               </v-col>
             </v-sheet>
           </v-col>
-          <v-col cols="7" class="item-box" v-bind:style="{background : '#DAC0A3'}">
+          <v-col cols="8" class="item-box" v-bind:style="{background : '#DAC0A3'}">
             <v-sheet height="570px" v-bind:style="{background : '#EADBC8'}">
               <v-col>
                 <v-row>
-                  <v-col :cols="1"></v-col>
-                  <v-col :cols="4">
-                  <div class="v-card__title text-center mx-auto text--h6">
+                  <v-col :cols="3">
+                  <div class="v-card__title justify-center text--h6">
                     거래 내역
                   </div>
                   </v-col>
@@ -66,20 +65,17 @@
                   > <!-- items에 accountNumArr 넣기 -->
                   </v-select>
                   </v-col>
-                  <v-col class="mx-auto" :cols="1">
-                    <v-img src="../assets/bell.png" width="30px" height="30px" @click="openNoticelist" style="margin-bottom:10px;">
-                    </v-img>
-                    <v-img src="../assets/add.png" width="30px" height="30px" @click="openaddlist" style="margin-bottom:10px;">
-                    </v-img>
-                    <v-img src="../assets/delete.png" width="30px" height="30px" @click="opendeletelist" style="margin-bottom:10px;">
-                    </v-img>
+                  <v-col class="d-flex align-center justify-center" :cols="3">
+                    <v-img src="../assets/bell.png" max-width="30px"  max-height="30px" @click="openNoticelist" />
+                    <v-img src="../assets/add.png" max-width="30px" max-height="30px" @click="openaddlist" v-bind:style="{marginLeft: '10px'}"/>
+                    <v-img src="../assets/delete.png" max-width="30px" max-height="30px" @click="opendeletelist" v-bind:style="{marginLeft: '10px'}"/>
                   </v-col>
                 </v-row>
                 <v-row>
                   <!-- todo 동적 apexchart 태그 re-rendering -->
-                  <div class="chart-wrap mx-auto">
+                  <div class="chart-wrap mx-auto" v-bind:style="{marginTop: '-20px'}">
                     <div id="chart2">
-                      <apexchart id = "bankingchart1" type="line" width="580" height="300" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
+                      <apexchart id = "bankingchart1" type="line" width="660" height="300" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
                     </div>
                   </div>
                 </v-row>
@@ -89,9 +85,8 @@
                   <v-col :cols="3">
                     <v-sheet class="mx-auto" height="100px" v-bind:style="{background : '#EADBC8'}">
                         <v-form @submit.prevent="getBankingDaily">
-                          <v-row class="d-flex">
-                            <v-col :cols="1"></v-col>
-                            <v-col :cols="10">
+                          <v-row class="d-flex" v-bind:style="{marginTop: '10px'}">
+                            <v-col>
                               <v-row>
                                 <v-text-field type="datetime-local" height="10px" v-model="bankingStartDate" label="시작일자"></v-text-field>
                               </v-row>
@@ -102,12 +97,11 @@
                                 <v-btn type="submit" color="white" v-bind:style="{background : '#444766'}" block outlined>조회하기</v-btn>
                               </v-row>
                             </v-col>
-                            <v-col :cols="1"></v-col>
                           </v-row>
                         </v-form>
                     </v-sheet>
                   </v-col>
-                  <v-col :cols="7">
+                  <v-col :cols="7" v-bind:style="{marginLeft: '20px'}">
                   <v-card class="banking-list noscroll-content" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
                     <div class="v-card__text"
                          v-if="bankingInfoList != null"
@@ -115,8 +109,6 @@
                       {{ item }}
                     </div>
                   </v-card>
-                  </v-col>
-                  <v-col :cols="1">
                   </v-col>
                 </v-row>
               </v-col>
@@ -220,15 +212,8 @@
           </v-row>
           </div>
         </div>
-
-
-
-
-
-
       </v-container>
     </v-main>
-
   </v-app>
 </template>
 
@@ -658,8 +643,6 @@ export default {
             strrst += "억";
           else if (this.numKorStack.size() / 4 === 3)
             strrst += "조";
-
-
       }
 
       return strrst;
@@ -782,11 +765,11 @@ export default {
 
 <style >
 .account-list {
-  height: calc(100vh - 64vh);
+  height: calc(100vh - 62vh);
   overflow-y: auto;
 }
 .banking-list {
-  height: calc(100vh - 85vh);
+  height: calc(100vh - 80vh);
   overflow-y: auto;
 }
 .outer-bg {
@@ -828,7 +811,8 @@ export default {
 
   background: #DAC0A3;
   border-radius: 8px;
-  width: 790px;
+  width: 500px;
+  height: 400px;
 
   /* padding: 30px; */
 }
