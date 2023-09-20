@@ -5,6 +5,8 @@ import vuetify from './plugins/vuetify'
 
 import VueSession from 'vue-session'
 import VueApexCharts from 'vue-apexcharts'
+import axios from 'axios';
+
 Vue.use(VueApexCharts);
 Vue.component('apexchart', VueApexCharts);
 
@@ -12,6 +14,8 @@ Vue.component('apexchart', VueApexCharts);
 var sessionOptions = {
   persist: true
 }
+axios.defaults.withCredentials = true; //세션 설정
+
 Vue.use(VueSession, sessionOptions)
 
 Vue.config.productionTip = false

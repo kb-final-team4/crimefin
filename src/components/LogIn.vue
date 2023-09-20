@@ -227,6 +227,9 @@ export default {
         const response = await axios.post('http://localhost:9999/user/sendNum',{
           memberId: this.memberId,
           phone:this.phone,
+        },
+        {
+          withCredentials:true
         });
 
         if(response.status===200){
@@ -249,6 +252,7 @@ export default {
           params:{
             authNum:this.verification,
           },
+          withCredentials:true
         })
           .then((response)=>{
             if (response.status === 200) {
