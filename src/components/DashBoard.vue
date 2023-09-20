@@ -517,6 +517,7 @@ export default {
         }
       }
 
+
       //차트 리렌더링 -- 안됨
       /*console.log("ApexCharts exec start");
       console.log("ApexCharts exec this.bankingBalanceList " +this.bankingBalanceList );
