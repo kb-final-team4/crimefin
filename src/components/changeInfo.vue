@@ -3,21 +3,8 @@
   <v-app>
     <AppBar fixed />
     <div>
-<<<<<<< HEAD
-      <v-navigation-drawer app>
-        <app-bar /> 
-   
-      <v-list>
-        <v-list-item>
-          <v-list-item-avatar>
-            <v-img src="logo.png"></v-img>
-          </v-list-item-avatar>
-          <v-list-item-title>CrimeFin</v-list-item-title>
-        </v-list-item>
-=======
       <v-navigation-drawer :width="350" app>
         <app-bar />
->>>>>>> f81d4514c67cc1d2e7b6daa79c90bb8190a33a7f
 
         <v-list>
           <v-list-item>
@@ -53,18 +40,6 @@
         </v-list>
       </v-navigation-drawer>
       <v-main>
-<<<<<<< HEAD
-      <!--<h2>회원가입</h2>-->
-      <v-form @submit.prevent="signUpUser">
-        
-        <h4>회원정보 수정</h4>
-        <v-row justify="center" class="mt-8">
-          <v-col cols="2" md="200">
-            <!--<v-label for="memberId">아이디 </v-label>-->
-            <v-text-field label="아이디" id="memberId" v-model="user.memberId" required outlined disabled></v-text-field>
-          </v-col>
-          <!-- <v-btn variant="tonal" class="button" type="button" @click="checkDuplicateId">
-=======
         <!--<h2>회원가입</h2>-->
         <v-form @submit.prevent="signUpUser">
           <v-row justify="center" class="mt-8">
@@ -80,7 +55,6 @@
               ></v-text-field>
             </v-col>
             <!-- <v-btn variant="tonal" class="button" type="button" @click="checkDuplicateId">
->>>>>>> f81d4514c67cc1d2e7b6daa79c90bb8190a33a7f
           중복확인
         </v-btn> -->
           </v-row>
