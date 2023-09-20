@@ -22,7 +22,7 @@
                 </v-row>
                 <br><v-divider></v-divider><br>
                 <v-row>
-                  <v-card width="370px" class="mx-auto account-list" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
+                  <v-card width="370px" class="mx-auto account-list noscroll-content" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
                   <div class="v-card__text text-center"
                        v-if="accountInfosList != null"
                        v-for="item in accountInfosList"
@@ -108,7 +108,7 @@
                     </v-sheet>
                   </v-col>
                   <v-col :cols="7">
-                  <v-card class="banking-list" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
+                  <v-card class="banking-list noscroll-content" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
                     <div class="v-card__text"
                          v-if="bankingInfoList != null"
                          v-for="item in bankingInfoList">
@@ -243,6 +243,9 @@ export default {
   },
   data: function() {
     return {
+      numKorStack: null, //스택 담는 용
+      numKor: null, // output 용
+
       accountId: "", // 아이디 입력 값
       bankName: "", // 은행명 입력 값
       accountNum: "", // 계좌번호 입력 값
@@ -557,6 +560,94 @@ export default {
             console.error(error);
           });*/
     },
+    parseNumstrToKorean(numStr){
+      class Stack {
+        constructor() {
+          this.storage = {};
+          this.top = 0; // 스택의 가장 상단을 가리키는 포인터 변수 초기화
+        }
+
+        size() {
+          return Object.keys(this.storage).length;
+        }
+
+        // 스택에 데이터를 추가
+        push(element) {
+          this.storage[this.top] = element;
+          this.top += 1;
+        }
+
+        // 가장 나중에 추가된 데이터가 가장 먼저 추출되어야 함
+        pop() {
+          // 빈 스택에 에러처리
+          if (Object.keys(this.storage).length === 0) {
+            return;
+            // 위의 return문은 코드의 가독성을 위하여 쓰는 것이다(없어도 같은 결과가 나옴)
+          }
+
+          const result = this.storage[this.top-1];
+          delete this.storage[this.top-1];
+          this.top -= 1;
+
+          return result;
+        }
+      }
+      //들어온 String형의 숫자를 한글자씩 자른다
+      var splitedStr = numStr.split('');
+      //그리고 각자 숫자로 변환해준다.
+      for(let i = 0; i<splitedStr.length; i++){
+        splitedStr[i] = parseInt(splitedStr[i]);
+      }
+      this.numKorStack = new Stack();
+      //뒤에서부터 스택에 push
+      for(let j = splitedStr.length-1; j >= 0; j--){
+        this.numKorStack.push(splitedStr[j])
+      }
+      var strrst = null;
+      while(this.numKorStack.top !== 0){
+        var rst = this.numKorStack.pop();
+
+        if(rst === 1)
+          strrst = "일"
+        else if(rst === 2)
+          strrst = "이"
+        else if(rst === 3)
+          strrst = "삼"
+        else if(rst === 4)
+          strrst = "사"
+        else if(rst === 5)
+          strrst = "오"
+        else if(rst === 6)
+          strrst = "육"
+        else if(rst === 7)
+          strrst = "칠"
+        else if(rst === 8)
+          strrst = "팔"
+        else if(rst === 9)
+          strrst = "구"
+
+        if(rst !== 0) {
+          //천백십 더해주기
+          if (this.numKorStack.size() % 4 === 3)
+            strrst += "천";
+          else if (this.numKorStack.size() % 4 === 2)
+            strrst += "백";
+          else if (this.numKorStack.size() % 4 === 1)
+            strrst += "십";
+        }
+          //만억조 더해주기
+          if (this.numKorStack.size() / 4 === 1)
+            strrst += "만";
+          else if (this.numKorStack.size() / 4 === 2)
+            strrst += "억";
+          else if (this.numKorStack.size() / 4 === 3)
+            strrst += "조";
+
+
+      }
+
+      return strrst;
+    },
     //왼쪽 도넛 그래프(모든 계좌 총액에서 각자 계좌가 차지하는 비율 나타내는 그래프)랑
     // 아래 로그인한 사용자의 계좌별 정보(은행, 계좌번호, 잔고)
     getTotalAccountList(){
@@ -592,8 +683,17 @@ export default {
       this.accountInfoList = new Array(this.accountNumArr.length);
       this.accountInfosList = new Array(this.accountNumArr.length);
       this.bankImgArr = new Array(this.accountNumArr.length);
-      let k;
-      for(k = 0; k< this.accountNumArr.length; k++){
+
+      this.numKor = new Array(this.accountNumArr.length);
+
+      for(let z = 0; z<this.accountNumArr.length; z++){
+        this.numKor[z] = this.parseNumstrToKorean(this.balanceArr[z]);
+      }
+
+      //this.numKor = this.parseNumstrToKorean(this.balanceArr); // 담아지지가 않음 todo 고치기
+
+      let k=0;
+      for(; k< this.accountNumArr.length; k++){
         this.accountInfoList[k] = "("+this.bankNameArr[k]+") "+ this.accountNumArr[k];
 
         if(this.bankNameArr[k]==="하나은행")
@@ -617,7 +717,8 @@ export default {
         else
           this.bankImgArr[k] ="won";
 
-        this.accountInfosList[k] = [this.bankImgArr[k], this.balanceArr[k]+"원", this.accountInfoList[k]];
+        //여기서 this.balanceArr을 다른걸로
+        this.accountInfosList[k] = [this.bankImgArr[k], this.numKor[k]+"원", this.accountInfoList[k]];
       }
       this.accountChartOptions.labels = this.accountNumArr;
 
@@ -771,6 +872,8 @@ export default {
   position:absolute;
   margin-top:5px;
 }
-
+.noscroll-content::-webkit-scrollbar{
+  display: none;
+}
 </style>
   
