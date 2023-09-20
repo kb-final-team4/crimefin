@@ -353,23 +353,22 @@ nav{
   text-align: center;
 }
 .white-bg {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
-position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 8px;
+      width: 790px;
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            background: white;
-            border-radius: 8px;
-            width: 790px;
-
-            padding-bottom: 30px;
+      padding-bottom: 30px;
+      padding-top:30px;
 }
 
 .white-bg-success{
@@ -405,6 +404,7 @@ position: fixed;
     border-radius: 8px;
     width: 790px;
 
+    padding-top:20px;
 
 } 
 

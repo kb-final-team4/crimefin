@@ -17,7 +17,7 @@
         <v-list-item-icon>
           <v-icon>mdi-account</v-icon>
         </v-list-item-icon>
-        <v-list-item-title class="larger-text">회원정보 수정</v-list-item-title>
+        <v-list-item-title class="larger-text">회원정보 변경</v-list-item-title>
       
       </v-list-item>
 
@@ -153,6 +153,9 @@ export default {
             background: white;
             border-radius: 8px;
             width: 790px;
+
+            padding-top:30px;
+            padding-bottom:20px;
             
         }
 

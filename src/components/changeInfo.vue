@@ -44,7 +44,7 @@
       <!--<h2>회원가입</h2>-->
       <v-form @submit.prevent="signUpUser">
         
-        
+        <h4>회원정보 수정</h4>
         <v-row justify="center" class="mt-8">
           <v-col cols="2" md="200">
             <!--<v-label for="memberId">아이디 </v-label>-->

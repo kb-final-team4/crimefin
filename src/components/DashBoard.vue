@@ -71,7 +71,7 @@
                     </v-img>
                     <v-img src="../assets/add.png" width="30px" height="30px" @click="openaddlist" style="margin-bottom:10px;">
                     </v-img>
-                    <v-img src="../assets/delete.png" width="30px" height="30px" @click="openaddlist" style="margin-bottom:10px;">
+                    <v-img src="../assets/delete.png" width="30px" height="30px" @click="opendeletelist" style="margin-bottom:10px;">
                     </v-img>
                   </v-col>
                 </v-row>
@@ -186,8 +186,37 @@
                 </v-card>
             <br>
             <v-row class="d-flex justify-end">
-            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="" class="btn-close" style="margin-right:30px;">등록</v-btn>
+            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="saveAccountInfo" class="btn-close" style="margin-right:30px;">등록</v-btn>
             <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="modal2=false" class="btn-close">닫기</v-btn>
+          </v-row>
+          </div>
+        </div>
+
+        <div class="outer-bg3" v-if="this.modal3 !== false" >
+          <div class="modal-bg3">
+            <h4 class="v-card__title text-center" v-bind:style="{color : 'gray'}">계좌 삭제</h4>
+            <v-card>
+                  <v-row>
+                    <v-col cols="10">
+                      <v-text-field v-model="accountId" label="아이디" variant="solo" class="t-field3"></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="10">
+                      <v-text-field v-model="bankName" label="은행명" variant="solo" class="t-field3"></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="10">
+                      <v-text-field v-model="accountNum" label="계좌번호" variant="solo" class="t-field3"></v-text-field>
+                    </v-col>
+                  </v-row>
+                  
+                </v-card>
+            <br>
+            <v-row class="d-flex justify-end">
+            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="deleteAccountInfo" class="btn-close" style="margin-right:30px;">삭제</v-btn>
+            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="modal3=false" class="btn-close">닫기</v-btn>
           </v-row>
           </div>
         </div>
@@ -224,6 +253,7 @@ export default {
 
       modal : false, //알림 모달창 열고닫을때 씀
       modal2: false,
+      modal3: false,
       noticeInfoList : null, //알림 표현용 리스트
 
       noticeTimeArr : null, //알림 시간 리스트
@@ -330,8 +360,22 @@ export default {
 
     }
   },
-methods:{
-  async authenticateAccount() {
+
+  created() {
+    this.getTotalAccountList();
+    this.getBankingDaily();
+  },
+  mounted() {
+
+  },
+  methods: {
+    deleteAccountInfo(){
+      //계좌번호 및 정보 삭제하는 함수
+    },
+
+
+
+    async authenticateAccount() {
     try {
       // 여기에서 백엔드와 통신하여 입금자명 인증을 수행합니다.
       const response = await axios.post("/api/authenticate-account", {
@@ -374,16 +418,7 @@ methods:{
       // 오류 처리를 원하는 대로 수행할 수 있습니다.
     }
   },
-},
 
-  created() {
-    this.getTotalAccountList();
-    this.getBankingDaily();
-  },
-  mounted() {
-
-  },
-  methods: {
     /*
     NOTICE_ID   NOT NULL VARCHAR2(20)
     MEMBER_ID   NOT NULL VARCHAR2(20)
@@ -398,6 +433,9 @@ methods:{
       this.modal2=true;
     },
     
+    opendeletelist(){
+      this.modal3=true;
+    },
      openNoticelist(){
       this.modal = true;
       /*
@@ -649,6 +687,15 @@ methods:{
   margin-bottom: 30px;
 }
 
+.outer-bg3 {
+  width: 200%;
+  height:350%;
+  background: #102C57;
+  position: fixed;
+  padding: 40px;
+  margin-bottom: 30px;
+}
+
 .modal-bg{
   position: fixed;
   top: 50%;
@@ -683,13 +730,40 @@ methods:{
   width: 790px;
 
   padding-bottom: 30px;
+  padding-left: 50px;
 }
+
+.modal-bg3{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: #DAC0A3;
+  border-radius: 8px;
+  width: 790px;
+
+  padding-bottom: 30px;
+}
+
 
 .t-field{
   width:550px;
   background-color: white;
   margin-top:0%;
   padding-left:40px;
+}
+
+.t-field3{
+  width:550px;
+  background-color: white;
+  margin-top:0%;
+  padding-left:100px;
 }
 
 .button{
