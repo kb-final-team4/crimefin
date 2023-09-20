@@ -135,6 +135,9 @@
               <v-row>
                 예방 성공!!<br>
               </v-row>
+              <v-row class="justify-center align-center">
+                <v-img src="../assets/ending_good.png" height="40px" width="40px" />
+              </v-row>
               <v-row class="justify-center">
                 <router-link to="/explobby">
                   <v-btn>메인으로</v-btn>
@@ -148,6 +151,9 @@
             <v-sheet>
               <v-row>
                 예방 실패!!<br>
+              </v-row>
+              <v-row class="justify-center align-center">
+                <v-img src="../assets/ending_bad.png" height="40px" width="40px" object-fit="cover"/>
               </v-row>
               <v-row class="justify-center">
                 <router-link to="/explobby">
