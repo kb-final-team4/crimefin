@@ -23,12 +23,15 @@ public class AssetController {
     private AssetService assetService;
 
     @PostMapping("/asset/auth")
-    public ResponseEntity addAccount(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request) throws Exception {
+    public ResponseEntity authAccount(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request) throws Exception {
+        System.out.println("자산 인증 요청 들어옴");
         HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
 
         //session에서 member id를 가져옴
+        System.out.println("계좌 인증 요청의 세션 아이디는 " + session.getId());
         MemberVO memberVO = (MemberVO) session.getAttribute("userInfo");
         String memberId = memberVO.getMemberId();
+        //String memberId = "kangyuseok";
 
         String accountNum = (String) requestJsonHashMap.get("accountNum");
         String bankName = (String) requestJsonHashMap.get("bankName");
@@ -37,11 +40,12 @@ public class AssetController {
         accountVO.setMemberId(memberId);
         accountVO.setAccountNum(accountNum);
         accountVO.setBank(bankName);
+        System.out.println(accountVO);
 
         int result = assetService.insertAccount(accountVO);
+        System.out.println("result = " + result);
 
         if(result != 0) { //계좌 임시로 생성 성공
-
             Random random = new Random(); //랜덤 함수 선언
             int createNum = 0;            //1자리 난수
             String ranNum = "";           //1자리 난수 형변환 변수
@@ -59,11 +63,13 @@ public class AssetController {
             bankingVO.setAccountNum(accountNum);
             bankingVO.setMemberId(memberId);
             //bankingVO.setBankingDate();
-            bankingVO.setDeposit(1); //1원 송금
-            bankingVO.setDepositName(resultNum); //입금자명 입력
+            bankingVO.setDeposit(1);
+            bankingVO.setDepositName(resultNum);
             //bankingVO.setBalance();
 
+            System.out.println(bankingVO);
             int result2 = assetService.insertBanking(bankingVO);
+            System.out.println("result2 ="+result2);
 
             if(result2 != 0) { //거래내역 생성 성공
                 session= request.getSession(true); //세션 있으면 기존 세션 반환, 없으면 세션 새로 만듬
@@ -73,30 +79,89 @@ public class AssetController {
             else { //거래내역 생성 실패
                 return new ResponseEntity(HttpStatus.NO_CONTENT);
             }
-
-
         }
         else { //계좌 생성 실패
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
-
-
     }
 
-    @PostMapping("/asset/auth/confirm")
-    public ResponseEntity checkAccount(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request) throws Exception {
+    @GetMapping(value="/asset/auth/confirm", params={"authNumConfirm"})
+    public ResponseEntity checkAccount(@RequestParam String authNumConfirm, HttpServletRequest request) throws Exception {
+        System.out.println("입금자명 확인 요청 들어옴");
 
         HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
 
         //session에서 authNum을 가져옴
         String authNum = (String) session.getAttribute("authNum");
 
-        String inputNum = (String) requestJsonHashMap.get("inputNum");
 
-        if(inputNum.equals(authNum)) {
+        if(authNumConfirm.equals(authNum)) {
+            System.out.println("입금자명 확인 성공");
             return new ResponseEntity(1, HttpStatus.OK);
         } else {
             return new ResponseEntity(0, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @PostMapping("/asset/regist")
+    public ResponseEntity isValidAccount(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request)throws Exception{
+        System.out.println("최종 폼 요청 들어옴");
+        boolean isAuthenticated = (boolean)requestJsonHashMap.get("isAuthenticated");
+        HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
+        MemberVO memberVO = (MemberVO) session.getAttribute("userInfo");
+        String memberId = memberVO.getMemberId();
+        String accountNum = (String) requestJsonHashMap.get("accountNum");
+        String NickName = (String)requestJsonHashMap.get("accountNickname");
+        String Limit = (String)requestJsonHashMap.get("accountLimit");
+
+        if(isAuthenticated){ //사용자 인증이 완료 (닉네임, limit 업데이트)
+            AccountVO accountVO = new AccountVO();
+            accountVO.setMemberId(memberId);
+            accountVO.setAccountNum(accountNum);
+            accountVO.setNickName(NickName);
+            accountVO.setLimit(Integer.parseInt(Limit));
+
+            int result = assetService.updateNickNameAndLimit(accountVO);
+
+            if(result != 0){
+
+                return new ResponseEntity(memberId, HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            }
+
+        }
+        else{
+            assetService.deleteBanking(accountNum); //먼저 해당 계좌 번호의 거래 이력 삭제
+            int result = assetService.deleteAccount(accountNum); //계좌 삭제
+
+            if(result != 0){
+                return new ResponseEntity(memberId, HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            }
+        }
+    }
+
+    @DeleteMapping("/asset")
+    public ResponseEntity deleteAccount(@RequestBody HashMap<String, Object>requestJsonHashMap, HttpServletRequest request)throws Exception{
+        System.out.println("계좌 삭제 요청");
+
+        HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
+        MemberVO memberVO = (MemberVO) session.getAttribute("userInfo");
+        String memberId = memberVO.getMemberId();
+        String bankName = (String)requestJsonHashMap.get("bankName");
+        String accountNum=(String)requestJsonHashMap.get("accountNum");
+
+        assetService.deleteBanking(accountNum);
+        int result = assetService.deleteAccount(accountNum);
+        if(result != 0){
+            return new ResponseEntity(memberId, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
     }
 

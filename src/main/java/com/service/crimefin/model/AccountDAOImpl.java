@@ -20,10 +20,22 @@ public class AccountDAOImpl implements AccountDAO{
     }
 
     @Override
-    public int deleteAccount(AccountVO accountVO) { return sqlSession.delete(NS+"deleteAccount", accountVO);
+    public List<AccountVO> getAccounts(String memberId) {return sqlSession.selectList(NS+"getAccounts", memberId);
     }
 
     @Override
-    public List<AccountVO> getAccounts(String memberId) {return sqlSession.selectList(NS+"getAccounts", memberId);
+    public void deleteBanking(String accountNum) {
+        sqlSession.delete(NS+"deleteBanking",accountNum);
+    }
+
+    @Override
+    public int deleteAccount(String accountNum) {
+        //sqlSession.delete(NS+"deleteBanking", accountNum);
+        return sqlSession.delete(NS+"deleteAccount", accountNum);
+    }
+
+    @Override
+    public int updateNickNameAndLimit(AccountVO accountVO) {
+        return sqlSession.update(NS+"updateNickNameAndLimit", accountVO);
     }
 }

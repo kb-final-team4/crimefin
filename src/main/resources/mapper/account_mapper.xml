@@ -5,18 +5,35 @@
 <mapper namespace="sql.account.mapper">
     <!--계좌 등록-->
     <insert id="insertAccount" parameterType="accountVO">
-        INSERT INTO ACCOUNT(
-            account_id,
+        INSERT INTO account(
             member_id,
             account_num,
             bank_name,
             balance,
-            limit)
+            limit,
+            nickname
+        )
         VALUES
-        (#{accountId},#{memberId},#{accountNum},#{bankName},#{balance},#{limit})
+            (#{memberId},#{accountNum},#{bankName},#{balance},#{limit},#{nickName})
     </insert>
 
-    <!-- 계좌 삭제   -->
+    <!-- 거래 삭제   -->
+    <delete id="deleteBanking" parameterType="String">
+        DELETE FROM banking WHERE account_num = #{accountNum}
+    </delete>
+
+    <!-- 계좌 삭제 -->
+    <delete id="deleteAccount" parameterType="String">
+        DELETE FROM account WHERE account_num = #{accountNum}
+    </delete>
+
+
+    <!-- 계좌 닉네임, limit 업데이트   -->
+    <update id="updateNickNameAndLimit" parameterType="accountVO">
+        UPDATE account
+        SET nickname=#{nickName}, limit=#{limit}
+        WHERE account_num=#{accountNum}
+    </update>
 
 
     <!-- 계좌 리스트 -->
