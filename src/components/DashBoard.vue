@@ -159,34 +159,34 @@
                       <v-text-field v-model="accountNum" label="계좌번호" variant="solo" class="t-field"></v-text-field>
                     </v-col>
                     <v-col cols="1" >
-                      <v-btn class="button" @click="authenticateAccount">인증</v-btn>
+                      <v-btn variant="tonal" class="button" @click="authenticateAccount">인증</v-btn>
                     </v-col>
                   </v-row>
                   
                   <v-row>
                     <!-- <div v-if="isAuthenticated"> -->
                     <v-col cols="8">
-                      <v-text-field label="입금자명" variant="solo" class="t-field"></v-text-field>
+                      <v-text-field v-model="authNumConfirm" label="입금자명" variant="solo" class="t-field"></v-text-field>
                     </v-col>
                     <v-col cols="1">
-                      <v-btn class="button" @click="saveAccountInfo">확인</v-btn>
+                      <v-btn class="button" @click="confirmAuthNum">확인</v-btn>
                     </v-col>
                     <!-- </div> -->
                   </v-row>
                   <v-row>
                     <v-col cols="8">
-                      <v-text-field label="계좌별명" variant="solo" class="t-field"></v-text-field>
+                      <v-text-field v-model="accountNickname" label="계좌별명" variant="solo" class="t-field"></v-text-field>
                     </v-col>
                   </v-row>
                   <v-row>
                     <v-col cols="8">
-                      <v-text-field label="limit" variant="solo" class="t-field"></v-text-field>
+                      <v-text-field v-model="accountLimit" label="limit" variant="solo" class="t-field"></v-text-field>
                     </v-col>
                   </v-row>
                 </v-card>
             <br>
             <v-row class="d-flex justify-end">
-            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="saveAccountInfo" class="btn-close" style="margin-right:30px;">등록</v-btn>
+            <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="registAccount" class="btn-close" style="margin-right:30px;">등록</v-btn>
             <v-btn v-bind:style="{background : '#EADBC8' , color : 'gray'}" variant="tonal" type="button" @click="modal2=false" class="btn-close">닫기</v-btn>
           </v-row>
           </div>
@@ -249,6 +249,7 @@ export default {
       accountId: "", // 아이디 입력 값
       bankName: "", // 은행명 입력 값
       accountNum: "", // 계좌번호 입력 값
+      authNumConfirm:"", //입금자 인증번호 확인
       isAuthenticated: false, // 인증 여부
       accountNickname: "", // 계좌 별명 입력 값
       accountLimit: "", // Limit 입력 값
@@ -369,27 +370,31 @@ export default {
     this.getBankingDaily();
   },
   mounted() {
-
+  
   },
-  methods: {
-    deleteAccountInfo(){
-      //계좌번호 및 정보 삭제하는 함수
-    },
-
-
-
-    async authenticateAccount() {
+  methods:{
+    /*
+    NOTICE_ID   NOT NULL VARCHAR2(20)
+    MEMBER_ID   NOT NULL VARCHAR2(20)
+    TIME                 TIMESTAMP(6)
+    ACCOUNT_NUM          VARCHAR2(20)
+    BANK_NAME            VARCHAR2(20)
+    DEPOSIT              NUMBER
+    WITHDRAWL            NUMBER
+     */
+    authenticateAccount() {
+    console.log(11);
     try {
       // 여기에서 백엔드와 통신하여 입금자명 인증을 수행합니다.
-      const response = await axios.post("/api/authenticate-account", {
-        accountId: this.accountId,
+      const response = axios.post('http://localhost:9999/asset/auth', {
         bankName: this.bankName,
         accountNum: this.accountNum,
       });
 
+      console.log(response);
       // 인증이 성공하면 isAuthenticated 값을 true로 설정합니다.
-      if (response.data.success) {
-        this.isAuthenticated = true;
+      if (response.status===200) {
+        //this.isAuthenticated = true;
         alert("계좌 정보가 성공적으로 인증되었습니다.");
       } else {
         // 인증 실패 시 메시지를 표시하거나 다른 처리를 수행할 수 있습니다.
@@ -401,37 +406,48 @@ export default {
     }
   },
 
+  confirmAuthNum() {
+    console.log(22);
+    axios.get('http://localhost:9999/asset/auth/confirm',{
+      params:{
+        authNumConfirm:this.authNumConfirm,
+      }
+    })
+    .then((response)=>{
+      if(response.status ===200){
+        alert('입금자명 확인 성공');
+        this.isAuthenticated = true;
+      }
+      else{
+        alert('입금자명이 틀립니다!');
+      }
+    })
+    .catch((error)=>{
+      console.error('입금자명 찾기 오류', error);
+    });
+  },
 
-  async saveAccountInfo() {
-    try {
-      // 계좌 정보를 로컬 스토리지에 저장합니다.
-      const accountInfo = {
-        accountId: this.accountId,
-        bankName: this.bankName,
-        accountNum: this.accountNum,
-      };
-
-      // 로컬 스토리지에 저장합니다. ********** 이 부분 로컬 말고 백엔드랑 연동하는 걸로 수정
-      localStorage.setItem('accountInfo', JSON.stringify(accountInfo));
-
-      // 저장이 완료되면 메시지를 표시합니다.
-      alert("계좌 정보가 성공적으로 저장되었습니다.");
-    } catch (error) {
-      console.error("계좌 정보 저장 중 오류 발생:", error);
-      // 오류 처리를 원하는 대로 수행할 수 있습니다.
+  registAccount(){
+    try{
+      const response = axios.post('http://localhost:9999/asset/regist', {
+        accountNickname: this.accountNickname,
+        accountLimit: this.accountLimit,
+        isAuthenticated:this.isAuthenticated,
+        accountNum:this.accountNum,
+      });
+      console.log(response);
+      if(response.status===200){
+        alert('계좌 생성 완료');
+      }
+      else{
+        alert('계좌 생성 오류 발생');
+      }
+    }catch(error){
+      console.error('입금자 명이 일치하지 않습니다.!!', error);
+      alert('계좌 등록 중 오류 발생');
     }
   },
 
-    /*
-    NOTICE_ID   NOT NULL VARCHAR2(20)
-    MEMBER_ID   NOT NULL VARCHAR2(20)
-    TIME                 TIMESTAMP(6)
-    ACCOUNT_NUM          VARCHAR2(20)
-    BANK_NAME            VARCHAR2(20)
-    DEPOSIT              NUMBER
-    WITHDRAWL            NUMBER
-     */
-    
     openaddlist(){
       this.modal2=true;
     },
@@ -760,6 +776,7 @@ export default {
       return images('./' + bank + ".png")
     },
   },
+
 };
 </script>
 

@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 
 
 import InitPage from '../components/InitPage.vue' 
-import Login from '../components/LogIn.vue' 
-import SignUp from '../components/SignUp.vue' 
+import Login from '../components/LogIn.vue' // Login 컴포넌트 경로 설정
+ import SignUp from '../components/SignUp.vue' //join 컴포넌트 경로 설정
 
 import MainPage from '../components/MainPage.vue' 
 
