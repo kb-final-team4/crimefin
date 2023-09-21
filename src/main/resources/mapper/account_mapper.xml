@@ -5,7 +5,8 @@
 <mapper namespace="sql.account.mapper">
     <!--계좌 등록-->
     <insert id="insertAccount" parameterType="accountVO">
-        INSERT INTO account(
+        INSERT INTO ACCOUNT(
+            account_id,
             member_id,
             account_num,
             bank_name,
