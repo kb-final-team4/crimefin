@@ -102,9 +102,16 @@ public class AssetController {
         }
     }
 
-    @GetMapping(value = "/asset/dashboard", params = {"memberId"})
-    public ResponseEntity getAccounts(@RequestParam String memberId) throws Exception{
+    @GetMapping(value = "/asset/dashboard")
+    public ResponseEntity getAccounts(HttpServletRequest request) throws Exception{
+        System.out.println("대시보드 계좌 조회 요청 들어옴");
+        HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
+        MemberVO memberVO = (MemberVO) session.getAttribute("userInfo");
+        String memberId = memberVO.getMemberId();
+
         List<AccountVO> rvo = assetService.getAccounts(memberId);
+
+        for(AccountVO a : rvo) System.out.println(a); //확인용
 
         if (rvo != null) { //계좌 있으면
             return new ResponseEntity(rvo, HttpStatus.OK);
