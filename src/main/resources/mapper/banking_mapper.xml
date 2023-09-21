@@ -27,4 +27,23 @@
 		  AND (b.BANKING_DATE BETWEEN TO_DATE(#{startDate},'YY/MM/DD') AND TO_DATE(#{endDate},'YY/MM/DD') + 0.99999)
 	</select>
 
+	<select id="getMaxBalanceBanking" parameterType="String" resultType="bankingVO">
+		SELECT banking_date, account_num, member_id, deposit, deposit_name, withdrawal, withdrawal_to, balance
+		FROM banking
+		WHERE
+		account_num =
+		(
+			SELECT account_num
+			FROM account
+			WHERE balance =
+			(
+				SELECT  max(balance)
+				FROM account
+				WHERE member_id like #{_parameter}
+			)
+		)
+		AND
+		<![CDATA[banking_date <= sysdate and banking_date >= (sysdate - 14)]]>
+		order by banking_date
+	</select>
 </mapper>

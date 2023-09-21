@@ -25,4 +25,9 @@ public class BankingDAOImpl implements BankingDAO {
     public List<BankingVO> getBanking(HashMap map) { return sqlSession.selectList(NS + "getBanking", map);
     }
 
+    @Override
+    public List<BankingVO> getMaxBalanceBanking(String memberId) {
+        return sqlSession.selectList(NS+"getMaxBalanceBanking", memberId);
+    }
+
 }

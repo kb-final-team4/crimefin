@@ -140,4 +140,17 @@ public class AssetController {
         }
     }
 
+    @GetMapping("/asset/dashboard/init")
+    public ResponseEntity getMaxBalanceBanking(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        MemberVO memberVO = (MemberVO) session.getAttribute("userInfo");
+        String memberId = memberVO.getMemberId();
+
+        List<BankingVO> rvo = assetService.getMaxBalanceBanking(memberId);
+
+        if(rvo!= null)
+            return new ResponseEntity(rvo, HttpStatus.OK);
+        else
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }

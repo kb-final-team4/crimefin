@@ -15,5 +15,6 @@ public interface AssetService {
     int updateNickNameAndLimit(AccountVO accountVO);
     List<AccountVO> getAccounts(String memberId);
     List<BankingVO> getBanking(HashMap map);
+    List<BankingVO> getMaxBalanceBanking(String memberId);
 
 }

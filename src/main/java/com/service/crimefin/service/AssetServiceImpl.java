@@ -52,4 +52,9 @@ public class AssetServiceImpl implements AssetService {
     @Override
     public List<BankingVO> getBanking(HashMap map) { return bankingDAO.getBanking(map); }
 
+    @Override
+    public List<BankingVO> getMaxBalanceBanking(String memberId) {
+        return bankingDAO.getMaxBalanceBanking(memberId);
+    }
+
 }
