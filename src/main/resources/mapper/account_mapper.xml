@@ -16,18 +16,11 @@
         (#{accountId},#{memberId},#{accountNum},#{bankName},#{balance},#{limit})
     </insert>
 
-    <!-- 계좌 삭제   -->
-
-
     <!-- 계좌 리스트 -->
     <select id="getAccounts" parameterType="String" resultType="accountVO">
         select bank_name, account_num, balance
         FROM ACCOUNT
         WHERE member_id = #{VALUE}
-
-
     </select>
-
-
 
 </mapper>
