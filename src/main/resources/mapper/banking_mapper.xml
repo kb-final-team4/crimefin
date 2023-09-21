@@ -5,17 +5,18 @@
 <mapper namespace="sql.banking.mapper">
 	<!--거래내역 등록-->
 	<insert id="insertBanking" parameterType="bankingVO">
-		INSERT INTO banking
-		(banking_id,
-		 member_id,
-		 account_id,
-		 banking_date,
-		 deposit,
-		 deposit_name,
-		 withdrawal,
-		 withdrawal_to)
+		INSERT INTO BANKING(
+			banking_id,
+			account_num,
+			member_id,
+			banking_date,
+			deposit,
+			deposit_name,
+			withdrawal,
+			withdrawal_to,
+			balance)
 		VALUES
-			(#{bankingId}, #{memberId}, #{accountId}, sysdate, #{deposit}, #{depositName}, #{withdrawal}, #{withdrawalTo})
+			(banking_seq.NEXTVAL,#{accountNum},#{memberId},#{bankingDate},#{deposit},#{depositName},#{withdrawal},#{withdrawalTo},#{balance})
 	</insert>
 
 	<!--거래내역 조회-->

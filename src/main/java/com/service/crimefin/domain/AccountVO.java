@@ -1,38 +1,21 @@
 package com.service.crimefin.domain;
 
 public class AccountVO {
-    private String accountId; //계좌 아이디
     private String memberId; //사용자 아이디
     private String accountNum; //계좌 번호
     private String bankName; //은행명
+    private String nickName; //계좌 닉네임
     private int balance; //잔고
     private int limit;//위험 알림 제한 금액
 
-    public AccountVO(String accountId, String memberId, String accountNum, String bankName, int balance, int limit) {
-        this.accountId = accountId;
+    public AccountVO(){}
+    public AccountVO(String memberId, String accountNum, String bankName, String nickName, int balance, int limit) {
         this.memberId = memberId;
         this.accountNum = accountNum;
         this.bankName = bankName;
+        this.nickName = nickName;
         this.balance = balance;
         this.limit = limit;
-    }
-
-    public AccountVO() {}
-
-    public AccountVO(String accountId, String memberId, String accountNum, String bankName, int balance) {
-        this.accountId = accountId;
-        this.memberId = memberId;
-        this.accountNum = accountNum;
-        this.bankName = bankName;
-        this.balance = balance;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
     }
 
     public String getMemberId() {
@@ -51,12 +34,20 @@ public class AccountVO {
         this.accountNum = accountNum;
     }
 
-    public String getBankName() {
+    public String getBank() {
         return bankName;
     }
 
     public void setBank(String bankName) {
         this.bankName = bankName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public int getBalance() {
@@ -78,10 +69,10 @@ public class AccountVO {
     @Override
     public String toString() {
         return "AccountVO{" +
-                "accountId='" + accountId + '\'' +
                 ", memberId='" + memberId + '\'' +
                 ", accountNum='" + accountNum + '\'' +
                 ", bankName='" + bankName + '\'' +
+                ", nickName='" + nickName + '\'' +
                 ", balance=" + balance +
                 ", limit=" + limit +
                 '}';

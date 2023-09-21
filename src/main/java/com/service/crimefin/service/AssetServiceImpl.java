@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class AssetServiceImpl implements AssetService {
+
     @Autowired
     private AccountDAO accountDAO;
 
@@ -20,17 +21,29 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public int insertAccount(AccountVO accountVO) {
+
         return accountDAO.insertAccount(accountVO);
     }
 
     @Override
-    public int deleteAccount(AccountVO accountVO) {
-        return 0;
+    public int insertBanking(BankingVO bankingVO) {
+
+        return bankingDAO.insertBanking(bankingVO);
     }
 
     @Override
-    public int insertBanking(BankingVO bankingVO) {
-        return bankingDAO.insertBanking(bankingVO);
+    public void deleteBanking(String accountNum) {
+        accountDAO.deleteBanking(accountNum);
+    }
+
+    @Override
+    public int deleteAccount(String accountNum) {
+        return accountDAO.deleteAccount(accountNum);
+    }
+
+    @Override
+    public int updateNickNameAndLimit(AccountVO accountVO) {
+        return accountDAO.updateNickNameAndLimit(accountVO);
     }
 
     @Override
@@ -38,6 +51,5 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public List<BankingVO> getBanking(HashMap map) { return bankingDAO.getBanking(map); }
-
 
 }
