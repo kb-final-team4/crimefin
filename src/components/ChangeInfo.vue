@@ -38,7 +38,7 @@
                         <v-col cols="10" style="height: 1000px;">
                             <v-card>
                             <v-main class="userInfo">
-                                <h2>회원정보 수정</h2>
+                                <h2 class="title">회원정보 수정</h2>
                                 <v-form @submit.prevent="signUpUser">
                                     
                                     
@@ -106,7 +106,7 @@
                                     </v-row>
 
                                     
-
+<!-- 
                                     <v-row justify="center" class="ma-2">
                                     <v-col cols="30" md="30">
                                     <v-radio-group v-model="user.sex" row>
@@ -115,7 +115,7 @@
                                     <v-radio label="여성" value="2"></v-radio>
                                     </v-radio-group>
                                     </v-col>
-                                    </v-row>
+                                    </v-row> -->
 
 
                                     <v-row justify="center" class="ma-2">
@@ -225,6 +225,10 @@ export default {
 <style>
     .userInfo{
         margin-top: 0px;
+    }
+
+    .title{
+        margin-top:-100px;
     }
 </style>
 
