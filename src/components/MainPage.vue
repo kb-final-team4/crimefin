@@ -1,53 +1,41 @@
 <template>
   <v-app>
-    <!-- 상단바 컴포넌트를 import 해서 불러옵니다 -->
     <AppBar />
 
     <v-main>
-      <v-container>
-        <!-- 카드를 가로로 배치하는 Flexbox 레이아웃 -->
+      <v-container fluid>
         <div class="d-flex justify-center">
-          <!-- 가로로 3개의 카드 배치 -->
-          <!-- 첫 번째 카드 -->
-          <v-card class="mx-2 mt-6 mr-2" width="450" tile>
+
+          <v-card class="mx-2 mt-6 mr-2 cover1" width="25%" tile>
             <v-card-title>
-              <v-card class="mx-auto" width="400" height="350" tile>
+              <v-card class="mx-auto inner-cover" width="90%" height="60%" tile>
                 <v-img
-                  src="../assets/call.png"
+                  src="../assets/12.png"
                   class="mx-auto"
-                  width="300"
-                  height="300"
+                  width="90%"
+                  height="90%"
                 ></v-img>
-                <v-card-text>
-                  <h2 class="text-center">이상한 전화가 왔어요</h2>
-                </v-card-text>
               </v-card>
             </v-card-title>
             <v-card-actions class="justify-center">
-              <!-- "바로가기" 버튼 -->
-              <v-btn color="primary" @click="redirectToPhishingNumber('Phone')"
+              <v-btn color="" @click="redirectToPhishingNumber('Phone')"
                 >바로가기</v-btn
               >
             </v-card-actions>
           </v-card>
 
-          <!-- 두 번째 카드 -->
-          <v-card class="mx-2 mt-6 mr-2" width="450" height="450" tile>
+          <v-card class="mx-2 mt-6 mr-2 cover2" width="25%"  tile>
             <v-card-title>
-              <v-card class="mx-auto" width="400" height="350" tile>
+              <v-card class="mx-auto inner-cover" width="90%" height="60%" tile>
                 <v-img
-                  src="../assets/sms.png"
+                  src="../assets/13.png"
                   class="mx-auto"
-                  width="300"
-                  height="300"
+                  width="90%"
+                  height="90%"
                 ></v-img>
-                <v-card-text>
-                  <h2 class="text-center">이상한 문자가 왔어요</h2>
-                </v-card-text>
               </v-card>
             </v-card-title>
             <v-card-actions class="justify-center">
-              <!-- "바로가기" 버튼 -->
               <v-btn
                 color="primary"
                 @click="redirectToPhishingNumber('Message')"
@@ -56,23 +44,19 @@
             </v-card-actions>
           </v-card>
 
-          <!-- 세 번째 카드 -->
-          <v-card class="mx-2 mt-6 mr-2" width="450" height="450" tile>
+          <v-card class="mx-2 mt-6 mr-2 cover3" width="25%" tile>
             <v-card-title>
-              <v-card class="mx-auto" width="400" height="350" tile>
+              <v-card class="mx-auto inner-cover" width="90%" height="60%" tile>
                 <v-img
-                  src="../assets/talk.png"
+                  src="../assets/14.png"
                   class="mx-auto"
-                  width="300"
-                  height="300"
+                  width="90%"
+                  height="90%"
                 ></v-img>
-                <v-card-text>
-                  <h2 class="text-center">이상한 SNS 연락이 왔어요</h2>
-                </v-card-text>
               </v-card>
             </v-card-title>
             <v-card-actions class="justify-center">
-              <v-btn color="primary" @click="redirectToPhishingLink('SNS')"
+              <v-btn color="" @click="redirectToPhishingLink('SNS')"
                 >바로가기</v-btn
               >
             </v-card-actions>
@@ -84,11 +68,11 @@
 </template>
 
 <script>
-import AppBar from "../views/AppBar.vue"; // 상단바 컴포넌트를 import 합니다.
+import AppBar from "../views/AppBar.vue"; 
 
 export default {
   components: {
-    AppBar, // 상단바 컴포넌트를 등록합니다.
+    AppBar, 
   },
   methods: {
     redirectToPhishingNumber(phishingtype) {
@@ -102,5 +86,32 @@ export default {
 </script>
 
 <style scoped>
-/* 스타일을 필요에 따라 추가하세요. */
+.cover1, .cover3 {
+  background-color: #14274E !important;
+  border-radius: 25px !important;
+  margin: 2% !important;
+}
+
+.cover2 {
+  background-color: #9BA4B4 !important;
+  border-radius: 25px !important;
+  margin: 2% !important;
+}
+.inner-cover{
+  background-color: #F1F6F9;
+  border-radius: 25px !important;
+  margin-top: 1% !important;
+}
+
+.cover1, .cover2, .cover3 {
+  margin-top: 5% !important;
+  transition: all .3s ease;
+}
+
+.cover1:hover,
+.cover2:hover,
+.cover3:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0,0,0,.5);
+}
 </style>

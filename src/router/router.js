@@ -4,10 +4,9 @@ import VueRouter from 'vue-router'
 
 import InitPage from '../components/InitPage.vue' 
 import Login from '../components/LogIn.vue' // Login 컴포넌트 경로 설정
-import Join from '../components/Join.vue' // Join 컴포넌트 경로 설정
-import SignUp from '../components/SignUp.vue' //join 컴포넌트 경로 설정
+ import SignUp from '../components/SignUp.vue' //join 컴포넌트 경로 설정
 
-import MainPage from '../components/MainPage.vue' // MainPage 컴포넌트 경로 설정
+import MainPage from '../components/MainPage.vue' 
 
 import PhishingNumber from "../components/PhishingNumber.vue";
 import PhishingNumberResult from "../components/PhishingNumberResult.vue";
@@ -44,11 +43,6 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
-  },
-  {
-    path: '/join',
-    name: 'Join',
-    component: Join
   },
   {
     path: '/signup',

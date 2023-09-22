@@ -15,7 +15,7 @@
         <router-link to="/login">
           <v-btn class="custom-button" dark>Sign In</v-btn>
         </router-link>
-        <router-link to="/join">
+        <router-link to="/signup">
           <v-btn class="custom-button" dark>Join</v-btn>
         </router-link>
       </v-col>
