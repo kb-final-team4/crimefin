@@ -13,17 +13,17 @@
 	<!-- 회원가입하기 -->
 	<insert id="insertMember" parameterType="memberVO">
 		INSERT INTO member(
-		member_id,
-		email,
-		password,
-		name,
-		phone,
-		address,
-		sex,
-		regdate,
-		message_ok)
+			member_id,
+			email,
+			password,
+			name,
+			phone,
+			address,
+			sex,
+			regdate,
+			message_ok)
 		VALUES
-		(#{memberId}, #{email}, #{password}, #{name}, #{phone}, #{address}, #{sex}, sysdate, #{messageOk})
+			(#{memberId}, #{email}, #{password}, #{name}, #{phone}, #{address}, #{sex}, sysdate, #{messageOk})
 	</insert>
 
 	<!--회원 탈퇴하기 -->

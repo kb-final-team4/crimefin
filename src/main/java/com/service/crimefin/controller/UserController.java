@@ -77,12 +77,13 @@ public class UserController {
         vo.setMemberId((String) requestJsonHashMap.get("memberId"));
         vo.setEmail((String) requestJsonHashMap.get("email"));
         vo.setPassword((String) requestJsonHashMap.get("password"));
-        vo.setName((String) requestJsonHashMap.get("name"));
+        vo.setName((String) requestJsonHashMap.get("username"));
         vo.setPhone((String) requestJsonHashMap.get("phone"));
         vo.setAddress((String) requestJsonHashMap.get("address"));
-        vo.setSex((int) requestJsonHashMap.get("sex"));
-        vo.setMessageOk((int) requestJsonHashMap.get("messageOk"));
+        vo.setSex(Integer.parseInt((String)requestJsonHashMap.get("sex")));
+        vo.setMessageOk(Integer.parseInt((String)requestJsonHashMap.get("messageOk")));
 
+        System.out.println(vo);
         //DB insert
         int result = userService.insertMember(vo);
 
@@ -170,7 +171,7 @@ public class UserController {
 
         int result = userService.isExistMemberId(memberId);
 
-        if(result != 0) { //중복되는 경우
+        if(result == 0) { //중복되는 경우
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
         else //사용가능한 아이디인 경우
