@@ -16,10 +16,12 @@
           <v-col cols="2" md="200">
             <!--<v-label for="memberId">아이디 </v-label>-->
             <v-text-field label="아이디" id="memberId" v-model="user.memberId" required outlined ></v-text-field>
+          
+          
           </v-col>
           <v-btn variant="tonal" class="button" type="button" @click="checkDuplicateId">
-          중복확인
-        </v-btn>
+          중복확인</v-btn>
+        
         </v-row>
         
 
@@ -252,10 +254,7 @@ methods: {
 }
 
 .button{
-  margin-left: 10px; 
-  margin-right: -110px;
-  margin-bottom: -45px;
-  margin-top: 20px;
+  margin-left: 530px; 
 }
 
 </style>
