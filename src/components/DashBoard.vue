@@ -5,24 +5,31 @@
     <v-main v-bind:style="{background : '#102C57'}">
       <v-container>
         <v-row>
-          <v-col cols="4" class="item-box" v-bind:style="{background : '#DAC0A3'}">
-            <v-sheet height="570px" v-bind:style="{background : '#EADBC8'}">
+          <v-col cols="3" class="item-box" v-bind:style="{background : '#DAC0A3'}">
+
               <v-col>
                 <v-row>
-                  <div class="v-card__title text-center mx-auto text--h6">
-                    개인 계좌 종합
-                  </div>
+                  <!-- 계좌 정보 그래프 카드 -->
+                  <v-card width="340px" height="240px" class="mx-auto account-list noscroll-content" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
+                    <v-row>
+                      <div class="v-card__title text-center mx-auto text--h6">
+                        개인 계좌 종합
+                      </div>
+                    </v-row>
+                    <v-row>
+                      <div class="chart-wrap mx-auto">
+                        <div id="chart1">
+                          <apexcharts id="myChart1" type="donut" width="300" height="300" :options="accountChartOptions" :series="accountSeries"></apexcharts>
+                        </div>
+                      </div>
+                    </v-row>
+                  </v-card>
+
                 </v-row>
                 <v-row>
-                  <div class="chart-wrap mx-auto">
-                    <div id="chart1">
-                      <apexcharts id="myChart1" type="donut" width="380" height="400" :options="accountChartOptions" :series="accountSeries"></apexcharts>
-                    </div>
-                  </div>
-                </v-row>
-                <br><v-divider></v-divider><br>
-                <v-row>
-                  <v-card width="300px" class="mx-auto account-list noscroll-content" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
+
+                  <!-- 계좌정보 text 카드 -->
+                  <v-card width="340px" class="mx-auto account-list noscroll-content" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
                   <div class="v-card__text text-center"
                        v-if="accountInfosList != null"
                        v-for="item in accountInfosList"
@@ -43,33 +50,53 @@
                   </v-row>
                   </div>
                   </v-card>
+
                 </v-row>
               </v-col>
-            </v-sheet>
+
           </v-col>
-          <v-col cols="8" class="item-box" v-bind:style="{background : '#DAC0A3'}">
-            <v-sheet height="570px" v-bind:style="{background : '#EADBC8'}">
+          <v-col cols="9" class="item-box" v-bind:style="{background : '#DAC0A3'}">
               <v-col>
+
+                <v-card>
                 <v-row>
+                  <!-- 조건입력 오른쪽 위 card -->
                   <v-col :cols="3">
-                  <div class="v-card__title justify-center text--h6">
+                  <div class="v-card__title d-flex align-center justify-center text--h6">
                     거래 내역
                   </div>
                   </v-col>
                   <v-col :cols="6">
-                  <v-select
-                      v-model="accountNumDropdown"
-                      v-if = "this.accountNumArr != null"
-                      label="계좌 선택"
-                      :items="this.accountNumArr"
-                  > <!-- items에 accountNumArr 넣기 -->
-                  </v-select>
+                    <v-row class="justify-center">
+                    <v-select
+                        v-bind:style="{maxWidth: '370px'}"
+                        v-model="accountNumDropdown"
+                        v-if = "this.accountNumArr != null"
+                        label="계좌 선택"
+                        :items="this.accountNumArr"
+                    >
+                    </v-select>
+                    </v-row>
+                    <v-row>
+                      <v-col :cols="5" v-bind:style="{marginTop: '-20px', marginLeft: '-10px'}">
+                        시작일자
+                        <input v-bind:style="{maxWidth:'100px'}" type="date" height="10px" v-model="bankingStartDate" label="시작일자" />
+                      </v-col>
+                      <v-col :cols="5" v-bind:style="{marginTop: '-20px', marginLeft: '-40px'}">
+                        종료일자
+                        <input v-bind:style="{maxWidth:'100px'}" type="date" height="10px" v-model="bankingEndDate" label="종료일자" />
+                      </v-col>
+                      <v-col :cols="2">
+                        <v-btn type="submit" color="white" v-bind:style="{background : '#444766', marginTop:'-14px'}" block outlined>조회</v-btn>
+                      </v-col>
+                    </v-row>
                   </v-col>
                   <v-col class="d-flex align-center justify-center" :cols="3">
                     <v-img src="../assets/bell.png" max-width="30px"  max-height="30px" @click="openNoticelist" />
                     <v-img src="../assets/add.png" max-width="30px" max-height="30px" @click="openaddlist" v-bind:style="{marginLeft: '10px'}"/>
                     <v-img src="../assets/delete.png" max-width="30px" max-height="30px" @click="opendeletelist" v-bind:style="{marginLeft: '10px'}"/>
                   </v-col>
+
                 </v-row>
                 <v-row>
                   <!-- todo 동적 apexchart 태그 re-rendering -->
@@ -79,27 +106,11 @@
                     </div>
                   </div>
                 </v-row>
+                </v-card>
+
+
                 <v-row>
-                  <v-col :cols="1">
-                  </v-col>
-                  <v-col :cols="3">
-                    <v-sheet class="mx-auto" height="100px" v-bind:style="{background : '#EADBC8'}">
-                        <v-form @submit.prevent="getBankingDaily">
-                          <v-row class="d-flex" v-bind:style="{marginTop: '10px'}">
-                            <v-col>
-                              <v-row>
-                                <v-text-field type="datetime-local" height="10px" v-model="bankingStartDate" label="시작일자"></v-text-field>
-                              </v-row>
-                              <v-row>
-                                <v-text-field type="datetime-local" height="10px" v-model="bankingEndDate" label="종료일자"></v-text-field>
-                              </v-row>
-                              <v-row>
-                                <v-btn type="submit" color="white" v-bind:style="{background : '#444766'}" block outlined>조회하기</v-btn>
-                              </v-row>
-                            </v-col>
-                          </v-row>
-                        </v-form>
-                    </v-sheet>
+                  <v-col :cols="4">
                   </v-col>
                   <v-col :cols="7" v-bind:style="{marginLeft: '20px'}">
                   <v-card class="banking-list noscroll-content" v-bind:style="{background : '#F8F0E5', color : 'gray'}">
@@ -112,7 +123,7 @@
                   </v-col>
                 </v-row>
               </v-col>
-            </v-sheet>
+
           </v-col>
         </v-row>
 
@@ -270,10 +281,11 @@ export default {
       //잔고 총합 구하고 계좌번호별로 분류해서 은행이랑 같이 아래 리스트에 표시하기
       //accountSeries에는 계좌번호별 퍼센티지 저장
       //accountChartOptions의 labels에는 계좌번호 저장
+
+      //여기는 수정하지말기
       accountSeries: [44,55,13,33], //this.balancePercentageArr, //balancePercentageArr
       accountChartOptions: {
         chart: {
-          width: 380,
           type: 'donut',
         },
         labels: ['123', '456', '789', '000'],//this.accountNumArr, //accountNumArr
@@ -287,14 +299,15 @@ export default {
               width: 200
             },
             legend: {
-              show: false
+              show: false,
             }
           }
         }],
         legend: {
+          show: true,
           position: 'right',
           offsetY: 0,
-          height: 230,
+          height: 200,
         }
       },
 
@@ -312,13 +325,12 @@ export default {
       bankingWithdrawlList : null, //리턴받은 출금액
       bankingWithdrawlToList : null, //리턴받은 출금 계좌 명 리스트
 
+      //todo 발표 시나리오 맞춰서 데이터 수정하기
       //오른쪽 차트 데이터들
       //getBankingListDaily
-      //세션에 바인딩된 memberId 보내고 시작시각 종료시각 입력한거 보내기
-      //거래시각 별로 bankingSeries에 잔고 저장하고 xaxis의 categories에 배열로 거래시각 저장하기
+      //여기 수정하기
       bankingSeries: [{
         name: '잔고',
-        //data: [100000, 41000, 35000, 51000, 49000, 62000, 69000, 91000, 148000]
         data : ['1020000', '1010000', '1050000', '1030000', '1050000', '50000']
       }],
       bankingChartOptions: {
@@ -341,8 +353,8 @@ export default {
             opacity: 0.5
           },
         },
+        //여기 수정하기 x축 값
         xaxis: {
-          //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
           categories: ["2023-09-10","2023-09-11","2023-09-12","2023-09-13","2023-09-14", "2023-09-15"],
         }
       },
@@ -472,6 +484,7 @@ export default {
         accountNum : this.accountNumDropdown
       }
 
+       //todo 발표 시나리오 맞춰서 데이터 수정하기
       this.noticeTimeArr = ['2023-09-10','2023-09-13','2023-09-15'];
       this.noticeBankNameArr = ['국민은행', '국민은행', '국민은행'];
       this.noticeDepositArr = [null, null, 10000000];
@@ -496,29 +509,30 @@ export default {
     },
 
     getBankingDaily(){
-      var url = "http://localhost:9999/asset/dashboard/time";
+      /*var url = "http://localhost:9999/asset/dashboard/time";
       var data ={
         memberId : this.memberId,
         accountNum : this.accountNumDropdown,
         startdate : this.bankingStartDate,
         enddate : this.bankingEndDate
-      };
+      };*/
 
-      console.log("getBankingDaily accountNumDropdown "+data.accountNum);
-      console.log("getBankingDaily startdate"+ data.startdate); //controller에서는 substring해서 쓰면 될듯
-      console.log("getBankingDaily enddate"+data.enddate);
+      //console.log("getBankingDaily accountNumDropdown "+data.accountNum);
+      //console.log("getBankingDaily startdate"+ data.startdate); //controller에서는 substring해서 쓰면 될듯
+      //console.log("getBankingDaily enddate"+data.enddate);
 
       //테스트 데이타 백에서 넘어오는거 보고 수정하기
+      //todo 발표 시나리오 맞춰서 데이터 수정하기
       this.bankingDateList = ["2023-09-10","2023-09-11","2023-09-12","2023-09-13","2023-09-14", "2023-09-15"];
       this.bankingDepositList = ["20000", null, "40000", null, "20000", null];
       this.bankingDepositNameList = ["cys", null, "cys2", null, "cys3", null];
-      this.bankingWithdrawlList = [null,"10000", null, "20000", null, "1000000"];
+      this.bankingWithdrawlList = [null,"10000", null, "20000", null, "100000"];
       this.bankingWithdrawlToList = [null,"ocl", null, "ocl2", null, "나쁜놈"];
+      this.bankingBalanceList = ['120000', '110000', '150000','130000','150000','50000'];
 
       this.bankingChartOptions.xaxis.categories = this.bankingDateList;
       console.log("getBankingDaily bankingChartOptions.xaxis.categories : " + this.bankingChartOptions.xaxis.categories);
 
-      this.bankingBalanceList = ['1020000', '1010000', '1050000', '1030000', '1050000', '50000'];
       for(let j = 0; j < this.bankingBalanceList.length; j++){
         this.bankingBalanceList[j] = parseInt(this.bankingBalanceList[j]);
       }
@@ -539,7 +553,52 @@ export default {
         }
       }
 
+      /*var initurl = "http://localhost:9999/asset/dashboard/init";
 
+      axios.get(initurl)
+          .then(response => {
+            this.bankingDateList = new Array(response.data.length);
+            this.bankingDepositList = new Array(response.data.length);
+            this.bankingDepositNameList = new Array(response.data.length);
+            this.bankingWithdrawlList = new Array(response.data.length);
+            this.bankingWithdrawlToList = new Array(response.data.length);
+            this.bankingBalanceList = new Array(response.data.length);
+
+            for(let i = 0; i<response.data.length; i++){
+              this.bankingDateList[i] = response.data[i].bankingDate;
+              this.bankingDepositList[i] = response.data[i].deposit;
+              this.bankingDepositNameList[i] = response.data[i].depositName;
+              this.bankingWithdrawlList[i] = response.data[i].withdrawal;
+              this.bankingWithdrawlToList[i] = response.data[i].withdrawalTo;
+              this.bankingBalanceList[i] = response.data[i].balance;
+            }
+
+            this.bankingChartOptions.xaxis.categories = this.bankingDateList;
+            console.log("getBankingDaily bankingChartOptions.xaxis.categories : " + this.bankingChartOptions.xaxis.categories);
+
+            for(let j = 0; j < this.bankingBalanceList.length; j++){
+              this.bankingBalanceList[j] = parseInt(this.bankingBalanceList[j]);
+            }
+            //console.log("getBankingDaily bankingSeries.data before"+ this.bankingSeries.data);
+            this.bankingSeries.data = this.bankingBalanceList;
+            console.log("getBankingDaily bankingSeries.data after"+ this.bankingSeries.data);
+
+            this.bankingInfoList = new Array(this.bankingDateList.length);
+            for(let i = 0; i<this.bankingDateList.length; i++){
+              //오른쪽차트 아래에 표기하는 곳
+              //입금
+              if(this.bankingDepositList[i] != null){
+                this.bankingInfoList[i] = this.bankingDateList[i]+" 입금 "+this.bankingDepositNameList[i]+" +"+this.bankingDepositList[i]+"원 잔고 : "+this.bankingBalanceList[i];
+              }
+              //출금
+              else{
+                this.bankingInfoList[i] = this.bankingDateList[i]+" 출금 "+this.bankingWithdrawlToList[i]+" -"+this.bankingWithdrawlList[i]+"원 잔고 : "+this.bankingBalanceList[i];
+              }
+            }
+          })
+          .catch(error => {
+
+          });*/
       //차트 리렌더링 -- 안됨
       /*console.log("ApexCharts exec start");
       console.log("ApexCharts exec this.bankingBalanceList " +this.bankingBalanceList );
@@ -583,25 +642,19 @@ export default {
       class Stack {
         constructor() {
           this.storage = {};
-          this.top = 0; // 스택의 가장 상단을 가리키는 포인터 변수 초기화
+          this.top = 0;
         }
-
         size() {
           return Object.keys(this.storage).length;
         }
-
-        // 스택에 데이터를 추가
         push(element) {
           this.storage[this.top] = element;
           this.top += 1;
         }
-
-        // 가장 나중에 추가된 데이터가 가장 먼저 추출되어야 함
         pop() {
           // 빈 스택에 에러처리
           if (Object.keys(this.storage).length === 0) {
             return;
-            // 위의 return문은 코드의 가독성을 위하여 쓰는 것이다(없어도 같은 결과가 나옴)
           }
 
           const result = this.storage[this.top-1];
@@ -611,14 +664,11 @@ export default {
           return result;
         }
       }
-      //들어온 String형의 숫자를 한글자씩 자른다
       var splitedStr = numStr.split('');
-      //그리고 각자 숫자로 변환해준다.
       for(let i = 0; i<splitedStr.length; i++){
         splitedStr[i] = parseInt(splitedStr[i]);
       }
       this.numKorStack = new Stack();
-      //뒤에서부터 스택에 push
       for(let j = splitedStr.length-1; j >= 0; j--){
         this.numKorStack.push(splitedStr[j])
       }
@@ -646,7 +696,6 @@ export default {
           strrst = "구"
 
         if(rst !== 0) {
-          //천백십 더해주기
           if (this.numKorStack.size() % 4 === 3)
             strrst += "천";
           else if (this.numKorStack.size() % 4 === 2)
@@ -654,7 +703,6 @@ export default {
           else if (this.numKorStack.size() % 4 === 1)
             strrst += "십";
         }
-          //만억조 더해주기
           if (this.numKorStack.size() / 4 === 1)
             strrst += "만";
           else if (this.numKorStack.size() / 4 === 2)
@@ -673,9 +721,10 @@ export default {
         memberId: this.memberId,
       };*/
 
-      //todo 테스트 데이타 백에서 넘어오는거 보고 수정하기
+      //todo 발표 시나리오 맞춰서 데이터 수정하기
+      var accountNickArr = ['계좌 1', '계좌 2', '계좌 3','계좌 4'];
       this.accountNumArr = ['111111-11-111111', '222222-22-2222222', '333333-33-333333', '444444-44-444444'];
-      this.accountChartOptions.labels = this.accountNumArr;
+      this.accountChartOptions.labels = accountNickArr;
       this.bankNameArr = ['국민은행', '국민은행', '신한은행', '하나은행'];
       this.balanceArr = ['500000', '300000', '100000', '100000'];
 
@@ -707,8 +756,6 @@ export default {
         this.numKor[z] = this.parseNumstrToKorean(this.balanceArr[z]);
       }
 
-      //this.numKor = this.parseNumstrToKorean(this.balanceArr); // 담아지지가 않음 todo 고치기
-
       let k=0;
       for(; k< this.accountNumArr.length; k++){
         this.accountInfoList[k] = "("+this.bankNameArr[k]+") "+ this.accountNumArr[k];
@@ -734,10 +781,9 @@ export default {
         else
           this.bankImgArr[k] ="won";
 
-        //여기서 this.balanceArr을 다른걸로
         this.accountInfosList[k] = [this.bankImgArr[k], this.numKor[k]+"원", this.accountInfoList[k]];
       }
-      this.accountChartOptions.labels = this.accountNumArr;
+      //this.accountChartOptions.labels = this.accountNumArr;
 
       console.log("getTotalAccountList accountInfosList " + this.accountInfosList);
 
