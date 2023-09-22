@@ -4,8 +4,7 @@
       <v-col width="50%" height="80%">
         <v-card >
           <v-card-title class="text-center" >
-            <div id="logo" height="50px"><v-img src="../assets/CRIME.png"></v-img></div>
-            <!-- <h2 class="mb-4">LOGIN</h2> -->
+            <div id="logo"><v-img src="../assets/CRIME (2).png"></v-img></div>
           </v-card-title>
 
           <v-card-text>
@@ -26,7 +25,7 @@
                 required
                 type="password"
               ></v-text-field>
-              <v-btn
+              <router-link to="/main"><v-btn
                 type="submit"
                 color="primary"
                 class="mt-4"
@@ -36,16 +35,7 @@
               >
                 로그인
               </v-btn>
-              <!-- 임시 로그인 버튼 -->
-              <router-link to="/main"><v-btn
-                color="primary"
-                class="mt-4"
-                block
-                outlined
-                depressed
-              >
-                로그인
-              </v-btn></router-link>
+              </router-link>
             </v-form>
           </v-card-text>
           <v-card-actions class="justify-center">
@@ -86,8 +76,7 @@
                 </v-col>
                 <v-col cols="8" >
                 <v-text-field label="인증번호 입력" id="verification" class="verification" v-model="verification" required outlined></v-text-field>
-                <v-btn variant="tonal" type="button" @click="confirmVerficationCode" class="btn-permit" style="margin-right:30px;">확인</v-btn>
-                <v-btn variant="tonal" type="button" @click="modal2=false" class="btn-close2">닫기</v-btn>
+                <v-btn variant="tonal" type="button" @click="confirmVerficationCode" class="btn-permit">확인</v-btn>
                 </v-col>
                 <!-- 실제 실행시킬 떄는 @click="navigate" 로 바꾸기 -->
             </div>
@@ -196,7 +185,6 @@ export default {
               // 아이디를 찾았을 때 foundUserId에 값을 설정하고 모달 창을 보이도록 상태 변수 설정
               this.foundUserId = this.userId;
               this.showSuccessModal = true;
-              this.modal=false;
             }
             else {
               alert('아이디를 찾을 수 없습니다.');
@@ -307,8 +295,10 @@ export default {
 
 
 <style scoped>
-.logo{
+
+#logo {
   display: inline-block;
+  height: 20%;
 }
 
 .d-flex {
