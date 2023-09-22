@@ -76,7 +76,7 @@
     </v-row>
 
     
-
+<!-- 
     <v-row justify="center" class="ma-2">
     <v-col cols="30" md="30">
     <v-radio-group v-model="user.sex" row>
@@ -85,7 +85,7 @@
     <v-radio label="여성" value="2"></v-radio>
     </v-radio-group>
     </v-col>
-    </v-row>
+    </v-row> -->
 
 
     <v-row justify="center" class="ma-2">
