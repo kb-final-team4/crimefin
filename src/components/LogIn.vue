@@ -25,6 +25,16 @@
                 required
                 type="password"
               ></v-text-field>
+              <v-btn
+                type="submit"
+                color="primary"
+                class="mt-4"
+                block
+                outlined
+                depressed
+              >
+                로그인
+              </v-btn>
               <router-link to="/main"><v-btn
                 type="submit"
                 color="primary"
