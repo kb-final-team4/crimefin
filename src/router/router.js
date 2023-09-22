@@ -127,8 +127,8 @@ const routes = [
   },
   {
     path: '/mypage',
-    name: 'ChangeInfo',
-    component: ChangeInfo
+    name: 'MyPage',
+    component: MyPage
   },
   {
     path: '/changeinfo',
