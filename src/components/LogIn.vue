@@ -86,7 +86,8 @@
                 </v-col>
                 <v-col cols="8" >
                 <v-text-field label="인증번호 입력" id="verification" class="verification" v-model="verification" required outlined></v-text-field>
-                <v-btn variant="tonal" type="button" @click="confirmVerficationCode" class="btn-permit">확인</v-btn>
+                <v-btn variant="tonal" type="button" @click="confirmVerficationCode" class="btn-permit" style="margin-right:30px;">확인</v-btn>
+                <v-btn variant="tonal" type="button" @click="modal2=false" class="btn-close2">닫기</v-btn>
                 </v-col>
                 <!-- 실제 실행시킬 떄는 @click="navigate" 로 바꾸기 -->
             </div>
@@ -195,6 +196,7 @@ export default {
               // 아이디를 찾았을 때 foundUserId에 값을 설정하고 모달 창을 보이도록 상태 변수 설정
               this.foundUserId = this.userId;
               this.showSuccessModal = true;
+              this.modal=false;
             }
             else {
               alert('아이디를 찾을 수 없습니다.');
