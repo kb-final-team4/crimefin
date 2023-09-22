@@ -1,105 +1,120 @@
-<!-- 찐코드 // 마이페이지 비밀번호 수정-->
+
 <template>
-  <div>
-    <v-navigation-drawer app>
-      <v-list>
-        <v-list-item>
-          <v-list-item-avatar>
-            <v-img src="logo.png"></v-img>
-          </v-list-item-avatar>
-          <v-list-item-title>CrimeFin</v-list-item-title>
-        </v-list-item>
+    <div id="app">
+        <v-app>
+            <v-content>
+                <v-container fluid>
+                    <v-row>
+                        <v-col>
+                            <!-- 앱바 자리-->
+                            <AppBar fixed app/>
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <!-- <v-row> -->
+                        <v-col cols="2">
+                            <v-card>
+                                <v-navigation-drawer theme="dark" width="0px;" >
+                                    <v-list nav>
+                                        <v-list-item
+                                            v-for="item in items"
+                                            :key="item.title"
+                                            :to="item.to"
+                                            link
+                                        >
+                                        <v-list-item>
+                                        <v-list-item-icon>
+                                            <v-icon>{{ item.icon }}</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-content>
+                                            <v-list-item-title>{{ item.title }}</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                        </v-list-item>
+                                    </v-list>
+                                </v-navigation-drawer>
+                                <v-main style="height: 850px;"></v-main>
+                            </v-card>
+                        </v-col> 
+                       
+                        <v-col cols="5" style="height: 1000px;">
+                            <div class="background">
+                            <h4 class="title">비밀번호 변경</h4>
+                                <v-col cols="7">
+                                <v-text-field
+                                    label="현재 비밀번호"
+                                    id="password"
+                                    v-model="password"
+                                    required
+                                    outlined
+                                    class="t-field"
+                                ></v-text-field>
+                                </v-col>
 
-        <v-divider></v-divider>
+                                <v-col cols="7">
+                                <v-text-field
+                                    label="새로운 비밀번호"
+                                    id="newPassword"
+                                    v-model="newPassword"
+                                    required
+                                    outlined
+                                    class="t-field"
+                                ></v-text-field>
+                                </v-col>
 
-        <v-list-item link to="/changeinfo">
-        <v-list-item-icon>
-          <v-icon>mdi-account</v-icon>
-        </v-list-item-icon>
-        <v-list-item-title class="larger-text">회원정보 변경</v-list-item-title>
-      
-      </v-list-item>
+                                <v-col cols="7">
+                                <v-text-field
+                                    label="비밀번호 확인"
+                                    id="passwordConfirm"
+                                    v-model="passwordConfirm"
+                                    required
+                                    outlined
+                                    class="t-field"
+                                ></v-text-field>
+                                </v-col>
 
-        <v-list-item link to="/changepassword">
-          <v-list-item-icon>
-            <v-icon>mdi-lock</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title class="larger-text">비밀번호 수정</v-list-item-title>
-        </v-list-item>
-
-        <v-list-item link to="/memberresign">
-          <v-list-item-icon>
-            <v-icon>mdi-cog</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title class="larger-text">회원탈퇴</v-list-item-title>
-        </v-list-item>
-        <!-- 추가 메뉴 아이템 작성 -->
-      </v-list>
-    </v-navigation-drawer>
-    <div class="black-bg4" v-if="modal4 == true">
-      <div class="white-bg4">
-        <h4 class="title">비밀번호 변경</h4>
-        <v-col cols="8">
-          <v-text-field
-            label="현재 비밀번호"
-            id="password"
-            v-model="password"
-            required
-            outlined
-            class="t-field"
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="8">
-          <v-text-field
-            label="새로운 비밀번호"
-            id="newPassword"
-            v-model="newPassword"
-            required
-            outlined
-            class="t-field"
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="8">
-          <v-text-field
-            label="비밀번호 확인"
-            id="passwordConfirm"
-            v-model="passwordConfirm"
-            required
-            outlined
-            class="t-field"
-          ></v-text-field>
-        </v-col>
-
-        <v-btn variant="tonal" type="button" @click="changePassword" class="btn-change"
-          >비밀번호 변경</v-btn
-        >
-      </div>
+                                <v-btn variant="tonal" type="button" @click="changePassword" class="btn-change"
+                                >비밀번호 변경</v-btn>
+                            </div>
+                        </v-col>  
+                    
+                    </v-row>
+                 </v-container>
+            </v-content>
+        </v-app>
     </div>
-    <app-bar />
-  </div>
+
+
 </template>
 <script>
-import axios from 'axios';
 import AppBar from '../views/AppBar.vue';
-
 export default {
-  components: {
-    'app-bar': AppBar, // 상단바 컴포넌트를 등록합니다.
-  },
+    components: {
+      AppBar, // 상단바 컴포넌트를 등록합니다.
+    },  
+    name:'App',
+    data() {
+      return {
+        items: [
+        { title: "회원정보 수정", to: "/changeinfo", icon: "mdi-pencil" },
+        { title: "비밀번호 변경", to: "/delete-password", icon: "mdi-lock" },
+        { title: "회원탈퇴", to: "/memberresign", icon: "mdi-close" }
 
-  name: 'App',
-  data() {
-    return {
-      modal4: true,
-      password: '',
-      newpassword: '',
-      passwordConfirm: '',
-    };
-  },
+        // 다른 아이템을 필요에 따라 추가할 수 있습니다.
+      ],
 
-  methods: {
+        user: {
+        password: '',
+        newpassword: '',
+        passwordConfirm: '',
+        },
+      };
+
+      
+    },
+
+    
+    methods: {
     async changePassword() {
       // 현재 비밀번호, 새로운 비밀번호, 비밀번호 확인을 가져옴
       const currentPassword = this.password;
@@ -127,35 +142,14 @@ export default {
       }
     },
   },
-};
+}
 </script>
 <style>
-.form {
-  margin: 0 auto;
-}
-body {
-  margin: 0;
-}
-div {
-  box-sizing: border-box;
-}
-.black-bg4 {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  padding: 20px;
-}
-/* .white-bg4 {
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        flex-direction: column;
-        background: white;
-        border-radius: 8px;
-    }    */
+    .userInfo{
+        margin-top: 0px;
+    }
 
-.white-bg4 {
+    .background {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -174,39 +168,4 @@ div {
             padding-bottom:20px;
             
         }
-
-.t-field {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-
-v-container {
-  flex: 1;
-}
-
-/*  .white-bg4 {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        -o-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        align-items: center;
-        justify-content: center;
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    padding-left: 200px; 
-    margin-left:700px; } */
-
-#name {
-  position: absolute;
-  top: 30px;
-  bottom: 50px;
-}
 </style>
-
-<!-- 클릭하면 열려야 할 곳에 @click="modal==true" 넣기 -->
