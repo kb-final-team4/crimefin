@@ -6,7 +6,7 @@
       <v-container fluid class="btn-container">
         <div class="d-flex justify-center">
 
-          <v-card class="mx-2 mt-6 mr-2  cover1" width="25%" tile @click="redirectToPhishingNumber('Phone')">
+          <v-card class="mx-2 mt-6 mr-2  cover1" width="23%" tile @click="redirectToPhishingNumber('Phone')">
             <v-card-title>
               <v-card class="mx-auto inner-cover" width="95%" height="60%" tile>
                 <v-img src="../assets/12.png" class="mx-auto" width="100%" height="100%"></v-img>
@@ -15,7 +15,7 @@
             
           </v-card>
 
-          <v-card class="mx-2 mt-6 mr-2 cover2" width="25%" tile @click="redirectToPhishingNumber('Message')">
+          <v-card class="mx-2 mt-6 mr-2 cover2" width="23%" tile @click="redirectToPhishingNumber('Message')">
             <v-card-title>
               <v-card class="mx-auto inner-cover" width="95%" height="60%" tile>
                 <v-img src="../assets/13.png" class="mx-auto" width="100%" height="100%"></v-img>
@@ -24,7 +24,7 @@
             
           </v-card>
 
-          <v-card class="mx-2 mt-6 mr-2 cover3" width="25%" tile>
+          <v-card class="mx-2 mt-6 mr-2 cover3" width="23%" tile>
             <v-card-title>
               <v-card class="mx-auto inner-cover" width="95%" height="60%" tile  @click="redirectToPhishingLink('SNS')" >
                 <v-img
@@ -118,13 +118,13 @@ export default {
 .cover1, .cover3 {
   background-color: #14274E !important;
   border-radius: 25px !important;
-  margin: 2% !important;
+  margin: 3% !important;
 }
 
 .cover2 {
   background-color: #9BA4B4 !important;
   border-radius: 25px !important;
-  margin: 2% !important;
+  margin: 3% !important;
 }
 .inner-cover{
   background-color: #F1F6F9;
@@ -133,7 +133,7 @@ export default {
 }
 
 .cover1, .cover2, .cover3 {
-  margin-top: 5% !important;
+  margin-top: 8% !important;
   transition: all .3s ease;
 }
 
