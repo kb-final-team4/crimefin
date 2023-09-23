@@ -1,230 +1,123 @@
 <template>
   <v-app>
-    <!-- 상단바 컴포넌트 import -->
     <AppBar />
-    <v-main v-bind:style="{ background: '#102C57' }">
+
+    <v-main>
       <v-container>
+        <v-col class="d-flex align-center justify-center" :cols="3">
+          <v-img
+            src="../assets/bell.png"
+            max-width="30px"
+            max-height="30px"
+            @click="openNoticelist"
+          />
+          <v-img
+            src="../assets/add.png"
+            max-width="30px"
+            max-height="30px"
+            @click="openaddlist"
+            v-bind:style="{ marginLeft: '10px' }"
+          />
+          <v-img
+            src="../assets/delete.png"
+            max-width="30px"
+            max-height="30px"
+            @click="opendeletelist"
+            v-bind:style="{ marginLeft: '10px' }"
+          />
+        </v-col>
+        
         <v-row>
-          <v-col
-            cols="4"
-            class="item-box"
-            v-bind:style="{ background: '#DAC0A3' }"
-          >
-            <v-sheet height="570px" v-bind:style="{ background: '#EADBC8' }">
-              <v-col>
-                <v-row>
-                  <div class="v-card__title text-center mx-auto text--h6">
-                    개인 계좌 종합
-                  </div>
-                </v-row>
-                <v-row>
-                  <div class="chart-wrap mx-auto">
-                    <div id="chart1">
-                      <apexcharts
-                        id="myChart1"
-                        type="donut"
-                        width="380"
-                        height="400"
-                        :options="accountChartOptions"
-                        :series="accountSeries"
-                      ></apexcharts>
-                    </div>
-                  </div>
-                </v-row>
-                <br /><v-divider></v-divider><br />
-                <v-row>
-                  <v-card
-                    width="300px"
-                    class="mx-auto account-list noscroll-content"
-                    v-bind:style="{ background: '#F8F0E5', color: 'gray' }"
-                  >
-                    <div
-                      class="v-card__text text-center"
-                      v-if="accountInfosList != null"
-                      v-for="item in accountInfosList"
-                      v-bind:style="{ height: '60px' }"
-                    >
-                      <v-row>
-                        <v-col :cols="3">
-                          <img
-                            :src="getImgUrl(item[0])"
-                            v-bind:alt="item[0]"
-                            height="40px"
-                            width="40px"
-                          />
-                        </v-col>
-                        <v-col :cols="8">
-                          <v-row
-                            v-bind:style="{
-                              paddingTop: '10px',
-                              fontSize: '16px',
-                            }"
-                          >
-                            {{ item[1] }}<br />
-                          </v-row>
-                          <v-row v-bind:style="{ fontSize: '12px' }">
-                            {{ item[2] }}
-                          </v-row>
-                        </v-col>
-                      </v-row>
-                    </div>
-                  </v-card>
-                </v-row>
-              </v-col>
-            </v-sheet>
-          </v-col>
-          <v-col
-            cols="8"
-            class="item-box"
-            v-bind:style="{ background: '#DAC0A3' }"
-          >
-            <v-sheet height="570px" v-bind:style="{ background: '#EADBC8' }">
-              <v-col>
-                <v-card>
-                  <v-row>
-                    <!-- 조건입력 오른쪽 위 card -->
-                    <v-col :cols="3">
-                      <div class="v-card__title justify-center text--h6">
-                        거래 내역
-                      </div>
-                    </v-col>
-                    <v-col :cols="6">
-                      <v-select
-                        v-model="accountNumDropdown"
-                        v-if="this.accountNumArr != null"
-                        label="계좌 선택"
-                        :items="this.accountNumArr"
-                      >
-                        <!-- items에 accountNumArr 넣기 -->
-                      </v-select>
-                    </v-col>
-                    <v-col class="d-flex align-center justify-center" :cols="3">
-                      <v-img
-                        src="../assets/bell.png"
-                        max-width="30px"
-                        max-height="30px"
-                        @click="openNoticelist"
-                      />
-                      <v-img
-                        src="../assets/add.png"
-                        max-width="30px"
-                        max-height="30px"
-                        @click="openaddlist"
-                        v-bind:style="{ marginLeft: '10px' }"
-                      />
-                      <v-img
-                        src="../assets/delete.png"
-                        max-width="30px"
-                        max-height="30px"
-                        @click="opendeletelist"
-                        v-bind:style="{ marginLeft: '10px' }"
-                      />
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <!-- todo 동적 apexchart 태그 re-rendering -->
-                    <div
-                      class="chart-wrap mx-auto"
-                      v-bind:style="{ marginTop: '-20px' }"
-                    >
-                      <div id="chart2">
-                        <apexchart
-                          id="bankingchart1"
-                          type="line"
-                          width="660"
-                          height="300"
-                          :options="bankingChartOptions"
-                          :series="bankingSeries"
-                        ></apexchart>
-                      </div>
-                    </div>
-                  </v-row>
-                </v-card>
-
-                <v-row>
-                  <v-col :cols="1"> </v-col>
-                  <v-col :cols="3">
-                    <v-sheet
-                      class="mx-auto"
-                      height="100px"
-                      v-bind:style="{ background: '#EADBC8' }"
-                    >
-                      <v-form @submit.prevent="getBankingDaily">
-                        <v-row
-                          class="d-flex"
-                          v-bind:style="{ marginTop: '10px' }"
-                        >
-                          <v-col>
-                            <v-row>
-                              <v-text-field
-                                type="datetime-local"
-                                height="10px"
-                                v-model="bankingStartDate"
-                                label="시작일자"
-                              ></v-text-field>
-                            </v-row>
-                            <v-row>
-                              <v-text-field
-                                type="datetime-local"
-                                height="10px"
-                                v-model="bankingEndDate"
-                                label="종료일자"
-                              ></v-text-field>
-                            </v-row>
-                            <v-row>
-                              <v-btn
-                                type="submit"
-                                color="white"
-                                v-bind:style="{ background: '#444766' }"
-                                block
-                                outlined
-                                >조회하기</v-btn
-                              >
-                            </v-row>
-                          </v-col>
-                        </v-row>
-                      </v-form>
-                    </v-sheet>
-                  </v-col>
-                  <v-col :cols="7" v-bind:style="{ marginLeft: '20px' }">
-                    <v-card
-                      class="banking-list noscroll-content"
-                      v-bind:style="{ background: '#F8F0E5', color: 'gray' }"
-                    >
-                      <div
-                        class="v-card__text"
-                        v-if="bankingInfoList != null"
-                        v-for="item in bankingInfoList"
-                      >
-                        {{ item }}
-                      </div>
-                    </v-card>
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-sheet>
-          </v-col>
-        </v-row>
-
-        <div class="outer-bg" v-if="this.modal !== false">
-          <div class="modal-bg">
-            <h4
-              class="v-card__title text-center"
-              v-bind:style="{ color: 'gray' }"
-            >
-              나의 알림 리스트
-            </h4>
+          <v-col cols="4" class="item-box">
+            <!-- 대시보드 1 :: 도넛 그래프 -->
             <v-card>
-              <div
-                class="v-card__text"
-                v-bind:style="{ background: '#F8F0E5', color: 'gray' }"
-                v-if="noticeInfoList != null"
-                v-for="notice in noticeInfoList"
-              >
-                {{ notice }}
+              <div class="v-card__title text-center mx-auto text--h6">
+                개인 계좌 종합
+              </div>
+              <div class="chart-wrap mx-auto">
+                <div id="chart1">
+                  <apexcharts id="myChart1" type="donut" width="380" height="400" :options="accountChartOptions" :series="accountSeries"></apexcharts>
+                </div>
               </div>
             </v-card>
-            <br />
+
+            <br><v-divider></v-divider><br>
+            
+            <!-- 대시보드 2 :: 전체 계좌 리스트 -->
+            <v-card>
+              <v-card width="300px" class="mx-auto account-list noscroll-content" v-bind:style="{ background: '#F8F0E5', color: 'gray' }">
+                <div class="v-card__text text-center" v-if="accountInfosList != null" v-for="item in accountInfosList" v-bind:style="{ height: '60px' }">
+                  <v-row>
+                    <v-col :cols="3">
+                      <img :src="getImgUrl(item[0])" v-bind:alt="item[0]" height="40px" width="40px"/>
+                    </v-col>
+                    <v-col :cols="8">
+                      <v-row v-bind:style="{ paddingTop: '10px', fontSize: '16px'}">
+                        {{ item[1] }}<br>
+                      </v-row>
+                      <v-row v-bind:style="{ fontSize: '12px' }">
+                        {{ item[2] }}
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                </div>
+              </v-card>
+            </v-card>                
+          </v-col>
+
+          <v-col cols="8" class="item-box">
+            <!-- 대시보드 3 :: 계좌 거래내역 그래프 -->
+            <v-card>
+              <div class="v-card__title justify-center text--h6">
+                거래 내역
+              <v-select v-model="accountNumDropdown" v-if="this.accountNumArr != null" label="계좌 선택" :items="this.accountNumArr" />
+              </div>
+              <v-row>
+                <div class="chart-wrap mx-auto" v-bind:style="{ marginTop: '-20px' }" >
+                  <div id="chart2">
+                    <apexchart id="bankingchart1" type="line" width="660" height="300" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
+                  </div>
+                </div>
+              </v-row>
+            </v-card>
+
+            <br><v-divider></v-divider><br>
+
+            <!-- 대시보드 4 :: 계좌 거래내역 리스트 -->
+            <v-card>
+              <v-col >
+                <v-form @submit.prevent="getBankingDaily">
+                  <v-row>
+                      <v-text-field type="datetime-local" height="10px" v-model="bankingStartDate" label="시작일자"></v-text-field>
+                      <v-text-field type="datetime-local" height="10px" v-model="bankingEndDate" label="종료일자"></v-text-field>
+                      <v-btn type="submit" color="white" v-bind:style="{ background: '#444766' }" block outlined>조회하기</v-btn >
+                    </v-row>
+                </v-form>
+              </v-col>
+              <v-col>
+              <v-card class="banking-list noscroll-content" v-bind:style="{ background: '#F8F0E5', color: 'gray' }" >
+                  <div class="v-card__text" v-if="bankingInfoList != null" v-for="item in bankingInfoList" >
+                    {{ item }}
+                  </div>
+                </v-card>
+              </v-col>
+            </v-card>    
+
+          </v-col>
+      </v-row>
+
+      <!-- 알림 리스트 -->
+      <div class="outer-bg" v-if="this.modal !== false">
+        <div class="modal-bg">
+          <h4 class="v-card__title text-center" v-bind:style="{ color: 'gray' }" >
+            나의 알림 리스트
+          </h4>
+          <v-card>
+            <div class="v-card__text" v-bind:style="{ background: '#F8F0E5', color: 'gray' }" v-if="noticeInfoList != null" v-for="notice in noticeInfoList" >
+                {{ notice }}
+            </div>
+          </v-card>
+          <br>
             <v-btn
               v-bind:style="{ background: '#EADBC8', color: 'gray' }"
               variant="tonal"
@@ -233,190 +126,196 @@
               class="btn-close"
               >닫기</v-btn
             >
-          </div>
         </div>
+      </div>
 
-        <div class="outer-bg2" v-if="this.modal2 !== false">
-          <div class="modal-bg2">
-            <h4
-              class="v-card__title text-center"
-              v-bind:style="{ color: 'gray' }"
-            >
-              계좌 등록
-            </h4>
-            <v-card>
-              <v-row>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="accountId"
-                    label="아이디"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="bankName"
-                    label="은행명"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="accountNum"
-                    label="계좌번호"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="1">
-                  <v-btn
-                    variant="tonal"
-                    class="button"
-                    @click="authenticateAccount"
-                    >인증</v-btn
-                  >
-                </v-col>
-              </v-row>
-
-              <v-row>
-                <!-- <div v-if="isAuthenticated"> -->
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="authNumConfirm"
-                    label="입금자명"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="1">
-                  <v-btn class="button" @click="confirmAuthNum">확인</v-btn>
-                </v-col>
-                <!-- </div> -->
-              </v-row>
-              <v-row>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="accountNickname"
-                    label="계좌별명"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="accountLimit"
-                    label="limit"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card>
-            <br />
-            <v-row class="d-flex justify-end">
-              <v-btn
-                v-bind:style="{ background: '#EADBC8', color: 'gray' }"
-                variant="tonal"
-                type="button"
-                @click="registAccount"
-                class="btn-close"
-                style="margin-right: 30px"
-                >등록</v-btn
-              >
-              <v-btn
-                v-bind:style="{ background: '#EADBC8', color: 'gray' }"
-                variant="tonal"
-                type="button"
-                @click="modal2 = false"
-                class="btn-close"
-                >닫기</v-btn
-              >
+      <!-- 계좌 등록 -->
+      <div class="outer-bg2" v-if="this.modal2 !== false">
+        <div class="modal-bg2">
+          <h4
+            class="v-card__title text-center"
+            v-bind:style="{ color: 'gray' }"
+          >
+            계좌 등록
+          </h4>
+          <v-card>
+            <v-row>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="accountId"
+                  label="아이디"
+                  variant="solo"
+                  class="t-field"
+                ></v-text-field>
+              </v-col>
             </v-row>
-          </div>
-        </div>
-
-        <div class="outer-bg3" v-if="this.modal3 !== false">
-          <div class="modal-bg3">
-            <h4
-              class="v-card__title text-center"
-              v-bind:style="{ color: 'gray' }"
-            >
-              계좌 삭제
-            </h4>
-            <v-card>
-              <v-row>
-                <v-col cols="10">
-                  <v-text-field
-                    v-model="memberId"
-                    label="아이디"
-                    variant="solo"
-                    class="t-field3"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="10">
-                  <v-text-field
-                    v-model="bankName"
-                    label="은행명"
-                    variant="solo"
-                    class="t-field3"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="10">
-                  <v-text-field
-                    v-model="accountNum"
-                    label="계좌번호"
-                    variant="solo"
-                    class="t-field3"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card>
-            <br />
-            <v-row class="d-flex justify-end">
-              <v-btn
-                v-bind:style="{ background: '#EADBC8', color: 'gray' }"
-                variant="tonal"
-                type="button"
-                @click="deleteAccount"
-                class="btn-close"
-                style="margin-right: 30px"
-                >삭제</v-btn
-              >
-              <v-btn
-                v-bind:style="{ background: '#EADBC8', color: 'gray' }"
-                variant="tonal"
-                type="button"
-                @click="modal3 = false"
-                class="btn-close"
-                >닫기</v-btn
-              >
+            <v-row>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="bankName"
+                  label="은행명"
+                  variant="solo"
+                  class="t-field"
+                ></v-text-field>
+              </v-col>
             </v-row>
-          </div>
+            <v-row>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="accountNum"
+                  label="계좌번호"
+                  variant="solo"
+                  class="t-field"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="1">
+                <v-btn
+                  variant="tonal"
+                  class="button"
+                  @click="authenticateAccount"
+                  >인증</v-btn
+                >
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <!-- <div v-if="isAuthenticated"> -->
+              <v-col cols="8">
+                <v-text-field
+                  v-model="authNumConfirm"
+                  label="입금자명"
+                  variant="solo"
+                  class="t-field"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="1">
+                <v-btn class="button" @click="confirmAuthNum">확인</v-btn>
+              </v-col>
+              <!-- </div> -->
+            </v-row>
+            <v-row>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="accountNickname"
+                  label="계좌별명"
+                  variant="solo"
+                  class="t-field"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="accountLimit"
+                  label="limit"
+                  variant="solo"
+                  class="t-field"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-card>
+          <br />
+          <v-row class="d-flex justify-end">
+            <v-btn
+              v-bind:style="{ background: '#EADBC8', color: 'gray' }"
+              variant="tonal"
+              type="button"
+              @click="registAccount"
+              class="btn-close"
+              style="margin-right: 30px"
+              >등록</v-btn
+            >
+            <v-btn
+              v-bind:style="{ background: '#EADBC8', color: 'gray' }"
+              variant="tonal"
+              type="button"
+              @click="modal2 = false"
+              class="btn-close"
+              >닫기</v-btn
+            >
+          </v-row>
         </div>
+      </div>
+
+      <!-- 계좌 삭제 -->
+      <div class="outer-bg3" v-if="this.modal3 !== false">
+        <div class="modal-bg3">
+          <h4
+            class="v-card__title text-center"
+            v-bind:style="{ color: 'gray' }"
+          >
+            계좌 삭제
+          </h4>
+          <v-card>
+            <v-row>
+              <v-col cols="10">
+                <v-text-field
+                  v-model="memberId"
+                  label="아이디"
+                  variant="solo"
+                  class="t-field3"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="10">
+                <v-text-field
+                  v-model="bankName"
+                  label="은행명"
+                  variant="solo"
+                  class="t-field3"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="10">
+                <v-text-field
+                  v-model="accountNum"
+                  label="계좌번호"
+                  variant="solo"
+                  class="t-field3"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-card>
+          <br />
+          <v-row class="d-flex justify-end">
+            <v-btn
+              v-bind:style="{ background: '#EADBC8', color: 'gray' }"
+              variant="tonal"
+              type="button"
+              @click="deleteAccount"
+              class="btn-close"
+              style="margin-right: 30px"
+              >삭제</v-btn
+            >
+            <v-btn
+              v-bind:style="{ background: '#EADBC8', color: 'gray' }"
+              variant="tonal"
+              type="button"
+              @click="modal3 = false"
+              class="btn-close"
+              >닫기</v-btn
+            >
+          </v-row>
+        </div>
+      </div>
       </v-container>
     </v-main>
+
+    <!-- Footer -->
+    <Footer/>
   </v-app>
 </template>
 
 <script>
-import AppBar from "../views/AppBar.vue"; // 상단바 컴포넌트 import
+import AppBar from "../views/AppBar.vue"; 
+import Footer from '../views/Footer.vue';
 import VueApexCharts from "vue-apexcharts";
 import axios from "axios";
 export default {
   components: {
-    AppBar, // 상단바 컴포넌트 등록
+    AppBar,  Footer,
     apexcharts: VueApexCharts, //차트 라이브러리
   },
   data: function () {
@@ -1100,6 +999,9 @@ export default {
 </script>
 
 <style>
+p, div, v-app{
+  font-family: 'Pretendard-Regular', sans-serif;
+}
 .account-list {
   height: calc(100vh - 62vh);
   overflow-y: auto;
