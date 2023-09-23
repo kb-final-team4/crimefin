@@ -26,8 +26,8 @@
               <v-img
                 class="mx-auto"
                 src="../assets/exp/msgGame/intro.png"
-                max-width="600"
-                max-height="500"
+                max-width="350"
+                max-height="270"
               />
               <v-img
                 class="mx-auto gamebtn"
@@ -44,8 +44,8 @@
                 <v-img
                   class="mx-auto"
                   src="../assets/exp/msgGame/chooseRole.png"
-                  max-width="400"
-                  max-height="600"
+                  max-width="270"
+                  max-height="360"
                   v-bind:style="{ marginTop: '20px' }"
                 />
               </v-row>
@@ -114,7 +114,7 @@
                 </v-sheet>
               </v-col>
               <v-col :cols="7" class="d-flex justify-center align-center">
-                <v-sheet class="answerArea">
+                <v-sheet class="answerArea" v-bind:style="{border: '#f5c86e solid 5px'}">
                   <v-row>
                     <v-img
                       v-bind:style="{ marginBottom: '20px' }"
@@ -214,7 +214,7 @@
               <v-sheet class="questArea"> </v-sheet>
             </v-col>
             <v-col :cols="5">
-              <v-sheet class="answerArea">
+              <v-sheet class="answerArea" v-bind:style="{border: '#f5c86e solid 5px'}">
                 <v-row class="goodAnswer">
                   <!--
                     좋은 대답
@@ -358,13 +358,13 @@ export default {
   margin-bottom: 10px;
 }
 .questPhone {
-  max-width: 300px;
-  max-height: 800px;
+  max-width: 250px;
+  max-height: 700px;
 }
 .answerbtn {
   max-width: 200px;
   max-height: 200px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding: 5px;
 }
 .gamebtn:hover {
@@ -375,9 +375,9 @@ export default {
   transform: translateY(-5px);
 }
 
-.answerArea {
+/*.answerArea {
   border: #f5c86e solid 5px;
-}
+}*/
 </style>
 
 <!-- /expmessagegame -->
