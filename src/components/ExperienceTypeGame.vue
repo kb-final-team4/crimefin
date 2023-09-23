@@ -7,14 +7,13 @@
       <v-container>
         <v-sheet class="gameMainSheet mx-auto">
 
-          <v-row class="justify-center">
+          <v-row class="justify-center" v-bind:style="{marginBottom: '30px'}">
             <v-card>
               <v-img v-bind:style="{marginTop: '10px'}" src="../assets/exp/typeGame/title.png" max-width="400px" max-height="100px"/>
             </v-card>
           </v-row>
-            <br>
           <!-- 게임 소개 -->
-          <div class="gameIntro mx-auto"  v-if="isGameIntro === true">
+          <div class="gameIntro mx-auto" v-bind:style="{marginTop: '-30px'}"  v-if="isGameIntro === true">
             <v-row class="justify-center" id="gameIntro" v-if="isGameIntro === true">
               <v-sheet>
                 <v-row>
@@ -48,6 +47,8 @@
               </v-row>
             </v-row>
             </v-col>
+
+            <v-col :cols="1"></v-col>
 
             <v-col :cols="5" class="answerBtnArea">
               <v-row class="justify-center">
