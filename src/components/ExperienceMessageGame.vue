@@ -365,7 +365,18 @@ export default {
   max-width: 200px;
   max-height: 200px;
   margin-bottom: 20px;
-  padding: 10px;
+  padding: 5px;
+}
+.gamebtn:hover {
+  transform: translateY(-5px);
+}
+
+.answerbtn:hover {
+  transform: translateY(-5px);
+}
+
+.answerArea {
+  border: #f5c86e solid 5px;
 }
 </style>
 
