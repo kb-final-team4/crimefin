@@ -69,9 +69,10 @@
                       </v-row>
                     </div>
                   </v-card>
+
                 </v-row>
               </v-col>
-            </v-sheet>
+
           </v-col>
           <v-col
             cols="8"
@@ -80,7 +81,10 @@
           >
             <v-sheet height="570px" v-bind:style="{ background: '#EADBC8' }">
               <v-col>
+
+                <v-card>
                 <v-row>
+                  <!-- 조건입력 오른쪽 위 card -->
                   <v-col :cols="3">
                     <div class="v-card__title justify-center text--h6">
                       거래 내역
@@ -118,6 +122,7 @@
                       v-bind:style="{ marginLeft: '10px' }"
                     />
                   </v-col>
+
                 </v-row>
                 <v-row>
                   <!-- todo 동적 apexchart 태그 re-rendering -->
@@ -137,6 +142,9 @@
                     </div>
                   </div>
                 </v-row>
+                </v-card>
+
+
                 <v-row>
                   <v-col :cols="1"> </v-col>
                   <v-col :cols="3">
@@ -198,7 +206,7 @@
                   </v-col>
                 </v-row>
               </v-col>
-            </v-sheet>
+
           </v-col>
         </v-row>
 
@@ -501,6 +509,7 @@ export default {
       bankingWithdrawlList: null, //리턴받은 출금액
       bankingWithdrawlToList: null, //리턴받은 출금 계좌 명 리스트
 
+      //todo 발표 시나리오 맞춰서 데이터 수정하기
       //오른쪽 차트 데이터들
       //getBankingListDaily
       //세션에 바인딩된 memberId 보내고 시작시각 종료시각 입력한거 보내기
@@ -539,6 +548,7 @@ export default {
             opacity: 0.5,
           },
         },
+        //여기 수정하기 x축 값
         xaxis: {
           //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
           categories: [
@@ -791,6 +801,52 @@ export default {
         }
       }
 
+      /*var initurl = "http://localhost:9999/asset/dashboard/init";
+
+      axios.get(initurl)
+          .then(response => {
+            this.bankingDateList = new Array(response.data.length);
+            this.bankingDepositList = new Array(response.data.length);
+            this.bankingDepositNameList = new Array(response.data.length);
+            this.bankingWithdrawlList = new Array(response.data.length);
+            this.bankingWithdrawlToList = new Array(response.data.length);
+            this.bankingBalanceList = new Array(response.data.length);
+
+            for(let i = 0; i<response.data.length; i++){
+              this.bankingDateList[i] = response.data[i].bankingDate;
+              this.bankingDepositList[i] = response.data[i].deposit;
+              this.bankingDepositNameList[i] = response.data[i].depositName;
+              this.bankingWithdrawlList[i] = response.data[i].withdrawal;
+              this.bankingWithdrawlToList[i] = response.data[i].withdrawalTo;
+              this.bankingBalanceList[i] = response.data[i].balance;
+            }
+
+            this.bankingChartOptions.xaxis.categories = this.bankingDateList;
+            console.log("getBankingDaily bankingChartOptions.xaxis.categories : " + this.bankingChartOptions.xaxis.categories);
+
+            for(let j = 0; j < this.bankingBalanceList.length; j++){
+              this.bankingBalanceList[j] = parseInt(this.bankingBalanceList[j]);
+            }
+            //console.log("getBankingDaily bankingSeries.data before"+ this.bankingSeries.data);
+            this.bankingSeries.data = this.bankingBalanceList;
+            console.log("getBankingDaily bankingSeries.data after"+ this.bankingSeries.data);
+
+            this.bankingInfoList = new Array(this.bankingDateList.length);
+            for(let i = 0; i<this.bankingDateList.length; i++){
+              //오른쪽차트 아래에 표기하는 곳
+              //입금
+              if(this.bankingDepositList[i] != null){
+                this.bankingInfoList[i] = this.bankingDateList[i]+" 입금 "+this.bankingDepositNameList[i]+" +"+this.bankingDepositList[i]+"원 잔고 : "+this.bankingBalanceList[i];
+              }
+              //출금
+              else{
+                this.bankingInfoList[i] = this.bankingDateList[i]+" 출금 "+this.bankingWithdrawlToList[i]+" -"+this.bankingWithdrawlList[i]+"원 잔고 : "+this.bankingBalanceList[i];
+              }
+            }
+          })
+          .catch(error => {
+
+          });*/
       //차트 리렌더링 -- 안됨
       /*console.log("ApexCharts exec start");
       console.log("ApexCharts exec this.bankingBalanceList " +this.bankingBalanceList );
@@ -834,25 +890,19 @@ export default {
       class Stack {
         constructor() {
           this.storage = {};
-          this.top = 0; // 스택의 가장 상단을 가리키는 포인터 변수 초기화
+          this.top = 0;
         }
-
         size() {
           return Object.keys(this.storage).length;
         }
-
-        // 스택에 데이터를 추가
         push(element) {
           this.storage[this.top] = element;
           this.top += 1;
         }
-
-        // 가장 나중에 추가된 데이터가 가장 먼저 추출되어야 함
         pop() {
           // 빈 스택에 에러처리
           if (Object.keys(this.storage).length === 0) {
             return;
-            // 위의 return문은 코드의 가독성을 위하여 쓰는 것이다(없어도 같은 결과가 나옴)
           }
 
           const result = this.storage[this.top - 1];

@@ -4,8 +4,7 @@
       <v-col width="50%" height="80%">
         <v-card >
           <v-card-title class="text-center" >
-            <div id="logo" height="50px"><v-img src="../assets/CRIME.png"></v-img></div>
-            <!-- <h2 class="mb-4">LOGIN</h2> -->
+            <div id="logo"><v-img src="../assets/CRIME (2).png"></v-img></div>
           </v-card-title>
 
           <v-card-text>
@@ -36,8 +35,8 @@
               >
                 로그인
               </v-btn>
-              <!-- 임시 로그인 버튼 -->
               <router-link to="/main"><v-btn
+                type="submit"
                 color="primary"
                 class="mt-4"
                 block
@@ -45,7 +44,8 @@
                 depressed
               >
                 로그인
-              </v-btn></router-link>
+              </v-btn>
+              </router-link>
             </v-form>
           </v-card-text>
           <v-card-actions class="justify-center">
@@ -305,8 +305,10 @@ export default {
 
 
 <style scoped>
-.logo{
+
+#logo {
   display: inline-block;
+  height: 20%;
 }
 
 .d-flex {

@@ -6,7 +6,11 @@
     <v-main>
       <v-container>
         <v-sheet id="questMainSheet">
-          <v-row class="justify-center v-card__title"> 메신저 피싱 체험 </v-row>
+          <v-row class="justify-center" v-bind:style="{ marginTop: '10px' }">
+            <v-card>
+              <v-img src="../assets/exp/msgGame/title.png" max-width="400" />
+            </v-card>
+          </v-row>
 
           <!-- 게임 소개 -->
           <v-row
@@ -14,24 +18,69 @@
             id="gameIntro"
             v-if="isGameIntro === true"
           >
-            <v-sheet>
-              <v-row>
-                누구나 당할수 있는 메신저 피싱,<br />
-                실제 사례들로 구성된 가벼운 테스트로<br />
-                확인해볼까요?<br />
-              </v-row>
-              <v-row class="justify-center">
-                <v-btn @click="startGame">시작하기</v-btn>
-              </v-row>
+            <v-sheet
+              class="d-block"
+              v-bind:style="{ padding: '30px' }"
+              width="800"
+            >
+              <v-img
+                class="mx-auto"
+                src="../assets/exp/msgGame/intro.png"
+                max-width="600"
+                max-height="500"
+              />
+              <v-img
+                class="mx-auto gamebtn"
+                @click="startGame"
+                src="../assets/exp/msgGame/start_btn.png"
+              />
             </v-sheet>
           </v-row>
 
           <!-- 역할 고르기 -->
           <v-row id="selectRole" v-if="isSelectRole === true">
-            <v-sheet class="mx-auto">
-              <v-row><v-btn @click="showQuest('worker')">직장인</v-btn></v-row>
-              <v-row><v-btn @click="showQuest('parents')">부모님</v-btn></v-row>
-              <v-row><v-btn @click="showQuest('elderly')">노인</v-btn></v-row>
+            <v-sheet class="mx-auto" width="800">
+              <v-row>
+                <v-img
+                  class="mx-auto"
+                  src="../assets/exp/msgGame/chooseRole.png"
+                  max-width="400"
+                  max-height="600"
+                  v-bind:style="{ marginTop: '20px' }"
+                />
+              </v-row>
+              <v-row>
+                <v-col :cols="4"></v-col>
+                <v-col :cols="2"
+                  ><v-img
+                    class="gamebtn mx-auto"
+                    @click="showQuest('worker')"
+                    src="../assets/exp/msgGame/student_btn.png"
+                /></v-col>
+                <v-col :cols="2"
+                  ><v-img
+                    class="gamebtn mx-auto"
+                    @click="showQuest('worker')"
+                    src="../assets/exp/msgGame/worker_btn.png"
+                /></v-col>
+                <v-col :cols="4"></v-col>
+              </v-row>
+              <v-row>
+                <v-col :cols="4"></v-col>
+                <v-col :cols="2"
+                  ><v-img
+                    class="gamebtn mx-auto"
+                    @click="showQuest('parents')"
+                    src="../assets/exp/msgGame/parents_btn.png"
+                /></v-col>
+                <v-col :cols="2"
+                  ><v-img
+                    class="gamebtn mx-auto"
+                    @click="showQuest('elderly')"
+                    src="../assets/exp/msgGame/elderly_btn.png"
+                /></v-col>
+                <v-col :cols="4"></v-col>
+              </v-row>
             </v-sheet>
           </v-row>
 
@@ -40,52 +89,84 @@
             class="playGame"
             v-if="isPlaying === true && isWorkerGame === true"
           >
-            <v-col :cols="1"></v-col>
-            <v-col :cols="5">
-              <!-- 질문 렌더링 -->
-              <v-sheet class="questArea">
-                <v-row v-if="score === 0">
-                  [신세계백화점] 추석 이벤트 선물 발송되었습니다. 앱 설치 후
-                  위탁 장소를 지정해 주세요. ssg.li.nk/23dbcES2F
-                </v-row>
-                <v-row v-if="score === 1">
-                  추석을 맞이하여 전사 직원 대상으로 발송된 메시지입니다. 본인
-                  확인을 위한 앱 설치 후 간단한 전화번호 인증 부탁드립니다.
-                </v-row>
-                <v-row v-if="score === 2">
-                  주소지 정보가 개인정보에 해당되어 까다롭지만 꼭 해주셔야
-                  상품을 수령하실 수가 있습니다.
-                </v-row>
-              </v-sheet>
-            </v-col>
-            <v-col :cols="5">
-              <v-sheet class="answerArea">
-                <v-row class="goodAnswer">
-                  <v-btn v-if="score === 0" @click="questReply(0)"
-                    >1. (링크 확인)
-                  </v-btn>
-                  <v-btn v-if="score === 1" @click="questReply(1)"
-                    >1. 회사 이벤트라면 주소 정보가 있어서 따로 인증이
-                    필요없을텐데요?</v-btn
-                  >
-                  <v-btn v-if="score === 2" @click="questReply(0)"
-                    >1. 네 인증 후 다시 연락드리겠습니다.
-                  </v-btn>
-                </v-row>
-                <v-row class="badAnswer">
-                  <v-btn v-if="score === 0" @click="questReply(1)"
-                    >2. 저 응모한적 없는데요.</v-btn
-                  >
-                  <v-btn v-if="score === 1" @click="questReply(0)"
-                    >2. (링크를 눌러 앱을 설치한다)
-                  </v-btn>
-                  <v-btn v-if="score === 2" @click="questReply(1)"
-                    >2. 인사과에 연락해서 확인 먼저 해 볼게요.</v-btn
-                  >
-                </v-row>
-              </v-sheet>
-            </v-col>
-            <v-col :cols="1"></v-col>
+            <v-sheet class="mx-auto d-flex" width="800">
+              <v-col :cols="5">
+                <!-- 질문 렌더링 -->
+                <v-sheet class="questArea">
+                  <v-row v-if="score === 0">
+                    <v-img
+                      class="questPhone mx-auto"
+                      src="../assets/exp/msgGame/quest1.png"
+                    />
+                  </v-row>
+                  <v-row v-if="score === 1">
+                    <v-img
+                      class="questPhone mx-auto"
+                      src="../assets/exp/msgGame/quest2.png"
+                    />
+                  </v-row>
+                  <v-row v-if="score === 2">
+                    <v-img
+                      class="questPhone mx-auto"
+                      src="../assets/exp/msgGame/quest3.png"
+                    />
+                  </v-row>
+                </v-sheet>
+              </v-col>
+              <v-col :cols="7" class="d-flex justify-center align-center">
+                <v-sheet class="answerArea">
+                  <v-row>
+                    <v-img
+                      v-bind:style="{ marginBottom: '20px' }"
+                      class="mx-auto"
+                      src="../assets/exp/msgGame/answerAreaTitle.png"
+                      max-width="300"
+                      max-height="70"
+                    />
+                  </v-row>
+                  <v-row class="goodAnswer justify-center">
+                    <v-img
+                      class="answerbtn"
+                      v-if="score === 0"
+                      @click="questReply(0)"
+                      src="../assets/exp/msgGame/upper1.png"
+                    ></v-img>
+                    <v-img
+                      class="answerbtn"
+                      v-if="score === 1"
+                      @click="questReply(1)"
+                      src="../assets/exp/msgGame/upper2.png"
+                    ></v-img>
+                    <v-img
+                      class="answerbtn"
+                      v-if="score === 2"
+                      @click="questReply(0)"
+                      src="../assets/exp/msgGame/upper3.png"
+                    ></v-img>
+                  </v-row>
+                  <v-row class="badAnswer justify-center">
+                    <v-img
+                      class="answerbtn"
+                      v-if="score === 0"
+                      @click="questReply(1)"
+                      src="../assets/exp/msgGame/lower1.png"
+                    ></v-img>
+                    <v-img
+                      class="answerbtn"
+                      v-if="score === 1"
+                      @click="questReply(0)"
+                      src="../assets/exp/msgGame/lower2.png"
+                    ></v-img>
+                    <v-img
+                      class="answerbtn"
+                      v-if="score === 2"
+                      @click="questReply(1)"
+                      src="../assets/exp/msgGame/lower3.png"
+                    ></v-img>
+                  </v-row>
+                </v-sheet>
+              </v-col>
+            </v-sheet>
           </v-row>
 
           <!-- 게임 : 부모님 -->
@@ -159,17 +240,19 @@
             v-if="isPlaying === false && isGoodEnding === true"
           >
             <v-sheet>
-              <v-row> 예방 성공!!<br /> </v-row>
-              <v-row class="justify-center align-center">
+              <v-row>
                 <v-img
-                  src="../assets/ending_good.png"
-                  height="40px"
-                  width="40px"
+                  src="../assets/exp/msgGame/good_ending.png"
+                  max-width="500px"
+                  max-height="500px"
                 />
               </v-row>
               <v-row class="justify-center">
                 <router-link to="/explobby">
-                  <v-btn>메인으로</v-btn>
+                  <v-img
+                    class="gamebtn"
+                    src="../assets/exp/msgGame/tomain_btn.png"
+                  />
                 </router-link>
               </v-row>
             </v-sheet>
@@ -182,18 +265,19 @@
             v-if="isPlaying === false && isBadEnding === true"
           >
             <v-sheet>
-              <v-row> 예방 실패!!<br /> </v-row>
-              <v-row class="justify-center align-center">
+              <v-row>
                 <v-img
-                  src="../assets/ending_bad.png"
-                  height="40px"
-                  width="40px"
-                  object-fit="cover"
+                  src="../assets/exp/msgGame/bad_ending.png"
+                  max-width="500px"
+                  max-height="500px"
                 />
               </v-row>
               <v-row class="justify-center">
                 <router-link to="/explobby">
-                  <v-btn>메인으로</v-btn>
+                  <v-img
+                    class="gamebtn"
+                    src="../assets/exp/msgGame/tomain_btn.png"
+                  />
                 </router-link>
               </v-row>
             </v-sheet>
@@ -201,15 +285,17 @@
         </v-sheet>
       </v-container>
     </v-main>
+    <Footer />
   </v-app>
 </template>
 
 <script>
 import AppBar from "../views/AppBar.vue"; // 상단바 컴포넌트 import
-
+import Footer from "../views/Footer.vue";
 export default {
   components: {
     AppBar, // 상단바 컴포넌트 등록
+    Footer,
   },
   data: function () {
     return {
@@ -264,6 +350,23 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.gamebtn {
+  max-width: 100px;
+  max-height: 30px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.questPhone {
+  max-width: 300px;
+  max-height: 800px;
+}
+.answerbtn {
+  max-width: 200px;
+  max-height: 200px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+</style>
 
 <!-- /expmessagegame -->
