@@ -69,10 +69,9 @@
                       </v-row>
                     </div>
                   </v-card>
-
                 </v-row>
               </v-col>
-
+            </v-sheet>
           </v-col>
           <v-col
             cols="8"
@@ -81,69 +80,66 @@
           >
             <v-sheet height="570px" v-bind:style="{ background: '#EADBC8' }">
               <v-col>
-
                 <v-card>
-                <v-row>
-                  <!-- 조건입력 오른쪽 위 card -->
-                  <v-col :cols="3">
-                    <div class="v-card__title justify-center text--h6">
-                      거래 내역
-                    </div>
-                  </v-col>
-                  <v-col :cols="6">
-                    <v-select
-                      v-model="accountNumDropdown"
-                      v-if="this.accountNumArr != null"
-                      label="계좌 선택"
-                      :items="this.accountNumArr"
+                  <v-row>
+                    <!-- 조건입력 오른쪽 위 card -->
+                    <v-col :cols="3">
+                      <div class="v-card__title justify-center text--h6">
+                        거래 내역
+                      </div>
+                    </v-col>
+                    <v-col :cols="6">
+                      <v-select
+                        v-model="accountNumDropdown"
+                        v-if="this.accountNumArr != null"
+                        label="계좌 선택"
+                        :items="this.accountNumArr"
+                      >
+                        <!-- items에 accountNumArr 넣기 -->
+                      </v-select>
+                    </v-col>
+                    <v-col class="d-flex align-center justify-center" :cols="3">
+                      <v-img
+                        src="../assets/bell.png"
+                        max-width="30px"
+                        max-height="30px"
+                        @click="openNoticelist"
+                      />
+                      <v-img
+                        src="../assets/add.png"
+                        max-width="30px"
+                        max-height="30px"
+                        @click="openaddlist"
+                        v-bind:style="{ marginLeft: '10px' }"
+                      />
+                      <v-img
+                        src="../assets/delete.png"
+                        max-width="30px"
+                        max-height="30px"
+                        @click="opendeletelist"
+                        v-bind:style="{ marginLeft: '10px' }"
+                      />
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <!-- todo 동적 apexchart 태그 re-rendering -->
+                    <div
+                      class="chart-wrap mx-auto"
+                      v-bind:style="{ marginTop: '-20px' }"
                     >
-                      <!-- items에 accountNumArr 넣기 -->
-                    </v-select>
-                  </v-col>
-                  <v-col class="d-flex align-center justify-center" :cols="3">
-                    <v-img
-                      src="../assets/bell.png"
-                      max-width="30px"
-                      max-height="30px"
-                      @click="openNoticelist"
-                    />
-                    <v-img
-                      src="../assets/add.png"
-                      max-width="30px"
-                      max-height="30px"
-                      @click="openaddlist"
-                      v-bind:style="{ marginLeft: '10px' }"
-                    />
-                    <v-img
-                      src="../assets/delete.png"
-                      max-width="30px"
-                      max-height="30px"
-                      @click="opendeletelist"
-                      v-bind:style="{ marginLeft: '10px' }"
-                    />
-                  </v-col>
-
-                </v-row>
-                <v-row>
-                  <!-- todo 동적 apexchart 태그 re-rendering -->
-                  <div
-                    class="chart-wrap mx-auto"
-                    v-bind:style="{ marginTop: '-20px' }"
-                  >
-                    <div id="chart2">
-                      <apexchart
-                        id="bankingchart1"
-                        type="line"
-                        width="660"
-                        height="300"
-                        :options="bankingChartOptions"
-                        :series="bankingSeries"
-                      ></apexchart>
+                      <div id="chart2">
+                        <apexchart
+                          id="bankingchart1"
+                          type="line"
+                          width="660"
+                          height="300"
+                          :options="bankingChartOptions"
+                          :series="bankingSeries"
+                        ></apexchart>
+                      </div>
                     </div>
-                  </div>
-                </v-row>
+                  </v-row>
                 </v-card>
-
 
                 <v-row>
                   <v-col :cols="1"> </v-col>
@@ -206,7 +202,7 @@
                   </v-col>
                 </v-row>
               </v-col>
-
+            </v-sheet>
           </v-col>
         </v-row>
 
