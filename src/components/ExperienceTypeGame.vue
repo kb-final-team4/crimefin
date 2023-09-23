@@ -6,93 +6,98 @@
     <v-main>
       <v-container>
         <v-sheet class="gameMainSheet mx-auto">
-          <v-col :cols="3"></v-col>
-          <v-col :cols="6">
+
           <v-row class="justify-center">
-            보이스 피싱 대처 유형 테스트
+            <v-card>
+              <v-img v-bind:style="{marginTop: '10px'}" src="../assets/exp/typeGame/title.png" max-width="250px" max-height="75px"/>
+            </v-card>
           </v-row>
             <br>
           <!-- 게임 소개 -->
-          <div class="gameIntro"  v-if="isGameIntro === true">
-            <v-row class="justify-center v-card__text" id="gameIntro" v-if="isGameIntro === true">
+          <div class="gameIntro mx-auto"  v-if="isGameIntro === true">
+            <v-row class="justify-center" id="gameIntro" v-if="isGameIntro === true">
               <v-sheet>
                 <v-row>
-                  당신의 피싱 대처 유형은?<br>
-                  10개의 가벼운 테스트로<br>
-                  지금 확인해볼까요?<br>
+                  <v-img class="postit" src="../assets/exp/typeGame/intro.png" max-width="300px" max-height="320px"/>
                 </v-row>
                 <v-row class="justify-center">
-                  <v-btn @click="startGame">시작하기</v-btn>
+                  <v-img class="mx-auto gamebtn" @click="startGame" src="../assets/exp/msgGame/start_btn.png" />
                 </v-row>
               </v-sheet>
             </v-row>
           </div>
 
           <!-- 문제 나오고 답변 고르는 곳 -->
-          <div class="questArea" v-if="this.currentQuestion !== 10 && isQuestArea === true">
+          <div class="questArea justify-center" v-if="this.currentQuestion !== 7 && isQuestArea === true">
             <v-row class="d-block">
               <v-row class="progressBar">
                 <!-- 진행도 -->
                   <div id="bar" class="innerbar"></div>
               </v-row>
-              <v-row>
+              <v-row class="justify-center">
                 <!-- 질문 영역 -->
-                <div v-if="this.currentQuestion===0"> Q. {{ this.questions[this.currentQuestion] }}</div>
-                <div v-if="this.currentQuestion===1"> Q. {{ this.questions[this.currentQuestion] }}</div>
-                <div v-if="this.currentQuestion===2"> Q. {{ this.questions[this.currentQuestion] }}</div>
-                <div v-if="this.currentQuestion===3"> Q. {{ this.questions[this.currentQuestion] }}</div>
-                <div v-if="this.currentQuestion===4"> Q. {{ this.questions[this.currentQuestion] }}</div>
-                <div v-if="this.currentQuestion===5"> Q. {{ this.questions[this.currentQuestion] }}</div>
-                <div v-if="this.currentQuestion===6"> Q. {{ this.questions[this.currentQuestion] }}</div>
-                <div v-if="this.currentQuestion===7"> Q. {{ this.questions[this.currentQuestion] }}</div>
-                <div v-if="this.currentQuestion===8"> Q. {{ this.questions[this.currentQuestion] }}</div>
-                <div v-if="this.currentQuestion===9"> Q. {{ this.questions[this.currentQuestion] }}</div>
+                <div v-if="this.currentQuestion===0"> <v-img class="postitQ" :src="getImgUrl(this.questions[this.currentQuestion])" max-height="350px" max-width="300px"/></div>
+                <div v-if="this.currentQuestion===1"> <v-img class="postitQ" :src="getImgUrl(this.questions[this.currentQuestion])" max-height="350px" max-width="300px"/></div>
+                <div v-if="this.currentQuestion===2"> <v-img class="postitQ" :src="getImgUrl(this.questions[this.currentQuestion])" max-height="350px" max-width="300px"/></div>
+                <div v-if="this.currentQuestion===3"> <v-img class="postitQ" :src="getImgUrl(this.questions[this.currentQuestion])" max-height="350px" max-width="300px"/></div>
+                <div v-if="this.currentQuestion===4"> <v-img class="postitQ" :src="getImgUrl(this.questions[this.currentQuestion])" max-height="350px" max-width="300px"/></div>
+                <div v-if="this.currentQuestion===5"> <v-img class="postitQ" :src="getImgUrl(this.questions[this.currentQuestion])" max-height="350px" max-width="300px"/></div>
+                <div v-if="this.currentQuestion===6"> <v-img class="postitQ" :src="getImgUrl(this.questions[this.currentQuestion])" max-height="350px" max-width="300px"/></div>
               </v-row>
             </v-row>
-            <v-row>
+            <div class="answerBtnArea">
+            <v-row class="justify-center">
               <!-- 선택 1 좋은 선택들 -->
-              <v-btn @click="questReply(2)">{{ this.questReplyUpper[this.currentQuestion] }}</v-btn>
+              <v-img class="gamebtn" :src="getImgUrl(this.questReplyUpper[this.currentQuestion])"  @click="questReply(2)" max-height="100px" max-width="200px"/>
             </v-row>
-            <v-row>
+            <v-row class="justify-center">
               <!-- 선택 2 나쁜 선택들 -->
-              <v-btn @click="questReply(1)">{{ this.questReplyLower[this.currentQuestion] }}</v-btn>
+              <v-img class="gamebtn" v-bind:style="{marginBottom: '20px'}" :src="getImgUrl(this.questReplyLower[this.currentQuestion])"  @click="questReply(1)" max-height="100px" max-width="200px"/>
             </v-row>
+            </div>
           </div>
 
           <!-- 결과 페이지 -->
-          <v-row class="justify-center v-card__text" id="typeResult" v-if="this.currentQuestion === 10">
+          <v-row class="justify-center" id="typeResult" v-if="this.currentQuestion === 7">
             <v-sheet>
               <!-- 여기다 점수대별로 유형 만들기 -->
-              <div v-if="this.score >= 15 && this.score <= 20">
-              <v-row >
-                피싱 유형 테스트 결과 15~20점대<br>
-              </v-row>
-              <v-row>
-                피싱유형 테스트 내용 15~20점대<br>
-              </v-row>
+              <div v-if="this.score > 0 && this.score <= 9">
+                <v-row >
+                  <v-img class="postit" src="../assets/exp/typeGame/end1.png" max-height="330px" max-width="300px"/>
+                </v-row>
               </div>
+              <div v-if="this.score > 9 && this.score <= 12">
+                <v-row >
+                  <v-img class="postit" src="../assets/exp/typeGame/end2.png" max-height="330px" max-width="300px"/>
+                </v-row>
+              </div>
+              <div v-if="this.score > 12 && this.score <= 14">
+                <v-row >
+                  <v-img class="postit" src="../assets/exp/typeGame/end3.png" max-height="330px" max-width="300px"/>
+                </v-row>
+              </div>
+
               <v-row class="justify-center">
                 <router-link to="/explobby">
-                  <v-btn>메인으로</v-btn>
+                  <v-img class="gamebtn" src="../assets/exp/msgGame/tomain_btn.png" />
                 </router-link>
               </v-row>
             </v-sheet>
           </v-row>
-          </v-col>
-          <v-col :cols="3"></v-col>
         </v-sheet>
       </v-container>
     </v-main>
-
+  <Footer/>
   </v-app>
 </template>
 
 <script>
 import AppBar from '../views/AppBar.vue';
-
+import Footer from '../views/Footer.vue';
 export default {
   components: {
     AppBar, // 상단바 컴포넌트 등록
+    Footer,
   },
   data: function () {
     return {
@@ -101,42 +106,33 @@ export default {
       isQuestArea : false, //본게임
       //10번까지 질문 담음
       questions : [
-        '질문1',
-        '질문2',
-        '질문3',
-        '질문4',
-        '질문5',
-        '질문6',
-        '질문7',
-        '질문8',
-        '질문9',
-        '질문10'
+        'q1',
+        'q2',
+        'q3',
+        'q4',
+        'q5',
+        'q6',
+        'q7',
       ],
       //위쪽 선택 버튼 내용 담음
       questReplyUpper : [
-          '좋은 대답 1',
-          '좋은 대답 2',
-          '좋은 대답 3',
-          '좋은 대답 4',
-          '좋은 대답 5',
-          '좋은 대답 6',
-          '좋은 대답 7',
-          '좋은 대답 8',
-          '좋은 대답 9',
-          '좋은 대답 10',
+          'good1',
+          'good2',
+          'good3',
+          'good4',
+          'good5',
+          'good6',
+          'good7',
       ],
       //아래쪽 선택 버튼 내용 담음
       questReplyLower : [
-        '나쁜 대답 1',
-        '나쁜 대답 2',
-        '나쁜 대답 3',
-        '나쁜 대답 4',
-        '나쁜 대답 5',
-        '나쁜 대답 6',
-        '나쁜 대답 7',
-        '나쁜 대답 8',
-        '나쁜 대답 9',
-        '나쁜 대답 10',
+        'bad1',
+        'bad2',
+        'bad3',
+        'bad4',
+        'bad5',
+        'bad6',
+        'bad7',
       ],
       currentQuestion : -1, // 현재 질문 index
       isPlaying : false,
@@ -152,10 +148,11 @@ export default {
       this.score += num;
       this.currentQuestion += 1;
       this.updateProgressbar();
+      console.log("현재 score "+this.score);
     },
     updateProgressbar() {
       let el = document.getElementById("bar");
-      let width = (this.currentQuestion / 9) * 100 + "%"; //10문항이니까 0~9
+      let width = (this.currentQuestion / 7) * 100 + "%"; //10문항이니까 0~9
       width = parseFloat(width).toFixed(2);
       if (width > 100) width = 100;
 
@@ -163,13 +160,19 @@ export default {
       let widthStr = width + "%";
       el.style.width = widthStr;
     },
+    //<img :src="getImgUrl(item[0])" max-height="40px" max-width="40px"/>
+    //이미지 url 삽입용
+    getImgUrl(link) {
+      var images = require.context('../assets/exp/typeGame', false, /\.png$/)
+      return images('./' + link + ".png")
+    },
   }
 };
 </script>
 
 <style >
 .progressBar {
-  max-width: 500px;
+  max-width: 300px;
   width: 90%;
   margin: 10px auto;
   margin-top: 10px;
@@ -180,7 +183,7 @@ export default {
 }
 
 .innerbar {
-  max-width: 500px;
+  max-width: 300px;
   height: 100%;
   text-align: right;
   height: 8px; /* same as #progressBar height if we want text middle aligned */
@@ -189,8 +192,25 @@ export default {
   background: linear-gradient(#5be6ba, #5ed1ad);
 }
 .gameMainSheet{
-  width: 800px;
+  width: 350px;
   height: 800px;
+}
+.gamebtn{
+  max-width: 200px;
+  max-height: 100px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.postit{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.postitQ{
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+.answerBtnArea{
+  border: #f5c86e solid 5px;
 }
 </style>
 
