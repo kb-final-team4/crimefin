@@ -21,7 +21,7 @@
           중복확인
         </v-btn>
         </v-row>
-        
+
 
     <v-row justify="center" class="pa-0">
       <!--<label for="password">비밀번호 </label>-->
@@ -39,7 +39,7 @@
 
     <div v-if="!isPasswordMatching">
       <p>비밀번호와 비밀번호 확인이 일치하지 않습니다. 다시 확인하세요.</p>
-    </div>       
+    </div>
 
     <v-row justify="center" class="pa-0">
       <!-- <label for="username">이름</label> -->
@@ -61,7 +61,7 @@
         <v-text-field label="이메일" id="email" v-model="user.email" required outlined></v-text-field>
       </v-col>
     </v-row>
-    
+
 
     <v-row justify="center" class="pa-0">
       <!-- <label for="address">주소</label> -->
@@ -73,7 +73,7 @@
       </v-col>
     </v-row>
 
-    
+
 
     <v-row justify="center" class="ma-2">
     <v-col cols="30" md="30">
@@ -108,9 +108,10 @@
   </v-app>
 
 
-    
-    
+
+
   </template>
+
 
   <script>
   import axios from 'axios';
@@ -151,7 +152,7 @@ methods: {
       const memberId=this.user.memberId;
 
       //const response=await axios.post('api/check-duplicate',{memberId});
-      axios.get('http://localhost:9999/duplicate', {
+      axios.get('http://localhost:9999/user/duplicate', {
         params:{
           memberId : memberId,
         },
@@ -159,7 +160,7 @@ methods: {
         .then((response)=>{
           console.log(response);
 
-          if(response.data=="0"){
+          if(response.data==''){
             alert('사용가능한 아이디입니다.');
           }else{
             alert('아이디가 이미 사용 중입니다.');
@@ -192,10 +193,10 @@ methods: {
           sex: this.user.sex,
           messageOk: this.user.messageOk,
         };
-      
+
       console.log(joinUser);
       var url="http://localhost:9999/user";
-      
+
       axios
         .post(url, joinUser)
         .then((response)=>{
@@ -223,6 +224,7 @@ methods: {
   },
 };
 </script>
+
 
 <style>
 
@@ -259,3 +261,4 @@ methods: {
 }
 
 </style>
+
