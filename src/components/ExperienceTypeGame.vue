@@ -9,7 +9,7 @@
 
           <v-row class="justify-center">
             <v-card>
-              <v-img v-bind:style="{marginTop: '10px'}" src="../assets/exp/typeGame/title.png" max-width="250px" max-height="75px"/>
+              <v-img v-bind:style="{marginTop: '10px'}" src="../assets/exp/typeGame/title.png" max-width="400px" max-height="100px"/>
             </v-card>
           </v-row>
             <br>
@@ -28,7 +28,9 @@
           </div>
 
           <!-- 문제 나오고 답변 고르는 곳 -->
-          <div class="questArea justify-center" v-if="this.currentQuestion !== 7 && isQuestArea === true">
+          <div class="questArea justify-center d-flex" v-if="this.currentQuestion !== 7 && isQuestArea === true">
+
+            <v-col :cols="5" class="questPostArea">
             <v-row class="d-block">
               <v-row class="progressBar">
                 <!-- 진행도 -->
@@ -45,16 +47,28 @@
                 <div v-if="this.currentQuestion===6"> <v-img class="postitQ" :src="getImgUrl(this.questions[this.currentQuestion])" max-height="350px" max-width="300px"/></div>
               </v-row>
             </v-row>
-            <div class="answerBtnArea">
-            <v-row class="justify-center">
-              <!-- 선택 1 좋은 선택들 -->
-              <v-img class="gamebtn" :src="getImgUrl(this.questReplyUpper[this.currentQuestion])"  @click="questReply(2)" max-height="100px" max-width="200px"/>
-            </v-row>
-            <v-row class="justify-center">
-              <!-- 선택 2 나쁜 선택들 -->
-              <v-img class="gamebtn" v-bind:style="{marginBottom: '20px'}" :src="getImgUrl(this.questReplyLower[this.currentQuestion])"  @click="questReply(1)" max-height="100px" max-width="200px"/>
-            </v-row>
-            </div>
+            </v-col>
+
+            <v-col :cols="5" class="answerBtnArea">
+              <v-row class="justify-center">
+                <v-img
+                    v-bind:style="{ marginBottom: '20px', marginTop: '20px' }"
+                    class="mx-auto"
+                    src="../assets/exp/msgGame/answerAreaTitle.png"
+                    max-width="300"
+                    max-height="70"
+                />
+              </v-row>
+              <v-row class="justify-center">
+                <!-- 선택 1 좋은 선택들 -->
+                <v-img class="gamebtn" :src="getImgUrl(this.questReplyUpper[this.currentQuestion])"  @click="questReply(2)" max-height="100px" max-width="200px"/>
+              </v-row>
+              <v-row class="justify-center">
+                <!-- 선택 2 나쁜 선택들 -->
+                <v-img class="gamebtn" v-bind:style="{marginBottom: '20px'}" :src="getImgUrl(this.questReplyLower[this.currentQuestion])"  @click="questReply(1)" max-height="100px" max-width="200px"/>
+              </v-row>
+            </v-col>
+
           </div>
 
           <!-- 결과 페이지 -->
@@ -76,7 +90,6 @@
                   <v-img class="postit" src="../assets/exp/typeGame/end3.png" max-height="330px" max-width="300px"/>
                 </v-row>
               </div>
-
               <v-row class="justify-center">
                 <router-link to="/explobby">
                   <v-img class="gamebtn" src="../assets/exp/msgGame/tomain_btn.png" />
@@ -84,6 +97,8 @@
               </v-row>
             </v-sheet>
           </v-row>
+
+
         </v-sheet>
       </v-container>
     </v-main>
@@ -192,7 +207,7 @@ export default {
   background: linear-gradient(#5be6ba, #5ed1ad);
 }
 .gameMainSheet{
-  width: 350px;
+  width: 800px;
   height: 800px;
 }
 .gamebtn{
