@@ -1,54 +1,60 @@
 <template>
-    <v-app>
-    <AppBar />
-  
-      <v-main>
-        <v-container>
-          <v-row justify="center">
-            <v-col cols="12" sm="6" md="4">
+  <v-app>
+  <!-- Appbar -->
+  <AppBar />
+    <v-main class="d-flex align-center justify-center">
 
-            <div v-if="phishingtype ==='Phone'">
-                <h1>{{ phishingtype }}:: 전화 내용을 입력해주세요!</h1>
+      <div v-if="phishingtype ==='Phone'">
+        <br><br><p class="title1">통화 내용을 입력받아 문맥을 분석해드립니다. <br>통화 내용을 조회해 보세요.</p><br><br>
+      </div>
+      <div v-else-if="phishingtype === 'Message'">
+        <br><br><p class="title1">수신 내용을 입력받아 문맥을 분석해드립니다. <br>문자 내용을 모두 조회해 보세요.</p><br><br>
+      </div>
+      <div v-else-if="phishingtype === 'SNS'">
+        <br><br><p class="title1">수신 내용을 입력받아 문맥을 분석해드립니다. <br>SNS 내용을 모두 조회해 보세요.</p><br><br>
+      </div>
+      <v-card class="mx-auto my-auto" id="form-container">
+        <v-row justify="center">
+          <v-col cols="12">
+            <div class="image-container">
+              <img src="../assets/ai.png" />
             </div>
-            <div v-else-if="phishingtype === 'Message'">
-                <h1>{{ phishingtype }}:: 문자 내용을 모두 입력해주세요!</h1>
-            </div>
-            <div v-else-if="phishingtype === 'SNS'">
-                <h1>{{ phishingtype }}:: SNS 내용을 모두 입력해주세요!</h1>
-            </div>
-              <v-form @submit.prevent="sendContent" >
-                <v-textarea
-                  v-model="content"
-                  label="내용"
-                  required
-                ></v-textarea>
-                <v-btn type="submit">AI 검사하기</v-btn>
+
+            <div class="input-container mx-auto">
+              <v-form @submit.prevent="sendContent">
+                <v-row>
+                  <v-textarea v-model="content" label="조회하고자 하는 내용을 모두 입력하세요" outlined dense required></v-textarea>&nbsp;&nbsp;&nbsp;
+                  <v-btn type="submit" class="mx-auto" color="#14274E">조회하기</v-btn> 
+                </v-row>
               </v-form>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-main>
+            </div>
+            <br>
+
+          </v-col>
+        </v-row>
+      </v-card>
+      <br><br><br>
+    </v-main>
   
-      <v-dialog v-model="showResultModal" width="60%" height="60%" position-x="center" position-y="center" class="result">
-      <AICheckResult
-        v-if="showResultModal"
-        :responsedata="responsedata"
-        :showResultModal.sync="showResultModal"
-        :phishingtype="phishingtype"
-      />
+    <v-dialog v-model="showResultModal" width="70%">
+      <AICheckResult  v-if="showResultModal" :responsedata="responsedata" :showResultModal.sync="showResultModal" :phishingtype="phishingtype"/>
     </v-dialog>
+
+    <!-- Footer -->
+    <Footer/>
     </v-app>
   </template>
   
   <script>
   import axios from 'axios';
-  import AppBar from '../views/AppBar.vue'; // 상단바 컴포넌트를 import 합니다.
+  import AppBar from '../views/AppBar.vue'; 
+  import Footer from '../views/Footer.vue';
   import AICheckResult from '../components/AICheckResult.vue';
   
   
   export default {
     components: {
-      AppBar, 
+      AppBar, Footer,
       AICheckResult},
   
     props: ['phishingtype'],
@@ -71,25 +77,62 @@
             console.log('POST 요청 성공:', response.data);
            
           this.responsedata = response.data
-  
-          // 모달 창 표시
           this.showResultModal = true;
           })
           .catch((error) => {
             console.error('POST 요청 오류:', error);
             
-            
-            this.responsedata = '위험'
-          // 모달 창 표시
-          this.showResultModal = true;
           });
       },
     },
   };
   </script>
   <style scoped>
-  .result{
-    padding: 30px;
-    margin:  30px;
-  }
-  </style>
+
+#form-container {
+   width:60%;
+   height:60%;
+   border-radius:15px;
+   padding :20px ;
+   border :5px solid #394867 ;
+   font-family: 'Pretendard-Regular', sans-serif;
+   margin-bottom: 50px;
+}
+p{
+  font-family: 'Pretendard-Regular', sans-serif;
+}
+.title1{
+  font-size: 25px;
+  font-weight: 800;
+}
+.subtitle{
+  font-size: 13px;
+  color: gray;
+  font-weight: 15;
+}
+
+.v-btn { 
+   background-color:#14274E ;
+   color:white ;  
+   margin-left: 15px;
+} 
+
+
+.input-container {
+  display: inline-block;
+  justify-content: center;
+  width: 50%;
+  font-size: 25px;
+
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.image-container img {
+  width: 23%;
+}
+</style>   

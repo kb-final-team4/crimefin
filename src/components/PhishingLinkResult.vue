@@ -1,41 +1,95 @@
 <template>
   <v-card-text v-model="showResultModal" class="total">
-    <div class="resultTitle">링크 검사 결과</div>
-    
-    <h3>{{resultData}}</h3>
     <div v-if="resultData == 1">
-      <p>스팸으로 resultData 링크입니다.</p>
-      <v-img src="../assets/red_signal.png" alt="빨간 신호등" max-width="60%" max-height="60%"></v-img>
-      <p>메뉴얼을 보시겠어요?</p>
-      <v-btn @click="navigateToManual(phishingtype)">메뉴얼 보기</v-btn>
-      <p>AI로 더 조회해 보시겠어요?</p>
-      <v-btn @click="navigateToAICheck(phishingtype)">AI로 조회하기</v-btn>
+      <v-col >
+          <div class="resultTitle">링크 분석 결과</div>
+      </v-col>
+      <v-row class="resultContent">
+        <v-col cols="7" class="left-section bordered" >
       
-      <div style="margin: 30px;">
-      <v-btn @click="closeModal">닫기</v-btn>
-      </div>
+          <div>
+            <img src="../assets/danger.png" alt="Danger Icon" class="icon">
+            <p>링크 분석 결과, 해당 링크는 <b>악성 링크</b>로 판단됩니다.</p>
+          </div>
+
+        </v-col>
+    
+        <v-col cols="5" class="right-section">
+
+          <div class="sol  mx-auto my-auto">
+            <p>
+              해당 범죄 관련<br> <b>대응 메뉴얼</b>을 제공해드리고 있어요.<br>확인하시겠어요?<br>
+              <v-btn @click="navigateToManual(phishingtype)"  color="#14274E">메뉴얼 보기</v-btn>
+            </p>
+            <p>
+              내용을 분석해드립니다. <br><b>AI로 더 조회</b>해 보시겠어요?<br>
+              <v-btn @click="navigateToAICheck(phishingtype)"  color="#14274E">AI로 조회하기</v-btn>
+            </p>
+          </div>
+          <v-card-actions><v-spacer/><v-btn @click="closeModal()" color="#14274E">닫기</v-btn></v-card-actions>
+
+        </v-col>
+      </v-row>
     </div>
-        <div v-else-if="resultData == 2">
-          <p>스팸으로 의심되는 링크입니다.</p>
-          <v-img src="../assets/orange_signal.png" alt="주황 신호등" max-width="60%" max-height="60%"></v-img>
-          <p>메뉴얼을 보시겠어요?</p>
-          <v-btn @click="navigateToManual(phishingtype)">메뉴얼 보기</v-btn>
-          <p>AI로 더 조회해 보시겠어요?</p>
-          <v-btn @click="navigateToAICheck(phishingtype)">AI로 조회하기</v-btn>
-          <div style="margin: 30px;">
-          <v-btn @click="closeModal">닫기</v-btn>
+    
+    <div v-if="resultData == 2">
+      <v-col >
+          <div class="resultTitle">링크 분석 결과</div>
+      </v-col>
+      <v-row class="resultContent">
+        <v-col cols="7" class="left-section bordered" >
+      
+          <div>
+            <img src="../assets/warning.png" alt="Warning Icon" class="icon">
+            <p>링크 분석 결과, 해당 링크는 <b>악성 링크</b>로 의심됩니다.</p>
           </div>
-        </div>
-        <div v-else-if="resultData == 3">
-          <p>안전한 링크입니다.</p>
-          <v-img src="../assets/green_signal.png" alt="녹색 신호등" max-width="60%" max-height="60%"></v-img>
-          
-          <p>AI로 더 조회해 보시겠어요?</p>
-          <v-btn @click="navigateToAICheck(phishingtype)">AI로 조회하기</v-btn>
-          <div style="margin: 30px;">
-          <v-btn @click="closeModal">닫기</v-btn>
+
+        </v-col>
+    
+        <v-col cols="5" class="right-section">
+
+          <div class="sol  mx-auto my-auto">
+            <p>
+              해당 범죄 관련<br> <b>대응 메뉴얼</b>을 제공해드리고 있어요.<br>확인하시겠어요?<br>
+              <v-btn @click="navigateToManual(phishingtype)"  color="#14274E">메뉴얼 보기</v-btn>
+            </p>
+            <p>
+              내용을 분석해드립니다. <br><b>AI로 더 조회</b>해 보시겠어요?<br>
+              <v-btn @click="navigateToAICheck(phishingtype)"  color="#14274E">AI로 조회하기</v-btn>
+            </p>
           </div>
-        </div>
+          <v-card-actions><v-spacer/><v-btn @click="closeModal()" color="#14274E">닫기</v-btn></v-card-actions>
+
+        </v-col>
+      </v-row>
+    </div>
+    <div v-if="resultData == 3">
+      <v-col >
+          <div class="resultTitle">링크 분석 결과</div>
+      </v-col>
+      <v-row class="resultContent">
+        <v-col cols="7" class="left-section bordered" >
+      
+          <div>
+            <img src="../assets/safe.png" alt="safe Icon" class="icon">
+            <p>링크 분석 결과, 해당 링크는 <b>일반 링크</b>로 판단됩니다.</p>
+          </div>
+
+        </v-col>
+    
+        <v-col cols="5" class="right-section">
+
+          <div class="sol  mx-auto my-auto">
+            <p>
+              내용을 분석해드립니다. <br><b>AI로 더 조회</b>해 보시겠어요?<br>
+              <v-btn @click="navigateToAICheck(phishingtype)"  color="#14274E">AI로 조회하기</v-btn>
+            </p>
+          </div>
+          <v-card-actions><v-spacer/><v-btn @click="closeModal()" color="#14274E">닫기</v-btn></v-card-actions>
+
+        </v-col>
+      </v-row>
+    </div>
       
   </v-card-text>
 </template>
@@ -65,23 +119,67 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-.total{
-  background-color: white ;
-  padding: 20px; 
-  font-size:20px; 
-  text-align: center;
+div{
+  font-family: 'Pretendard-Regular'
 }
-.resultTitle{
-  padding: 20px; 
-  margin: 20px; 
-  font-size:30px; 
+p{
+  font-size: 22px;
+  line-height: 1.4;
+}
+.resultTitle {
+  margin: 3%;
+  font-size: 30px;
+  color: white;
   font-weight:bolder; 
   text-align: center;
+}
+.resultContent{
+  border-radius: 15px;
+  margin: 1%;
+}
+.left-section {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding-top: 40px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
   
 }
-v-img{
-  width: 50px;
+.v-btn { 
+   background-color:#14274E;
+   color:white ;  
+   margin: 10px;
+} 
+
+
+.sol{
+  height: 80%;
 }
+
+.icon {
+  width: 40%;
+}
+
+.right-section {
+  background-color: white;
+  padding-top: 40px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  
+}
+.total{
+  background-color: #14274E;
+  font-size:20px; 
+  justify-content: center;
+  border-radius: 15px;
+}
+.bordered {
+    border-right: 5px dotted #14274E;
+    
+}
+
 </style>
-  
+        

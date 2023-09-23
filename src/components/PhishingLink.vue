@@ -1,45 +1,53 @@
 <template>
   <v-app>
+  <!-- Appbar -->
   <AppBar />
 
-    <v-main>
-      <v-container>
+    <v-main class="d-flex align-center justify-center">
+      <br><br><p class="title1">출처를 알 수 없는 링크가 포함되어있나요? 악성 링크 여부를 분석해드립니다. <br>링크를 조회해 보세요.</p><br><br>
+      <v-card class="mx-auto my-auto" id="form-container">
         <v-row justify="center">
-          <v-col cols="12" sm="6" md="4">
-            <h1>{{ phishingtype }}:: 링크를 입력하세요</h1>
-            <v-form @submit.prevent="sendLink">
-              <v-text-field
-                v-model="inputUrl"
-                label="링크"
-                required
-              ></v-text-field>
-              <v-btn type="submit">조회하기</v-btn>
-            </v-form>
+          <v-col cols="12">
+            <div class="image-container">
+              <img src="../assets/link.png" />
+            </div>
+
+            <div class="input-container mx-auto">
+              <v-form @submit.prevent="sendLink">
+                <v-row>
+                  <v-text-field v-model="inputUrl" label="링크를 입력하세요" outlined dense required></v-text-field>&nbsp;&nbsp;&nbsp;
+                  <v-btn type="submit" class="mx-auto" color="#14274E">조회하기</v-btn> 
+                </v-row>
+              </v-form>
+            </div>
+            <br>
+            <p class="subtitle">출처를 알 수 없는 링크가 포함되어있는 경우, 링크를 클릭하면 나도 모르는 사이에 스마트폰에 악성 앱 등이 설치될 수 있습니다.<br>공공기관에서 문자가 왔다면 해당 기관의 대표 번호나 홈페이지 주소와 일치하는 지 확인이 필요합니다.</p>            
+ 
           </v-col>
         </v-row>
-      </v-container>
+      </v-card>
+      <br><br><br>
     </v-main>
 
-    <v-dialog v-model="showResultModal" width="60%" height="60%" position-x="center" position-y="center" class="result">
-    <PhishingLinkResult
-      v-if="showResultModal"
-      :responsedata="responsedata"
-      :showResultModal.sync="showResultModal"
-      :phishingtype="phishingtype"
-    />
-  </v-dialog>
+    <v-dialog v-model="showResultModal" width="70%">
+      <PhishingLinkResult  v-if="showResultModal" :responsedata="responsedata" :showResultModal.sync="showResultModal" :phishingtype="phishingtype" />
+    </v-dialog>
+
+    <!-- Footer -->
+    <Footer/>
   </v-app>
 </template>
 
 <script>
 import axios from 'axios';
-import AppBar from '../views/AppBar.vue'; // 상단바 컴포넌트를 import 합니다.
+import AppBar from '../views/AppBar.vue'; 
+import Footer from '../views/Footer.vue';
 import PhishingLinkResult from '../components/PhishingLinkResult.vue';
 
 
 export default {
   components: {
-    AppBar, 
+    AppBar, Footer,
     PhishingLinkResult},
 
   props: ['phishingtype'],
@@ -60,10 +68,8 @@ export default {
       axios.post(url, data)
         .then((response) => {
           console.log('POST 요청 성공:', response.data);
-         // response.data를 responseData에 저장
+         
         this.responsedata = response.data
-        alert(response.data)
-        // 모달 창 표시
         this.showResultModal = true;
         })
         .catch((error) => {
@@ -74,25 +80,51 @@ export default {
 };
 </script>
 <style scoped>
-@font-face {
-    font-family: 'LINESeedKR-Bd';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
+
+#form-container {
+   width:60%;
+   height:60%;
+   border-radius:15px;
+   padding :20px ;
+   border :5px solid #394867 ;
+   font-family: 'Pretendard-Regular', sans-serif;
+   margin-bottom: 50px;
+}
+p{
+  font-family: 'Pretendard-Regular', sans-serif;
+}
+.title1{
+  font-size: 25px;
+  font-weight: 800;
+}
+.subtitle{
+  font-size: 13px;
+  color: gray;
+  font-weight: 15;
 }
 
-@font-face {
-  font-family: 'TheJamsil5Bold';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+.v-btn { 
+   background-color:#14274E ;
+   color:white ;  
+   margin-left: 15px;
+} 
+
+
+.input-container {
+  display: inline-block;
+  justify-content: center;
+  width: 50%;
+  font-size: 25px;
+
 }
 
-h1{
-   font-family: 'LINESeedKR-Bd'
+.image-container {
+  display: flex;
+  justify-content: center;
+  
 }
-.result{
-  padding: 30px;
-  margin:  30px;
+
+.image-container img {
+  width: 20%;
 }
-</style>
+</style>   
