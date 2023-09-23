@@ -101,7 +101,34 @@
               outlined
               @click="handleCardClick(card)"
             >
-              {{ card.content }}
+              <v-row>
+                <v-col cols="4">
+                  <v-img
+                    :src="require(`../assets/${card.img}`)"
+                    style="
+                      max-width: 100%;
+                      opacity: 0.8;
+                      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+                    "
+                  ></v-img>
+                </v-col>
+                <v-col cols="8">
+                  <v-card-title
+                    class="text-right mt-4 mb-4 my-4"
+                    style="font-weight: 300; font-size: 24px"
+                  >
+                    {{ card.title }}
+                  </v-card-title>
+                  <v-divider></v-divider>
+                  <!-- 제목과 내용 구분선 추가 -->
+                  <v-card-subtitle
+                    class="text-right mt-2 mb-2 my-2"
+                    style="font-weight: 300; font-size: 20px"
+                  >
+                    {{ card.content }}
+                  </v-card-subtitle>
+                </v-col>
+              </v-row>
             </v-card>
           </div>
         </div>
@@ -144,16 +171,22 @@ export default {
       if (keyword === "#자녀사칭") {
         let dummyData = [
           {
-            content: `"나 폰 고장 났어" 유학생 자녀에게 온 문자 눌렀다 '날벼락'`,
+            title: `"나 폰 고장 났어" 유학생 자녀에게 온 문자 눌렀다 '날벼락'`,
             href: "http://news.lghellovision.net/news/articleView.html?idxno=437466",
+            img: "similar1.jpg",
+            content: `["전기통신사업법 위반으로 현행범 체포합니다."] 자녀를 사칭해 폰이 고장났다는 내용의 피싱 문자를 보낸 일당입니다. 서산경찰서는 피싱 문자를 보내 피해자 3명의 현금 6백90여만 원을 가로챈 혐의로 5명을 구...`,
           },
           {
-            content: `제주서 '우체국 직원 사칭' 보이스피싱 현금 수거책 검거`,
+            title: `제주서 '우체국 직원 사칭' 보이스피싱 현금 수거책 검거`,
             href: "http://www.jemin.com/news/articleView.html?idxno=761164",
+            img: "similar2.jpg",
+            content: `보이스피싱 조직원들은 이날 오전 9시께 우체국 직원을 사칭해 개인정보가 유출됐다며 현금을 인출해 검정색 비닐봉지에 담아 아파트 우편함에 넣도록 했다. 같은 날 오후 7시33분께 피해자 자녀의 신고를 접수한...`,
           },
           {
-            content: `"엄마, 나 폰 고장났어" 사칭 문자로 돈 뜯은 30대 실형`,
+            title: `"엄마, 나 폰 고장났어" 사칭 문자로 돈 뜯은 30대 실형`,
             href: "https://newsis.com/view/?id=NISX20230911_0002445343&cID=10201&pID=10200",
+            img: "similar3.jpg",
+            content: `신분증·계좌·비밀번호를 보내줘'라는 내용의 자녀 사칭 문자를 발송한 뒤 악성 앱 링크를 보냈다. 이들은 이후 유심으로 피해자들 명의의 휴대전화를 번호이동 시킨 뒤 새로 전화를 개통했고, 피해자 개인정보를 ...`,
           },
         ];
 
@@ -163,16 +196,22 @@ export default {
       if (keyword === "#보이스피싱") {
         let dummyData = [
           {
-            content: `은행연합회, 카카오톡으로 보이스피싱 예방 나서`,
+            title: `은행연합회, 카카오톡으로 보이스피싱 예방 나서`,
             href: "https://newsis.com/view/?id=NISX20230922_0002460796&cID=15001&pID=15000",
+            img: "similar4.jpg",
+            content: `추석명절을 앞두고 급증할 것으로 예상되는 보이스피싱 피해 예방을 위한 주의안내 문자를 카카오톡 공식 채널에서 약 2900만명의 카카오톡 가입자에게 발송할 예정이다. 카카오에서 인증된 채널인 경우 채팅방 ...`,
           },
           {
-            content: `인터넷은행 과장 행세…보이스피싱 현금수거책 징역형`,
+            title: `인터넷은행 과장 행세…보이스피싱 현금수거책 징역형`,
             href: "https://view.asiae.co.kr/article/2023092215454728840",
+            img: "similar5.jpg",
+            content: `인터넷은행 과장 행세를 하며 보이스피싱 현금수거책 역할을 한 20대 남성이 징역형을 선고 받았다. 23일 서울동부지법 형사3단독 민성철 판사는 지난 20일 사기 혐의로 기소된 A(26)씨에게 징역 1년2월을 선고했...`,
           },
           {
-            content: `"추석 연휴 피싱·스미싱 평소보다 10% 이상 늘어"`,
+            title: `"추석 연휴 피싱·스미싱 평소보다 10% 이상 늘어"`,
             href: "https://www.yna.co.kr/view/AKR20230922059500017?input=1195m",
+            img: "similar6.jpg",
+            content: `라온화이트햇 '스마트 안티 피싱' 데이터 분석 결과 보안·인증기업 라온시큐어는 추석 전후 보이스피싱과 스미싱(휴대전화 문자메시지를 이용한 피싱) 범죄가 평소보다 상당폭 늘어 주의가 필요하다고 22일 밝혔다...`,
           },
         ];
 
