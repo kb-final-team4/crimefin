@@ -8,14 +8,14 @@
         <v-sheet id="questMainSheet">
           <v-row class="justify-center" v-bind:style="{marginTop: '10px'}">
             <v-card>
-              <v-img src="../assets/exp/msgGame/title.png" max-width="400"/>
+              <v-img src="../assets/exp/msgGame/title.png" max-width="300"/>
             </v-card>
           </v-row>
 
           <!-- 게임 소개 -->
           <v-row class="justify-center v-card__text" id="gameIntro" v-if="isGameIntro === true">
-            <v-sheet class="d-block" v-bind:style="{padding: '30px'}" width="800">
-              <v-img class="mx-auto" src="../assets/exp/msgGame/intro.png" max-width="600" max-height="500"/>
+            <v-sheet class="d-block" v-bind:style="{padding: '15px'}" width="800">
+              <v-img class="mx-auto" src="../assets/exp/msgGame/intro.png" max-width="450" max-height="350"/>
               <v-img class="mx-auto gamebtn" @click="startGame" src="../assets/exp/msgGame/start_btn.png" />
             </v-sheet>
           </v-row>
@@ -24,7 +24,7 @@
           <v-row id="selectRole" v-if="isSelectRole === true">
             <v-sheet class="mx-auto" width="800">
               <v-row>
-              <v-img class="mx-auto" src="../assets/exp/msgGame/chooseRole.png" max-width="400" max-height="600" v-bind:style="{marginTop: '20px'}"/>
+              <v-img class="mx-auto" src="../assets/exp/msgGame/chooseRole.png" max-width="200" max-height="300" v-bind:style="{marginTop: '20px'}"/>
               </v-row>
               <v-row>
                 <v-col :cols="4"></v-col>
@@ -44,7 +44,8 @@
           <!-- 게임 : 직장인 -->
           <v-row class="playGame" v-if="isPlaying === true && isWorkerGame === true">
             <v-sheet class="mx-auto d-flex" width="800">
-            <v-col :cols ="5">
+              <v-col :cols="2"></v-col>
+            <v-col :cols ="3">
               <!-- 질문 렌더링 -->
               <v-sheet class="questArea">
                 <v-row v-if="score===0">
@@ -58,10 +59,10 @@
                 </v-row>
               </v-sheet>
             </v-col>
-            <v-col :cols="7" class="d-flex justify-center align-center">
-              <v-sheet class="answerArea">
+            <v-col :cols="5" class="d-flex justify-center align-center">
+              <div class="answerArea">
                 <v-row>
-                  <v-img v-bind:style="{marginBottom: '20px'}" class="mx-auto" src="../assets/exp/msgGame/answerAreaTitle.png" max-width="300" max-height="70"/>
+                  <v-img v-bind:style="{marginBottom: '20px'}" class="mx-auto" src="../assets/exp/msgGame/answerAreaTitle.png" max-width="200" max-height="50"/>
                 </v-row>
                 <v-row class="goodAnswer justify-center">
                   <v-img class="answerbtn" v-if="score===0" @click="questReply(0)" src="../assets/exp/msgGame/upper1.png"></v-img>
@@ -73,8 +74,9 @@
                   <v-img class="answerbtn" v-if="score===1" @click="questReply(0)" src="../assets/exp/msgGame/lower2.png"></v-img>
                   <v-img class="answerbtn" v-if="score===2" @click="questReply(1)" src="../assets/exp/msgGame/lower3.png"></v-img>
                 </v-row>
-              </v-sheet>
+              </div>
             </v-col>
+              <v-col :cols="2"></v-col>
             </v-sheet>
           </v-row>
 
@@ -144,7 +146,7 @@
           <v-row class="justify-center v-card__text" id="goodEnding" v-if="isPlaying === false && isGoodEnding === true">
             <v-sheet>
               <v-row>
-                <v-img src="../assets/exp/msgGame/good_ending.png" max-width="500px" max-height="500px"/>
+                <v-img src="../assets/exp/msgGame/good_ending.png" max-width="300px" max-height="300px"/>
               </v-row>
               <v-row class="justify-center">
                 <router-link to="/explobby">
@@ -158,7 +160,7 @@
           <v-row class="justify-center v-card__text" id="badEnding" v-if="isPlaying === false && isBadEnding === true">
             <v-sheet>
               <v-row>
-               <v-img src="../assets/exp/msgGame/bad_ending.png" max-width="500px" max-height="500px"/>
+               <v-img src="../assets/exp/msgGame/bad_ending.png" max-width="300px" max-height="300px"/>
               </v-row>
               <v-row class="justify-center">
                 <router-link to="/explobby">
@@ -244,20 +246,31 @@ export default {
 
 <style >
 .gamebtn{
-  max-width: 100px;
-  max-height: 30px;
+  max-width: 200px;
+  max-height: 100px;
   margin-top: 20px;
   margin-bottom: 10px;
 }
 .questPhone{
-  max-width: 300px;
-  max-height: 800px;
+  max-width: 200px;
+  max-height: 5000px;
 }
 .answerbtn{
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 100px;
+  max-height: 100px;
   margin-bottom: 20px;
-  padding: 10px;
+  padding: 5px;
+}
+.gamebtn:hover{
+  transform: translateY(-5px);
+}
+
+.answerbtn:hover {
+  transform: translateY(-5px);
+}
+
+.answerArea{
+  border: #f5c86e solid 5px;
 }
 </style>
 
