@@ -6,16 +6,15 @@
     <!--계좌 등록-->
     <insert id="insertAccount" parameterType="accountVO">
         INSERT INTO ACCOUNT(
-            account_id,
-            member_id,
             account_num,
+            member_id,
             bank_name,
             balance,
             limit,
             nickname
         )
         VALUES
-            (#{memberId},#{accountNum},#{bankName},#{balance},#{limit},#{nickName})
+            (#{accountNum},#{memberId},#{bankName},#{balance},#{limit},#{nickName})
     </insert>
 
     <!-- 거래 삭제   -->
