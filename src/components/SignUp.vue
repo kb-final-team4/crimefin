@@ -246,11 +246,16 @@ methods: {
 }
 
 .button{
+  margin-left: 550px; 
+  
+}
+
+/* .button{
   margin-left: 10px; 
   margin-right: -110px;
   margin-bottom: -45px;
   margin-top: 20px;
-}
+} */
 
 </style>
 
