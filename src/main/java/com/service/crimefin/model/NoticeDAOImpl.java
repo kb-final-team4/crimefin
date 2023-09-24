@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class NoticeDAOImpl implements NoticeDAO{
     @Autowired
@@ -14,5 +16,10 @@ public class NoticeDAOImpl implements NoticeDAO{
     @Override
     public int insertNotice(NoticeVO noticeVO) {
         return sqlSession.insert(NS+"insertNotice", noticeVO);
+    }
+
+    @Override
+    public List<NoticeVO> getNotice(String memberId) {
+        return sqlSession.selectList(NS+"getNotice", memberId);
     }
 }

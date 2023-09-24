@@ -3,7 +3,9 @@ package com.service.crimefin.controller;
 import com.service.crimefin.domain.AccountVO;
 import com.service.crimefin.domain.BankingVO;
 import com.service.crimefin.domain.MemberVO;
+import com.service.crimefin.domain.NoticeVO;
 import com.service.crimefin.service.AssetService;
+import com.service.crimefin.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,9 @@ public class AssetController {
 
     @Autowired
     private AssetService assetService;
+
+    @Autowired
+    private NoticeService noticeService;
 
     @PostMapping("/asset/auth")
     public ResponseEntity addAccount(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request) throws Exception {
@@ -238,6 +243,20 @@ public class AssetController {
         String memberId = memberVO.getMemberId();
 
         List<BankingVO> rvo = assetService.getMaxBalanceBanking(memberId);
+
+        if(rvo!= null)
+            return new ResponseEntity(rvo, HttpStatus.OK);
+        else
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/asset/dashboard/notice")
+    public ResponseEntity getNotice(HttpServletRequest request) {
+        HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
+        MemberVO memberVO = (MemberVO) session.getAttribute("userInfo");
+        String memberId = memberVO.getMemberId();
+
+        List<NoticeVO> rvo = noticeService.getNotice(memberId);
 
         if(rvo!= null)
             return new ResponseEntity(rvo, HttpStatus.OK);

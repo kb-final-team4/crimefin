@@ -69,6 +69,7 @@ public class IntervalDB {
                 NoticeVO noticeVO = new NoticeVO();
                 noticeVO.setMemberId(memberId);
                 noticeVO.setAccountNum(accountNum);
+                noticeVO.setTime(bankingVO.getBankingDate()); //거래내역 생성할때 날짜도 넣어줘야 그걸 이용함
                 noticeVO.setBankName(accountVO.getBank());
                 noticeVO.setDeposit(bankingVO.getDeposit());
                 noticeVO.setWithdrawal(bankingVO.getWithdrawal());

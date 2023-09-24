@@ -17,4 +17,10 @@
 		VALUES
 			(noticelist_seq.NEXTVAL,#{memberId},#{time},#{accountNum},#{bankName},#{deposit},#{withdrawal})
 	</insert>
+
+	<select id="getNotice" parameterType="String" resultType="noticeVO">
+		select time, account_num, bank_name, deposit, withdrawal
+		FROM NOTICELIST
+		WHERE member_id = #{VALUE}
+	</select>
 </mapper>
