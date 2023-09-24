@@ -1,13 +1,5 @@
 <template>
   <v-app>
-    <AppBar fixed/>
-    <div>
-    <!-- <div class="menu">
-      <img alt="crimefin logo" src="../assets/CRIME.png">
-      <a v-for="a in menuBar" :key="a">{{ a}}</a>
-    </div> -->
-
-
 
       <v-main>
       <!--<h2>회원가입</h2>-->
@@ -51,7 +43,7 @@
     <v-row justify="center" class="pa-0">
       <!-- <label for="phone">전화번호</label> -->
       <v-col cols="2" >
-        <v-text-field label="전화번호" id="phone" v-model="user.phone" required outlined @input="formatPhoneNumber"></v-text-field>
+        <v-text-field label="전화번호" id="phone" v-model="user.phone" required outlined></v-text-field>
       </v-col>
     </v-row>
 
@@ -104,7 +96,7 @@
   <div v-if="isRegistered">
     <p>가입이 완료되었습니다. 환영합니다!</p>
   </div>
-</div>
+
   </v-app>
 
 
@@ -209,18 +201,18 @@ methods: {
         });
     },
 
-    formatPhoneNumber(){
-    let phoneNumber = this.user.phone.replace(/[^0-9]/g, '');
-    // 원하는 전화번호 형식으로 가공 (예: 010-1234-5678)
-    if (phoneNumber.length >= 4 && phoneNumber.length <= 7) {
-            phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
-          } else if (phoneNumber.length >= 8) {
-            phoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
-          }
+    // formatPhoneNumber(){
+    // let phoneNumber = this.user.phone.replace(/[^0-9]/g, '');
+    // // 원하는 전화번호 형식으로 가공 (예: 010-1234-5678)
+    // if (phoneNumber.length >= 4 && phoneNumber.length <= 7) {
+    //         phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+    //       } else if (phoneNumber.length >= 8) {
+    //         phoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
+    //       }
 
-    // 가공한 전화번호를 다시 입력 필드에 설정
-    this.user.phone = phoneNumber;
-    },
+    // // 가공한 전화번호를 다시 입력 필드에 설정
+    // this.user.phone = phoneNumber;
+    // },
   },
 };
 </script>
