@@ -35,7 +35,7 @@
               >
                 로그인
               </v-btn>
-              <router-link to="/main"><v-btn
+<!--              <router-link to="/main"><v-btn
                 type="submit"
                 color="primary"
                 class="mt-4"
@@ -45,7 +45,7 @@
               >
                 로그인
               </v-btn>
-              </router-link>
+              </router-link>-->
             </v-form>
           </v-card-text>
           <v-card-actions class="justify-center">
@@ -145,7 +145,6 @@ export default {
       foundUserId: '', // 아이디 찾기 성공 후 표시할 아이디
       showSuccessModal: false, // 성공 모달 창을 보여주기 위한 상태 변수
       modal4 : false,
-      password:'',
       newpassword:'',
       passwordConfirm:'',
     };
