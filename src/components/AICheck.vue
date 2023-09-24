@@ -35,6 +35,10 @@
       </v-card>
       <br><br><br>
     </v-main>
+    <!-- 스피너 -->
+    <div v-if="isLoading" class="loading-overlay">
+      <div class="spinner"> </div>
+    </div>
   
     <v-dialog v-model="showResultModal" width="70%">
       <AICheckResult  v-if="showResultModal" :responsedata="responsedata" :showResultModal.sync="showResultModal" :phishingtype="phishingtype"/>
@@ -64,24 +68,30 @@
         content: '', 
         responsedata:null,
         showResultModal:false,
+        isLoading: false,
         };
     },
     methods: {
         sendContent() {
-        var url = "http://localhost:9999/phishing/content";
-        var data = {
-            content: this.content
-        }
+
+          this.isLoading = true;
+
+          var url = "http://localhost:9999/phishing/content";
+          var data = {
+              content: this.content
+          }
         axios.post(url, data)
           .then((response) => {
             console.log('POST 요청 성공:', response.data);
            
-          this.responsedata = response.data
-          this.showResultModal = true;
+            this.responsedata = response.data
+            this.showResultModal = true;
+
+            this.isLoading = false; 
           })
           .catch((error) => {
             console.error('POST 요청 오류:', error);
-            
+            this.isLoading = false; 
           });
       },
     },
@@ -135,5 +145,34 @@ p{
 
 .image-container img {
   width: 23%;
+}
+.loading-overlay{
+ position:absolute;
+ top :0;
+ left :0;
+ width :100%;
+ height :100%;
+ background-color :rgba(0,0,0,.7);
+ display:flex;
+ justify-content:center ;
+ align-items:center ;
+ color:white ;
+ font-size:2em ;
+ z-index :9999 ; 
+}
+
+
+.spinner {
+  border: 16px solid #f3f3f3; 
+  border-top: 16px solid #9ba4b4; 
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+ animation: spin 0.8s linear infinite ; 
+}
+
+@keyframes spin {
+ from { transform: rotate(0deg); }
+ to { transform: rotate(360deg); }
 }
 </style>   
