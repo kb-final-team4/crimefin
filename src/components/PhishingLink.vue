@@ -115,7 +115,6 @@ p{
   justify-content: center;
   width: 50%;
   font-size: 25px;
-
 }
 
 .image-container {

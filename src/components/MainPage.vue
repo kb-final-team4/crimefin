@@ -1,61 +1,30 @@
 <template>
   <v-app>
-    <AppBar />
+    <AppBar/>
 
     <v-main>
       <v-container fluid class="btn-container">
         <div class="d-flex justify-center">
-          <v-card
-            class="mx-2 mt-6 mr-2 cover1"
-            width="23%"
-            tile
-            @click="redirectToPhishingNumber('Phone')"
-          >
+          <v-card class="mx-2 mt-6 mr-2 cover1" width="23%" tile @click="redirectToPhishingNumber('Phone')" >
             <v-card-title>
               <v-card class="mx-auto inner-cover" width="95%" height="60%" tile>
-                <v-img
-                  src="../assets/12.png"
-                  class="mx-auto"
-                  width="100%"
-                  height="100%"
-                ></v-img>
+                <v-img src="../assets/12.png" class="mx-auto" width="100%" height="100%"></v-img>
               </v-card>
             </v-card-title>
           </v-card>
 
-          <v-card
-            class="mx-2 mt-6 mr-2 cover2"
-            width="23%"
-            tile
-            @click="redirectToPhishingNumber('Message')"
-          >
+          <v-card class="mx-2 mt-6 mr-2 cover2" width="23%" tile @click="redirectToPhishingNumber('Message')">
             <v-card-title>
               <v-card class="mx-auto inner-cover" width="95%" height="60%" tile>
-                <v-img
-                  src="../assets/13.png"
-                  class="mx-auto"
-                  width="100%"
-                  height="100%"
-                ></v-img>
+                <v-img src="../assets/13.png" class="mx-auto" width="100%" height="100%"></v-img>
               </v-card>
             </v-card-title>
           </v-card>
 
           <v-card class="mx-2 mt-6 mr-2 cover3" width="23%" tile>
             <v-card-title>
-              <v-card
-                class="mx-auto inner-cover"
-                width="95%"
-                height="60%"
-                tile
-                @click="redirectToPhishingLink('SNS')"
-              >
-                <v-img
-                  src="../assets/14.png"
-                  class="mx-auto"
-                  width="100%"
-                  height="100%"
-                ></v-img>
+              <v-card class="mx-auto inner-cover" width="95%" height="60%" tile @click="redirectToPhishingLink('SNS')">
+                <v-img src="../assets/14.png" class="mx-auto" width="100%" height="100%"></v-img>
               </v-card>
             </v-card-title>
           </v-card>
@@ -64,85 +33,68 @@
 
       <v-container fluid class="news-container">
         <div class="d-flex flex-column align-center mt-6">
-          <h2 class="mb-4 text-center w-25 font-weight-bold">
-            관심있는 사례, 지금 검색해보세요!
-          </h2>
-
-          <!-- 검색창 -->
-          <v-text-field
-            v-model="searchText"
-            label="Search..."
-            single-line
-            hide-details
-            class="w-25 mb-4"
-          ></v-text-field>
-
-          <!-- 키워드 버튼들 -->
-          <div class="d-flex flex-wrap justify-center mt-4 w-25">
-            <v-btn
-              v-for="(keyword, index) in keywords"
-              :key="index"
-              @click="fetchData(keyword)"
-              class="mr-2 mb-2"
-              >{{ keyword }}</v-btn
-            >
+          
+          <p class="news-title"> 나와 유사한 사례, 지금 검색해보세요!</p>
+          
+          <div class="input-container mx-auto">
+            <v-form>
+              <v-row>
+                <v-col cols="9">
+                  <v-text-field v-model="searchText" label="검색어를 입력해주세요." single-line dense class="large-input"></v-text-field>  
+                </v-col>
+                <v-col cols="3">
+                  <v-btn class="mx-auto" color="#14274E">조회하기</v-btn> 
+                </v-col>
+              </v-row>
+            </v-form>
           </div>
 
-          <!-- 카드들 -->
-          <div
-            v-if="cards.length > 0"
-            class="mt-6 d-flex flex-wrap justify-center"
-          >
-            <v-card
-              v-for="(card, index) in cards"
-              :key="'card-' + index"
-              width="100%"
-              tile
-              outlined
-              @click="handleCardClick(card)"
-            >
+
+          <div class="keywords-container">
+            <v-btn v-for="(keyword, index) in keywords" :key="index" @click="fetchData(keyword)" class="keywordbtn">{{ keyword }}</v-btn>
+          </div>
+
+          <v-flex>
+          <div v-if="cards.length > 0" class="mb-4 mx-auto" >
+            <v-card v-for="(card, index) in cards" :key="'card-' + index" width="60%" tile outlined @click="handleCardClick(card)" class="mx-auto news">
+              
               <v-row>
                 <v-col cols="4">
-                  <v-img
-                    :src="require(`../assets/${card.img}`)"
-                    style="
-                      max-width: 100%;
-                      opacity: 0.8;
-                      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-                    "
-                  ></v-img>
+                  <v-img :src="require(`../assets/${card.img}`)" style=" max-width: 100%; opacity: 0.8; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);"></v-img>
                 </v-col>
+
                 <v-col cols="8">
-                  <v-card-title
-                    class="text-right mt-4 mb-4 my-4"
-                    style="font-weight: 300; font-size: 24px"
-                  >
+                  <v-card-title class="text-left" style="font-weight: bold;">
                     {{ card.title }}
                   </v-card-title>
+
                   <v-divider></v-divider>
-                  <!-- 제목과 내용 구분선 추가 -->
-                  <v-card-subtitle
-                    class="text-right mt-2 mb-2 my-2"
-                    style="font-weight: 300; font-size: 20px"
-                  >
+                  
+                  <v-card-subtitle class="text-left" style="font-weight: 300; font-size: 18px">
                     {{ card.content }}
                   </v-card-subtitle>
                 </v-col>
               </v-row>
+           
             </v-card>
           </div>
+        </v-flex>
+
         </div>
       </v-container>
     </v-main>
+    <!-- Footer -->
+    <Footer/>
   </v-app>
 </template>
 
 <script>
 import AppBar from "../views/AppBar.vue";
+import Footer from '../views/Footer.vue';
 
 export default {
   components: {
-    AppBar,
+    AppBar,Footer,
   },
   data() {
     return {
@@ -165,8 +117,6 @@ export default {
       this.$router.push({ name: "PhishingLink", params: { phishingtype } });
     },
     fetchData(keyword) {
-      // 이 부분에서 실제 데이터를 가져오는 로직을 구현해야 합니다.
-      // 예시로 간단한 더미 데이터를 생성하였습니다.
 
       if (keyword === "#자녀사칭") {
         let dummyData = [
@@ -219,10 +169,8 @@ export default {
       }
     },
     handleCardClick(card) {
-      // 카드가 클릭되었을 때 처리할 로직을 여기에 작성합니다.
-      // card.href에 해당하는 링크로 이동합니다.
       if (card.href) {
-        window.open(card.href, "_blank"); // 새 탭 또는 새 창에서 링크 열기
+        window.open(card.href, "_blank"); // 
       }
     },
   },
@@ -230,6 +178,29 @@ export default {
 </script>
 
 <style scoped>
+
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+  font-family: 'TheJamsil5Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+p, div{
+  font-family: 'Pretendard-Regular', sans-serif;
+}
 .cover1,
 .cover3 {
   background-color: #14274e !important;
@@ -257,7 +228,8 @@ export default {
 
 .cover1:hover,
 .cover2:hover,
-.cover3:hover {
+.cover3:hover,
+.news:hover {
   transform: translateY(-5px);
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
 }
@@ -265,11 +237,11 @@ export default {
 .v-text-field {
   margin-top: 20px;
 }
-
-.v-btn {
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
+.v-btn { 
+   background-color:#14274E ;
+   color:white ;  
+   
+} 
 
 .v-card {
   margin-right: 10px;
@@ -283,4 +255,45 @@ export default {
   background-size: cover;
   background-position: center;
 }
+.news-container{
+  height: full;
+  font-family: 'TheJamsil5Bold';
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+}
+.news-title{
+  font-family: 'TheJamsil5Bold';
+  font-size: 40px;
+  font-weight: 900;
+  margin: 4%;
+}
+.large-input .v-input__control {
+    height: 80px;
+}
+
+.v-input__slot, .large-input  {
+    font-size: 60px; 
+}
+
+.keywords-container{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  margin: 2%;
+}
+.keywordbtn{
+  color: #9ba4b4;
+  margin: 1.5%;
+  font-size: 20px;
+  font-family: 'TheJamsil5Bold';
+}
+.news{
+  font-family: 'TheJamsil5Bold';
+  margin: 20px;
+}
+
 </style>
