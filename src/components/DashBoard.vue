@@ -4,50 +4,45 @@
 
     <v-main>
       <v-container>
-        <v-col class="d-flex align-center justify-center" :cols="3">
+        <v-row>
+          <v-col :cols="1"></v-col>
+        <v-col :cols="7"></v-col>
+        <v-col class="d-flex align-center justify-end" :cols="3">
+          <v-btn @click="openaddlist" width="60px" height="30px" v-bind:style="{ background: '#9ba4b4', color: 'white' }">계좌등록</v-btn>
+          <v-btn @click="opendeletelist" width="60px" height="30px" v-bind:style="{ marginLeft: '10px',background: '#9ba4b4', color: 'white' }">계좌삭제</v-btn>
           <v-img
-            src="../assets/bell.png"
-            max-width="30px"
-            max-height="30px"
-            @click="openNoticelist"
-          />
-          <v-img
-            src="../assets/add.png"
-            max-width="30px"
-            max-height="30px"
-            @click="openaddlist"
-            v-bind:style="{ marginLeft: '10px' }"
-          />
-          <v-img
-            src="../assets/delete.png"
-            max-width="30px"
-            max-height="30px"
-            @click="opendeletelist"
-            v-bind:style="{ marginLeft: '10px' }"
+              v-bind:style="{ marginLeft: '10px' }"
+              src="../assets/bell.png"
+              max-width="30px"
+              max-height="30px"
+              @click="openNoticelist"
           />
         </v-col>
-        
+          <v-col :cols="1"></v-col>
+        </v-row>
+
         <v-row>
-          <v-col cols="4" class="item-box">
+          <v-col :cols="1"></v-col>
+          <v-col cols="3" class="item-box justify-center">
             <!-- 대시보드 1 :: 도넛 그래프 -->
-            <v-card>
-              <div class="v-card__title text-center mx-auto text--h6">
+            <v-card height="200px" width="300px">
+              <div class="text-center" v-bind:style="{fontSize: '25px', marginTop: '-13px', padding: '10px'}">
                 개인 계좌 종합
               </div>
               <div class="chart-wrap mx-auto">
                 <div id="chart1">
-                  <apexcharts id="myChart1" type="donut" width="380" height="400" :options="accountChartOptions" :series="accountSeries"></apexcharts>
+                  <apexcharts id="myChart1" type="donut" width="280px" height="200" :options="accountChartOptions" :series="accountSeries"></apexcharts>
                 </div>
               </div>
             </v-card>
-
-            <br><v-divider></v-divider><br>
-            
+            <br>
+            <v-divider></v-divider>
+            <br>
             <!-- 대시보드 2 :: 전체 계좌 리스트 -->
-            <v-card>
-              <v-card width="300px" class="mx-auto account-list noscroll-content" v-bind:style="{ background: '#F8F0E5', color: 'gray' }">
-                <div class="v-card__text text-center" v-if="accountInfosList != null" v-for="item in accountInfosList" v-bind:style="{ height: '60px' }">
-                  <v-row>
+            <v-card width="300px" height="420px">
+              <v-card width="240px" class="mx-auto account-list noscroll-content" v-bind:style="{ background: '#9ba4b4', color: 'gray', paddingTop: '10px' }">
+                <div class="v-card__text text-center white--text" v-if="accountInfosList != null" v-for="item in accountInfosList" v-bind:style="{ height: '60px' }">
+                  <v-row class="justify-end">
                     <v-col :cols="3">
                       <img :src="getImgUrl(item[0])" v-bind:alt="item[0]" height="40px" width="40px"/>
                     </v-col>
@@ -65,17 +60,26 @@
             </v-card>                
           </v-col>
 
-          <v-col cols="8" class="item-box">
+          <v-col cols="7" class="item-box">
             <!-- 대시보드 3 :: 계좌 거래내역 그래프 -->
-            <v-card>
-              <div class="v-card__title justify-center text--h6">
-                거래 내역
-              <v-select v-model="accountNumDropdown" v-if="this.accountNumArr != null" label="계좌 선택" :items="this.accountNumArr" />
-              </div>
+            <v-card height="350px">
               <v-row>
-                <div class="chart-wrap mx-auto" v-bind:style="{ marginTop: '-20px' }" >
+                <v-col :cols="4">
+                  <div class="v-card__title justify-center text--h6">
+                    거래 내역
+                  </div>
+                </v-col>
+                <v-col :cols="2"></v-col>
+                <v-col :cols="5">
+                  <v-select v-model="accountNumDropdown" v-if="this.accountNumArr != null" label="계좌 선택" :items="this.accountNumArr" />
+                </v-col>
+                <v-col :cols="1"></v-col>
+              </v-row>
+
+              <v-row>
+                <div class="chart-wrap mx-auto" v-bind:style="{marginTop: '-10px'}">
                   <div id="chart2">
-                    <apexchart id="bankingchart1" type="line" width="660" height="300" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
+                    <apexchart id="bankingchart1" type="line" width="500" height="250" :options="bankingChartOptions" :series="bankingSeries"></apexchart>
                   </div>
                 </div>
               </v-row>
@@ -84,26 +88,68 @@
             <br><v-divider></v-divider><br>
 
             <!-- 대시보드 4 :: 계좌 거래내역 리스트 -->
-            <v-card>
+            <v-card height="270px">
               <v-col >
                 <v-form @submit.prevent="getBankingDaily">
                   <v-row>
+                    <v-col :cols="4">
                       <v-text-field type="datetime-local" height="10px" v-model="bankingStartDate" label="시작일자"></v-text-field>
+                    </v-col>
+                    <v-col :cols="4">
                       <v-text-field type="datetime-local" height="10px" v-model="bankingEndDate" label="종료일자"></v-text-field>
+                    </v-col>
+                    <v-col :cols="4">
                       <v-btn type="submit" color="white" v-bind:style="{ background: '#444766' }" block outlined>조회하기</v-btn >
-                    </v-row>
+                    </v-col>
+                  </v-row>
                 </v-form>
               </v-col>
               <v-col>
-              <v-card class="banking-list noscroll-content" v-bind:style="{ background: '#F8F0E5', color: 'gray' }" >
-                  <div class="v-card__text" v-if="bankingInfoList != null" v-for="item in bankingInfoList" >
-                    {{ item }}
-                  </div>
+                <v-card class="banking-list noscroll-content" v-bind:style="{ background: '#9ba4b4', marginTop: '-20px' }" >
+                  <v-row>
+                    <v-col :cols="3"></v-col>
+                    <v-col :cols="1" class="text-right" v-bind:style="{fontSize:'14px'}">
+                      날짜
+                    </v-col>
+                    <v-col :cols="2" class="text-right" v-bind:style="{fontSize:'14px'}">
+                      입/출금자
+                    </v-col>
+                    <v-col :cols="2" class="text-left" v-bind:style="{fontSize:'14px'}">
+                      입/출금액
+                    </v-col>
+                    <v-col :cols="1" class="text-left">
+                      잔고
+                    </v-col>
+                    <v-col :cols="4"></v-col>
+                  </v-row>
+                  <v-row v-bind:style="{marginTop: '-30px'}">
+                    <div
+                      v-bind:style="{fontSize: '23px', marginTop: '-10px'}"
+                      class="v-card__text white--text"
+                      v-if="bankingInfoList != null"
+                      v-for="item in bankingInfoList"
+                    >
+<!--                      <v-col :cols="2">
+                        {{ item[0] }}
+                      </v-col>
+                      <v-col :cols="2">
+                        {{ item[1] }}
+                      </v-col>
+                      <v-col :cols="2">
+                        {{ item[2] }}
+                      </v-col>
+                      <v-col :cols="2">
+                        {{ item[3] }}
+                      </v-col>-->
+                      {{ item }}
+                    </div>
+                  </v-row>
                 </v-card>
               </v-col>
             </v-card>    
 
           </v-col>
+          <v-col :cols="1"></v-col>
       </v-row>
 
       <!-- 알림 리스트 -->
@@ -395,6 +441,7 @@ export default {
       bankingStartDate: null, // 추적시작날짜 입력하고
       bankingEndDate: null, // 추적종료날짜 입력하기
 
+      bankingInfosList: null, //리턴받아서 거래내역 스트링들 합쳐서 만든 프론트 표현용 스트링 배열
       bankingInfoList: null, //리턴받아서 스트링 합쳐서 만든 프론트 표현용 스트링 배열
 
       bankingDateList: null, //리턴받은 거래일자, bankingChartOptions.xaxis.categories에 넣기
@@ -669,32 +716,41 @@ export default {
         "getBankingDaily bankingSeries.data after" + this.bankingSeries.data
       );
 
-      this.bankingInfoList = new Array(this.bankingDateList.length);
+
+      /*this.bankingInfosList = new Array(4);
+      this.bankingInfosList[0] = new Array(this.bankingDateList.length);
+      this.bankingInfosList[1] = new Array(this.bankingDateList.length);
+      this.bankingInfosList[2] = new Array(this.bankingDateList.length);
+      this.bankingInfosList[3] = new Array(this.bankingDateList.length);
+
       for (let i = 0; i < this.bankingDateList.length; i++) {
+        this.bankingInfosList[0][i] = this.bankingDateList[i];
+        this.bankingInfosList[3][i] = this.bankingBalanceList[i];
         //오른쪽차트 아래에 표기하는 곳
         //입금
         if (this.bankingDepositList[i] != null) {
-          this.bankingInfoList[i] =
-            this.bankingDateList[i] +
-            " 입금 " +
-            this.bankingDepositNameList[i] +
-            " +" +
-            this.bankingDepositList[i] +
-            "원 잔고 : " +
-            this.bankingBalanceList[i];
+          this.bankingInfosList[1][i] = this.bankingDepositNameList[i];
+          this.bankingInfosList[2][i] = this.bankingDepositList[i];
         }
         //출금
         else {
-          this.bankingInfoList[i] =
-            this.bankingDateList[i] +
-            " 출금 " +
-            this.bankingWithdrawlToList[i] +
-            " -" +
-            this.bankingWithdrawlList[i] +
-            "원 잔고 : " +
-            this.bankingBalanceList[i];
+          this.bankingInfosList[1][i] = this.bankingWithdrawlToList[i];
+          this.bankingInfosList[2][i] = this.bankingWithdrawlList[i];
+        }
+      }*/
+
+      this.bankingInfoList = new Array(this.bankingDateList.length);
+
+      for(let i = 0; i < this.bankingDateList.length; i++) {
+        if (this.bankingDepositList[i] != null) {
+          this.bankingInfoList[i] = this.bankingDateList[i]+" "+this.bankingDepositNameList[i]+" +"+this.bankingDepositList[i]+" "+this.bankingBalanceList[i];
+        }
+        //출금
+        else {
+          this.bankingInfoList[i] = this.bankingDateList[i]+" "+this.bankingWithdrawlToList[i]+" -"+this.bankingWithdrawlList[i]+" "+this.bankingBalanceList[i];
         }
       }
+
 
       /*var initurl = "http://localhost:9999/asset/dashboard/init";
 
