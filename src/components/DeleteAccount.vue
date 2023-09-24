@@ -121,7 +121,7 @@ export default {
       ],
 
         user: {
-        accountId: '',
+        memberId:'',
         bankName:'',
         accountNum:'',
         authNumConfirm:'',
@@ -137,5 +137,15 @@ export default {
 <style>
     .modal-bg3{
         background-color: white;
+
+        position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     }
 </style>

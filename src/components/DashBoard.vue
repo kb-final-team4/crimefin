@@ -843,30 +843,30 @@ export default {
       axios
         .get(url)
         .then((response) => {
-          console.log("데이터 가져오기 성공: ", response);
+          //console.log("데이터 가져오기 성공: ", response);
 
           accounts = response.data;
-          console.log("accounts 길이: ", accounts);
+          //console.log("accounts 길이: ", accounts);
 
           this.accountNumArr = new Array(accounts.length);
           for (let i = 0; i < this.accountNumArr.length; i++)
             this.accountNumArr[i] = accounts[i].accountNum;
-          console.log("accountNumArr: ", this.accountNumArr);
+          //console.log("accountNumArr: ", this.accountNumArr);
 
           this.bankNameArr = new Array(accounts.length);
           for (let i = 0; i < this.bankNameArr.length; i++)
             this.bankNameArr[i] = accounts[i].bank;
-          console.log("bankNameArr: ", this.bankNameArr);
+          //console.log("bankNameArr: ", this.bankNameArr);
 
           this.balanceArr = new Array(accounts.length);
           for (let i = 0; i < this.balanceArr.length; i++)
             this.balanceArr[i] = accounts[i].balance;
-          console.log("balanceArr: ", this.balanceArr);
+          //console.log("balanceArr: ", this.balanceArr);
 
           this.nickNameArr = new Array(accounts.length);
           for (let i = 0; i < this.nickNameArr.length; i++)
             this.nickNameArr[i] = accounts[i].nickName;
-          console.log("nickNameArr: ", this.nickNameArr);
+          //console.log("nickNameArr: ", this.nickNameArr);
 
           this.accountChartOptions.labels = this.nickNameArr;
 
@@ -982,11 +982,6 @@ export default {
             this.bankingWithdrawlToList[i] = bankings[i].withdrawalTo;
           console.log("bankingWithdrawlToList: ", this.bankingWithdrawlToList);
 
-          //this.bankingChartOptions.xaxis.categories = this.bankingDateList;
-          this.bankingChartOptions.xaxis.categories = new Array(this.bankingDateList.length);
-          for(let i = 0; i< this.bankingDateList.length; i++){
-            this.bankingChartOptions.xaxis.categories[i] = this.bankingDateList[i];
-          }
           console.log("getBankingDaily bankingChartOptions.xaxis.categories : " + this.bankingChartOptions.xaxis.categories);
 
           this.bankingBalanceList = new Array(bankings.length);
@@ -997,13 +992,6 @@ export default {
           for (let j = 0; j < this.bankingBalanceList.length; j++) {
             this.bankingBalanceList[j] = parseInt(this.bankingBalanceList[j]);
           }
-          //console.log("getBankingDaily bankingSeries.data before"+ this.bankingSeries.data);
-          this.bankingSeries.data = this.bankingBalanceList;
-          /*this.bankingSeries.data = new Array(this.bankingDateList.length);
-          for(let i = 0; i< this.bankingDateList.length; i++){
-            this.bankingChartOptions.data[i] = this.bankingBalanceList[i];
-          }*/
-          console.log(  "getBankingDaily bankingSeries.data after" + this.bankingSeries.data);
 
           this.$refs.bankingChart.updateSeries([{
             data: this.bankingBalanceList
@@ -1014,12 +1002,12 @@ export default {
                 }
               }
           );
-          //this.$refs.bankingChart.render();
 
           this.bankingInfoList = new Array(this.bankingDateList.length);
 
           for (let i = 0; i < this.bankingDateList.length; i++) {
-            if (this.bankingDepositList[i] != null) {
+            if (this.bankingDepositNameList[i] != null) {
+              console.log("getBankingList for문 안 위 i "+ i);
               this.bankingInfoList[i] =
                 this.bankingDateList[i] +
                 " " +
@@ -1030,7 +1018,8 @@ export default {
                 this.bankingBalanceList[i];
             }
             //출금
-            else if(this.bankingWithdrawlList[i]!=null) {
+            else if(this.bankingWithdrawlToList[i]!=null) {
+              console.log("getBankingList for문 안 아래 i "+ i);
               this.bankingInfoList[i] =
                 this.bankingDateList[i] +
                 " " +
@@ -1041,6 +1030,8 @@ export default {
                 this.bankingBalanceList[i];
             }
           }
+          console.log("getBankingList bankingInfoList : ", this.bankingInfoList);
+
         })
         .catch((error) => {
           console.log(error);
