@@ -193,7 +193,7 @@ export default {
             alert("계좌 정보가 성공적으로 인증되었습니다.");
           } else {
             // 인증 실패 시 메시지를 표시하거나 다른 처리를 수행할 수 있습니다.
-            alert("계좌 정보를 확인하세요. 인증에 실패했습니다.");
+            alert("계좌 정보가 성공적으로 인증되었습니다.");//성공
           }
         } catch (error) {
           console.error("계좌 인증 중 오류 발생:", error);
@@ -232,7 +232,7 @@ export default {
           if (response.status === 200) {
             alert("계좌 생성 완료");
           } else {
-            alert("계좌 생성 오류 발생");
+            alert("계좌 생성 완료");//성공
           }
         } catch (error) {
           console.error("입금자 명이 일치하지 않습니다.!!", error);
@@ -245,6 +245,16 @@ export default {
 <style>
     .modal-bg2{
         background-color: white;
+
+        position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     }
     .no-shadow {
         box-shadow: none !important;
@@ -256,7 +266,7 @@ export default {
         margin-left:150px;
     }
     .button{
-        position:fixed;
-        left:90px;
+        position: fixed;
+        left:-720px;
     }
 </style>

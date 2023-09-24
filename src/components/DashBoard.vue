@@ -8,24 +8,6 @@
           <v-col :cols="1"></v-col>
           <v-col :cols="7"></v-col>
           <v-col class="d-flex align-center justify-end" :cols="3">
-            <v-btn
-              @click="openaddlist"
-              width="60px"
-              height="30px"
-              v-bind:style="{ background: '#9ba4b4', color: 'white' }"
-              >계좌등록</v-btn
-            >
-            <v-btn
-              @click="opendeletelist"
-              width="60px"
-              height="30px"
-              v-bind:style="{
-                marginLeft: '10px',
-                background: '#9ba4b4',
-                color: 'white',
-              }"
-              >계좌삭제</v-btn
-            >
             <v-img
               v-bind:style="{ marginLeft: '10px' }"
               src="../assets/bell.png"
@@ -278,178 +260,6 @@
             >
           </div>
         </div>
-
-        <!-- 계좌 등록 -->
-        <div class="outer-bg2" v-if="this.modal2 !== false">
-          <div class="modal-bg2">
-            <h4
-              class="v-card__title text-center"
-              v-bind:style="{ color: 'gray' }"
-            >
-              계좌 등록
-            </h4>
-            <v-card>
-              <v-row>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="accountId"
-                    label="아이디"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="bankName"
-                    label="은행명"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="accountNum"
-                    label="계좌번호"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="1">
-                  <v-btn
-                    variant="tonal"
-                    class="button"
-                    @click="authenticateAccount"
-                    >인증</v-btn
-                  >
-                </v-col>
-              </v-row>
-
-              <v-row>
-                <!-- <div v-if="isAuthenticated"> -->
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="authNumConfirm"
-                    label="입금자명"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="1">
-                  <v-btn class="button" @click="confirmAuthNum">확인</v-btn>
-                </v-col>
-                <!-- </div> -->
-              </v-row>
-              <v-row>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="accountNickname"
-                    label="계좌별명"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="8">
-                  <v-text-field
-                    v-model="accountLimit"
-                    label="limit"
-                    variant="solo"
-                    class="t-field"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card>
-            <br />
-            <v-row class="d-flex justify-end">
-              <v-btn
-                v-bind:style="{ background: '#EADBC8', color: 'gray' }"
-                variant="tonal"
-                type="button"
-                @click="registAccount"
-                class="btn-close"
-                style="margin-right: 30px"
-                >등록</v-btn
-              >
-              <v-btn
-                v-bind:style="{ background: '#EADBC8', color: 'gray' }"
-                variant="tonal"
-                type="button"
-                @click="modal2 = false"
-                class="btn-close"
-                >닫기</v-btn
-              >
-            </v-row>
-          </div>
-        </div>
-
-        <!-- 계좌 삭제 -->
-        <div class="outer-bg3" v-if="this.modal3 !== false">
-          <div class="modal-bg3">
-            <h4
-              class="v-card__title text-center"
-              v-bind:style="{ color: 'gray' }"
-            >
-              계좌 삭제
-            </h4>
-            <v-card>
-              <v-row>
-                <v-col cols="10">
-                  <v-text-field
-                    v-model="memberId"
-                    label="아이디"
-                    variant="solo"
-                    class="t-field3"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="10">
-                  <v-text-field
-                    v-model="bankName"
-                    label="은행명"
-                    variant="solo"
-                    class="t-field3"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="10">
-                  <v-text-field
-                    v-model="accountNum"
-                    label="계좌번호"
-                    variant="solo"
-                    class="t-field3"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card>
-            <br />
-            <v-row class="d-flex justify-end">
-              <v-btn
-                v-bind:style="{ background: '#EADBC8', color: 'gray' }"
-                variant="tonal"
-                type="button"
-                @click="deleteAccount"
-                class="btn-close"
-                style="margin-right: 30px"
-                >삭제</v-btn
-              >
-              <v-btn
-                v-bind:style="{ background: '#EADBC8', color: 'gray' }"
-                variant="tonal"
-                type="button"
-                @click="modal3 = false"
-                class="btn-close"
-                >닫기</v-btn
-              >
-            </v-row>
-          </div>
-        </div>
       </v-container>
     </v-main>
 
@@ -564,15 +374,6 @@ export default {
       bankingSeries: [
         {
           name: "잔고",
-          //data: [100000, 41000, 35000, 51000, 49000, 62000, 69000, 91000, 148000]
-          // data: [
-          //   "1020000",
-          //   "1010000",
-          //   "1050000",
-          //   "1030000",
-          //   "1050000",
-          //   "50000",
-          // ],
           data: [],
         },
       ],
@@ -598,239 +399,77 @@ export default {
         },
         //여기 수정하기 x축 값
         xaxis: {
-          //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-          // categories: [
-          //   "2023-09-10",
-          //   "2023-09-11",
-          //   "2023-09-12",
-          //   "2023-09-13",
-          //   "2023-09-14",
-          //   "2023-09-15",
-          // ],
           categories: [],
         },
       },
     };
   },
-
   created() {
     this.getTotalAccountList();
     //this.getBankingDaily();
   },
   mounted() {},
   methods: {
-    /*
-    NOTICE_ID   NOT NULL VARCHAR2(20)
-    MEMBER_ID   NOT NULL VARCHAR2(20)
-    TIME                 TIMESTAMP(6)
-    ACCOUNT_NUM          VARCHAR2(20)
-    BANK_NAME            VARCHAR2(20)
-    DEPOSIT              NUMBER
-    WITHDRAWL            NUMBER
-     */
-    authenticateAccount() {
-      console.log(11);
-      try {
-        // 여기에서 백엔드와 통신하여 입금자명 인증을 수행합니다.
-        const response = axios.post("http://localhost:9999/asset/auth", {
-          bankName: this.bankName,
-          accountNum: this.accountNum,
-        });
-
-        console.log(response);
-        // 인증이 성공하면 isAuthenticated 값을 true로 설정합니다.
-        if (response.status === 200) {
-          //this.isAuthenticated = true;
-          alert("계좌 정보가 성공적으로 인증되었습니다.");
-        } else {
-          // 인증 실패 시 메시지를 표시하거나 다른 처리를 수행할 수 있습니다.
-          alert("계좌 정보를 확인하세요. 인증에 실패했습니다.");
-        }
-      } catch (error) {
-        console.error("계좌 인증 중 오류 발생:", error);
-        // 오류 처리를 원하는 대로 수행할 수 있습니다.
-      }
-    },
-
-    confirmAuthNum() {
-      console.log(22);
-      axios
-        .get("http://localhost:9999/asset/auth/confirm", {
-          params: {
-            authNumConfirm: this.authNumConfirm,
-          },
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            alert("입금자명 확인 성공");
-            this.isAuthenticated = true;
-          } else {
-            alert("입금자명이 틀립니다!");
-          }
-        })
-        .catch((error) => {
-          console.error("입금자명 찾기 오류", error);
-        });
-    },
-
-    registAccount() {
-      try {
-        const response = axios.post("http://localhost:9999/asset/regist", {
-          accountNickname: this.accountNickname,
-          accountLimit: this.accountLimit,
-          isAuthenticated: this.isAuthenticated,
-          accountNum: this.accountNum,
-        });
-        console.log(response);
-        if (response.status === 200) {
-          alert("계좌 생성 완료");
-        } else {
-          alert("계좌 생성 오류 발생");
-        }
-      } catch (error) {
-        console.error("입금자 명이 일치하지 않습니다.!!", error);
-        alert("계좌 등록 중 오류 발생");
-      }
-    },
-
-    deleteAccount() {
-      console.log(99);
-      try {
-        const response = axios.delete("http://localhost:9999/asset", {
-          data: {
-            //delte요청은 data로 묶어서 보내야함
-            memberId: this.memberId,
-            bankName: this.bankName,
-            accountNum: this.accountNum,
-          },
-        });
-        console.log(response);
-      } catch (error) {
-        console.error("계좌 삭제 중 오류 발생", error);
-        alert("계좌 삭제 중 오류 발생");
-      }
-    },
-
-    openaddlist() {
-      this.modal2 = true;
-    },
-
-    opendeletelist() {
-      this.modal3 = true;
-    },
+    //todo 아직 기능개발 안됨, 테스트 필요!!!!!!!!!!
     openNoticelist() {
       this.modal = true;
-      /*
-      noticeTimeArr : null, //알림 시간 리스트
-      noticeBankNameArr : null, //알림 은행명 리스트
-      noticeDepositArr : null, //알림 입금 리스트
-      noticeWithdrawlArr : null, //알림 출금 리스트
-       */
+
       var url = "http://localhost:9999/asset/dashboard/notice";
       var data = {
         memberId: this.memberId,
         accountNum: this.accountNumDropdown,
       };
 
-      this.noticeTimeArr = ["2023-09-10", "2023-09-13", "2023-09-15"];
-      this.noticeBankNameArr = ["국민은행", "국민은행", "국민은행"];
-      this.noticeDepositArr = [null, null, 10000000];
-      this.noticeWithdrawlArr = [9000000, 100000000, null];
+      axios
+        .post(url, data)
+        .then((response) => {
+          var notices = response.data;
 
-      this.noticeInfoList = new Array(this.noticeTimeArr.length);
-      for (let i = 0; i < this.noticeTimeArr.length; i++) {
-        if (this.noticeDepositArr[i] !== null)
-          this.noticeInfoList[i] =
-            this.noticeTimeArr[i] +
-            " " +
-            this.noticeBankNameArr[i] +
-            " " +
-            this.noticeDepositArr[i] +
-            "원이 입금되었습니다.";
-        else
-          this.noticeInfoList[i] =
-            this.noticeTimeArr[i] +
-            " " +
-            this.noticeBankNameArr[i] +
-            " " +
-            this.noticeWithdrawlArr[i] +
-            "원이 빠져나갔습니다.";
-      }
-
-      /*axios.post(url,data)
-          .then(response => {
-
-          })
-          .catch(error => {
-            console.log(error);
-          });*/
-    },
-    parseNumstrToKorean(numStr) {
-      class Stack {
-        constructor() {
-          this.storage = {};
-          this.top = 0;
-        }
-        size() {
-          return Object.keys(this.storage).length;
-        }
-        push(element) {
-          this.storage[this.top] = element;
-          this.top += 1;
-        }
-        pop() {
-          // 빈 스택에 에러처리
-          if (Object.keys(this.storage).length === 0) {
-            return;
+          //this.noticeTimeArr = ["2023-09-10", "2023-09-13", "2023-09-15"];
+          this.noticeTimeArr = new Array(notices.length);
+          for (let i = 0; i < notices.length; i++) {
+            this.noticeTimeArr[i] = notices[i].time;
           }
 
-          const result = this.storage[this.top - 1];
-          delete this.storage[this.top - 1];
-          this.top -= 1;
+          //this.noticeBankNameArr = ["국민은행", "국민은행", "국민은행"];
+          this.noticeBankNameArr = new Array(notices.length);
+          for (let j = 0; j < notices.length; j++) {
+            this.noticeBankNameArr[j] = notices[j].bankName;
+          }
+          //this.noticeDepositArr = [0, 0, 10000000];
+          this.noticeDepositArr = new Array(notices.length);
+          for (let k = 0; k < notices.length; k++) {
+            this.noticeDepositArr[k] = notices[k].deposit;
+          }
+          //this.noticeWithdrawlArr = [9000000, 100000000, 0];
+          this.noticeWithdrawlArr = new Array(notices.length);
+          for (let l = 0; l < notices.length; l++) {
+            this.noticeWithdrawlArr[l] = notices[l].withdrawal;
+          }
 
-          return result;
-        }
-      }
-      numStr = numStr.toString();
-      console.log("numtoKOR numstr", numStr);
-      //들어온 String형의 숫자를 한글자씩 자른다
-      var splitedStr = numStr.split("");
-      //그리고 각자 숫자로 변환해준다.
-      for (let i = 0; i < splitedStr.length; i++) {
-        splitedStr[i] = parseInt(splitedStr[i]);
-      }
-      this.numKorStack = new Stack();
-      //뒤에서부터 스택에 push
-      for (let j = splitedStr.length - 1; j >= 0; j--) {
-        this.numKorStack.push(splitedStr[j]);
-      }
-      var strrst = null;
-      while (this.numKorStack.top !== 0) {
-        var rst = this.numKorStack.pop();
-
-        if (rst === 1) strrst = "1";
-        else if (rst === 2) strrst = "2";
-        else if (rst === 3) strrst = "3";
-        else if (rst === 4) strrst = "4";
-        else if (rst === 5) strrst = "5";
-        else if (rst === 6) strrst = "6";
-        else if (rst === 7) strrst = "7";
-        else if (rst === 8) strrst = "8";
-        else if (rst === 9) strrst = "9";
-
-        if (rst !== 0) {
-          //천백십 더해주기
-          if (this.numKorStack.size() % 4 === 3) strrst += "천";
-          else if (this.numKorStack.size() % 4 === 2) strrst += "백";
-          else if (this.numKorStack.size() % 4 === 1) strrst += "십";
-        }
-        //만억조 더해주기
-        if (this.numKorStack.size() / 4 === 1) strrst += "만";
-        else if (this.numKorStack.size() / 4 === 2) strrst += "억";
-        else if (this.numKorStack.size() / 4 === 3) strrst += "조";
-      }
-      console.log("numtoKOR", strrst);
-      return strrst;
+          this.noticeInfoList = new Array(this.noticeTimeArr.length);
+          for (let i = 0; i < this.noticeTimeArr.length; i++) {
+            if (this.noticeDepositArr[i] !== 0)
+              this.noticeInfoList[i] =
+                this.noticeTimeArr[i] +
+                " " +
+                this.noticeBankNameArr[i] +
+                " " +
+                this.noticeDepositArr[i] +
+                "원이 입금되었습니다.";
+            else
+              this.noticeInfoList[i] =
+                this.noticeTimeArr[i] +
+                " " +
+                this.noticeBankNameArr[i] +
+                " " +
+                this.noticeWithdrawlArr[i] +
+                "원이 빠져나갔습니다.";
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     //왼쪽 도넛 그래프(모든 계좌 총액에서 각자 계좌가 차지하는 비율 나타내는 그래프)랑
     // 아래 로그인한 사용자의 계좌별 정보(은행, 계좌번호, 잔고)
@@ -843,30 +482,30 @@ export default {
       axios
         .get(url)
         .then((response) => {
-          console.log("데이터 가져오기 성공: ", response);
+          //console.log("데이터 가져오기 성공: ", response);
 
           accounts = response.data;
-          console.log("accounts 길이: ", accounts);
+          //console.log("accounts 길이: ", accounts);
 
           this.accountNumArr = new Array(accounts.length);
           for (let i = 0; i < this.accountNumArr.length; i++)
             this.accountNumArr[i] = accounts[i].accountNum;
-          console.log("accountNumArr: ", this.accountNumArr);
+          //console.log("accountNumArr: ", this.accountNumArr);
 
           this.bankNameArr = new Array(accounts.length);
           for (let i = 0; i < this.bankNameArr.length; i++)
             this.bankNameArr[i] = accounts[i].bank;
-          console.log("bankNameArr: ", this.bankNameArr);
+          //console.log("bankNameArr: ", this.bankNameArr);
 
           this.balanceArr = new Array(accounts.length);
           for (let i = 0; i < this.balanceArr.length; i++)
             this.balanceArr[i] = accounts[i].balance;
-          console.log("balanceArr: ", this.balanceArr);
+          //console.log("balanceArr: ", this.balanceArr);
 
           this.nickNameArr = new Array(accounts.length);
           for (let i = 0; i < this.nickNameArr.length; i++)
             this.nickNameArr[i] = accounts[i].nickName;
-          console.log("nickNameArr: ", this.nickNameArr);
+          //console.log("nickNameArr: ", this.nickNameArr);
 
           this.accountChartOptions.labels = this.nickNameArr;
           this.$refs.donutChart.refresh();
@@ -983,14 +622,6 @@ export default {
             this.bankingWithdrawlToList[i] = bankings[i].withdrawalTo;
           console.log("bankingWithdrawlToList: ", this.bankingWithdrawlToList);
 
-          //this.bankingChartOptions.xaxis.categories = this.bankingDateList;
-          this.bankingChartOptions.xaxis.categories = new Array(
-            this.bankingDateList.length
-          );
-          for (let i = 0; i < this.bankingDateList.length; i++) {
-            this.bankingChartOptions.xaxis.categories[i] =
-              this.bankingDateList[i];
-          }
           console.log(
             "getBankingDaily bankingChartOptions.xaxis.categories : " +
               this.bankingChartOptions.xaxis.categories
@@ -1004,15 +635,6 @@ export default {
           for (let j = 0; j < this.bankingBalanceList.length; j++) {
             this.bankingBalanceList[j] = parseInt(this.bankingBalanceList[j]);
           }
-          //console.log("getBankingDaily bankingSeries.data before"+ this.bankingSeries.data);
-          this.bankingSeries.data = this.bankingBalanceList;
-          /*this.bankingSeries.data = new Array(this.bankingDateList.length);
-          for(let i = 0; i< this.bankingDateList.length; i++){
-            this.bankingChartOptions.data[i] = this.bankingBalanceList[i];
-          }*/
-          console.log(
-            "getBankingDaily bankingSeries.data after" + this.bankingSeries.data
-          );
 
           this.$refs.bankingChart.updateSeries([
             {
@@ -1024,12 +646,12 @@ export default {
               categories: this.bankingDateList,
             },
           });
-          //this.$refs.bankingChart.render();
 
           this.bankingInfoList = new Array(this.bankingDateList.length);
 
           for (let i = 0; i < this.bankingDateList.length; i++) {
-            if (this.bankingDepositList[i] != null) {
+            if (this.bankingDepositNameList[i] != null) {
+              console.log("getBankingList for문 안 위 i " + i);
               this.bankingInfoList[i] =
                 this.bankingDateList[i] +
                 " " +
@@ -1040,7 +662,8 @@ export default {
                 this.bankingBalanceList[i];
             }
             //출금
-            else if (this.bankingWithdrawlList[i] != null) {
+            else if (this.bankingWithdrawlToList[i] != null) {
+              console.log("getBankingList for문 안 아래 i " + i);
               this.bankingInfoList[i] =
                 this.bankingDateList[i] +
                 " " +
@@ -1051,6 +674,10 @@ export default {
                 this.bankingBalanceList[i];
             }
           }
+          console.log(
+            "getBankingList bankingInfoList : ",
+            this.bankingInfoList
+          );
         })
         .catch((error) => {
           console.log(error);
@@ -1064,6 +691,73 @@ export default {
     getImgUrl(bank) {
       var images = require.context("../assets/", false, /\.png$/);
       return images("./" + bank + ".png");
+    },
+    parseNumstrToKorean(numStr) {
+      class Stack {
+        constructor() {
+          this.storage = {};
+          this.top = 0;
+        }
+        size() {
+          return Object.keys(this.storage).length;
+        }
+        push(element) {
+          this.storage[this.top] = element;
+          this.top += 1;
+        }
+        pop() {
+          // 빈 스택에 에러처리
+          if (Object.keys(this.storage).length === 0) {
+            return;
+          }
+
+          const result = this.storage[this.top - 1];
+          delete this.storage[this.top - 1];
+          this.top -= 1;
+
+          return result;
+        }
+      }
+      numStr = numStr.toString();
+      console.log("numtoKOR numstr", numStr);
+      //들어온 String형의 숫자를 한글자씩 자른다
+      var splitedStr = numStr.split("");
+      //그리고 각자 숫자로 변환해준다.
+      for (let i = 0; i < splitedStr.length; i++) {
+        splitedStr[i] = parseInt(splitedStr[i]);
+      }
+      this.numKorStack = new Stack();
+      //뒤에서부터 스택에 push
+      for (let j = splitedStr.length - 1; j >= 0; j--) {
+        this.numKorStack.push(splitedStr[j]);
+      }
+      var strrst = null;
+      while (this.numKorStack.top !== 0) {
+        var rst = this.numKorStack.pop();
+
+        if (rst === 1) strrst = "1";
+        else if (rst === 2) strrst = "2";
+        else if (rst === 3) strrst = "3";
+        else if (rst === 4) strrst = "4";
+        else if (rst === 5) strrst = "5";
+        else if (rst === 6) strrst = "6";
+        else if (rst === 7) strrst = "7";
+        else if (rst === 8) strrst = "8";
+        else if (rst === 9) strrst = "9";
+
+        if (rst !== 0) {
+          //천백십 더해주기
+          if (this.numKorStack.size() % 4 === 3) strrst += "천";
+          else if (this.numKorStack.size() % 4 === 2) strrst += "백";
+          else if (this.numKorStack.size() % 4 === 1) strrst += "십";
+        }
+        //만억조 더해주기
+        if (this.numKorStack.size() / 4 === 1) strrst += "만";
+        else if (this.numKorStack.size() / 4 === 2) strrst += "억";
+        else if (this.numKorStack.size() / 4 === 3) strrst += "조";
+      }
+      console.log("numtoKOR", strrst);
+      return strrst;
     },
   },
 };
@@ -1084,11 +778,12 @@ v-app {
   overflow-y: auto;
 }
 .outer-bg {
-  width: 200%;
-  height: 200%;
-  background: #102c57;
   position: fixed;
-  padding: 20px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .modal-bg {
@@ -1108,25 +803,6 @@ v-app {
   height: 400px;
 
   /* padding: 30px; */
-}
-
-.t-field {
-  width: 550px;
-  background-color: white;
-  margin-top: 0%;
-  padding-left: 40px;
-}
-
-.t-field3 {
-  width: 550px;
-  background-color: white;
-  margin-top: 0%;
-  padding-left: 100px;
-}
-
-.button {
-  position: absolute;
-  margin-top: 5px;
 }
 .noscroll-content::-webkit-scrollbar {
   display: none;
