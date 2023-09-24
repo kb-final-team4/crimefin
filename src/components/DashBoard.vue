@@ -56,7 +56,6 @@
                 <div id="chart1">
                   <apexcharts
                     ref="donutChart"
-                    ref="donutChart"
                     id="myChart1"
                     type="donut"
                     width="280px"
