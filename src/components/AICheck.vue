@@ -5,13 +5,13 @@
     <v-main class="d-flex align-center justify-center">
 
       <div v-if="phishingtype ==='Phone'">
-        <br><br><p class="title1">통화 내용을 입력받아 문맥을 분석해드립니다. <br>통화 내용을 조회해 보세요.</p><br><br>
+        <br><p class="title1">통화 내용을 입력받아 문맥을 분석해드립니다. <br>통화 내용을 조회해 보세요.</p><br>
       </div>
       <div v-else-if="phishingtype === 'Message'">
-        <br><br><p class="title1">수신 내용을 입력받아 문맥을 분석해드립니다. <br>문자 내용을 모두 조회해 보세요.</p><br><br>
+        <br><p class="title1">수신 내용을 입력받아 문맥을 분석해드립니다. <br>문자 내용을 모두 조회해 보세요.</p><br>
       </div>
       <div v-else-if="phishingtype === 'SNS'">
-        <br><br><p class="title1">수신 내용을 입력받아 문맥을 분석해드립니다. <br>SNS 내용을 모두 조회해 보세요.</p><br><br>
+        <br><p class="title1">수신 내용을 입력받아 문맥을 분석해드립니다. <br>SNS 내용을 모두 조회해 보세요.</p><br>
       </div>
       <v-card class="mx-auto my-auto" id="form-container">
         <v-row justify="center">
@@ -96,7 +96,8 @@
    padding :20px ;
    border :5px solid #394867 ;
    font-family: 'Pretendard-Regular', sans-serif;
-   margin-bottom: 50px;
+   margin: 50px;
+   
 }
 p{
   font-family: 'Pretendard-Regular', sans-serif;

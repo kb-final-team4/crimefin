@@ -3,7 +3,7 @@
     <!-- 상단바 컴포넌트를 import 해서 불러옵니다 -->
     <AppBar />
 
-    <v-main class="align-center" v-bind:style="{background : '#DDE6ED'}">
+    <v-main class="align-center main-container" >
       <v-container class="exp-container">
         <!-- 카드를 가로로 배치하는 Flexbox 레이아웃 -->
         <div class="d-flex justify-space-between align-center">
@@ -29,15 +29,18 @@
         </div>
       </v-container>
     </v-main>
+    <!-- Footer -->
+    <Footer/>
   </v-app>
 </template>
 
 <script>
-import AppBar from "../views/AppBar.vue"; // 상단바 컴포넌트를 import 합니다.
+import AppBar from "../views/AppBar.vue"; 
+import Footer from '../views/Footer.vue';
 
 export default {
   components: {
-    AppBar, // 상단바 컴포넌트를 등록합니다.
+    AppBar,Footer,
   },
   methods: {
 
@@ -46,11 +49,17 @@ export default {
 </script>
 
 <style scoped>
-.exp-container{
+.main-container{
+  height: 100vh;
+  background-image: url("../assets/19.png");
+  background-size: cover;
+  background-position: center;
+}
+/* .exp-container{
   background: #DDE6ED;
   border-radius: 20px;
   padding: 30px;
-}
+} */
 
 .exp-card{
   background : #e6edf7;

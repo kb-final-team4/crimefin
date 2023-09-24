@@ -1,58 +1,25 @@
 <template>
-  <v-container fluid class="d-flex flex-column align-center justify-center h-100">
+  <v-container fluid class="d-flex flex-column align-center justify-center h-100 main-container">
     <v-row justify="center" align="center" >
       <v-col width="50%" height="80%">
         <v-card >
-          <v-card-title class="text-center" >
-            <div id="logo"><v-img src="../assets/CRIME (2).png"></v-img></div>
+          <v-card-title class="mx-auto" align="center" >
+            <div id="logo"><v-img src="../assets/CRIME (2).png" width="50%"></v-img></div>
           </v-card-title>
 
           <v-card-text>
 
             <v-form @submit.prevent="login" class="mx-auto" max-width="80%">
-              <v-text-field
-                v-model="memberId"
-                label="아이디"
-                outlined
-                dense
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="password"
-                label="비밀번호"
-                outlined
-                dense
-                required
-                type="password"
-              ></v-text-field>
-              <v-btn
-                type="submit"
-                color="primary"
-                class="mt-4"
-                block
-                outlined
-                depressed
-              >
-                로그인
-              </v-btn>
-<!--              <router-link to="/main"><v-btn
-                type="submit"
-                color="primary"
-                class="mt-4"
-                block
-                outlined
-                depressed
-              >
-                로그인
-              </v-btn>
-              </router-link>-->
+              <v-text-field v-model="memberId" label="아이디" outlined dense required></v-text-field>
+              <v-text-field v-model="password" label="비밀번호" outlined dense required type="password"></v-text-field>
+              <v-btn type="submit" class="mt-4 login-btn"  outlined block>로그인</v-btn>
             </v-form>
           </v-card-text>
-          <v-card-actions class="justify-center">
-            <v-btn text color="primary" class="mr-2" @click="modal=true">아이디 찾기</v-btn><br>
+          <v-card-actions class="justify-center mx-auto" >
+            <v-btn text color="primary" class="mt-4 other-btn" outlined block @click="modal=true">아이디 찾기</v-btn><br>
           </v-card-actions>
-          <v-card-actions class="justify-center">
-            <v-btn text color="primary" class="mr-2" @click="modal2=true">비밀번호 찾기</v-btn><br>
+          <v-card-actions class="justify-center" max-width="80%">
+            <v-btn text color="primary" class="mt-4 other-btn" outlined block @click="modal2=true">비밀번호 찾기</v-btn><br>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -304,11 +271,28 @@ export default {
 
 
 <style scoped>
+.main-container{
+  background-image: url("../assets/init_bg.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.login-btn{
+  background-color:#14274E ;
+  color:white ;  
+}
+.other-btn { 
+   width: 60% ;  
+   
+   
+} 
 
 #logo {
   display: inline-block;
   height: 20%;
 }
+
+
 
 .d-flex {
   display: flex;

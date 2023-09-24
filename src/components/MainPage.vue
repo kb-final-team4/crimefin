@@ -266,7 +266,7 @@ p, div{
   width: 40%;
 }
 .news-title{
-  font-family: 'TheJamsil5Bold';
+  font-family: 'LINESeedKR-Bd';
   font-size: 40px;
   font-weight: 900;
   margin: 4%;
