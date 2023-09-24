@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container fluid fill-height class="container">
     <v-row align="center" justify="center" >
       <v-col cols="12" sm="6" md="4">
         
@@ -7,7 +7,7 @@
     </v-row>
     <v-row align="center" justify="center">
       <v-col cols="12" sm="6" md="4">
-        <h1 class="white-text text-center">Get Started</h1>
+        <p class="white-text text-center">Get Started</p>
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
@@ -24,13 +24,25 @@
 </template>
 
 <style scoped>
+p, div{
+  font-family: 'TheJamsil5Bold';
+}
+.container{
+  /* background-image: url("../assets/init_bg.png"); */
+  background-size: cover;
+  background-position: center;
+}
 .white-text {
   color: white;
+  font-weight: bolder;
+  font-size: 40px;
 }
 
 .custom-button {
   background-color: #445069;
   color: white;
   margin: 5px;
+  width: 100px;
 }
+
 </style>

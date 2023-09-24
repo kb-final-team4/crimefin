@@ -29,7 +29,7 @@ export default {
   background-color: black; 
   overflow-y: scroll; 
   height: 105vh; 
-  width:full;
+  width:100%;
 
 }
 
