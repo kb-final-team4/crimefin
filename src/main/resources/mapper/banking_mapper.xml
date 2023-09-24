@@ -27,17 +27,12 @@
 		  AND (b.BANKING_DATE BETWEEN TO_DATE(#{startDate},'YY/MM/DD') AND TO_DATE(#{endDate},'YY/MM/DD') + 0.99999)
 	</select>-->
 
+	<!--거래내역 조회-->
 	<select id="getBanking" parameterType="hashmap" resultType="bankingVO">
-		SELECT b.banking_date, b.deposit, b.deposit_name, b.withdrawal, b.withdrawal_to, b.balance
-		FROM ACCOUNT a
-		JOIN BANKING b ON a.member_id = b.member_id
-		WHERE b.account_num = #{accountNum}
-		<if test="startDate != null and endDate != null">
-			AND (b.BANKING_DATE BETWEEN TO_DATE(#{startDate},'YY/MM/DD') AND TO_DATE(#{endDate},'YY/MM/DD') + 0.99999)
-		</if>
-		<if test="startDate == null and endDate == null">
-			AND (b.BANKING_DATE BETWEEN SYSDATE - 14 AND SYSDATE)
-		</if>
+		select banking_date, deposit, deposit_name, withdrawal, withdrawal_to, balance
+		from banking
+		where account_num like #{accountNum}
+		  and <![CDATA[ banking_date >= to_date(#{startDate}, 'YYYY-MM-DD') and banking_date <= to_date(#{endDate}, 'YYYY-MM-DD')+0.999 ]]>
 	</select>
 
 	<!--limit 이상 거래 내역 조회-->

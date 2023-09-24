@@ -207,19 +207,22 @@ public class AssetController {
     @PostMapping("/asset/dashboard/time")
     public ResponseEntity getBanking(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request) throws Exception{
         HashMap map = new HashMap();
+
         String accountNum = (String) requestJsonHashMap.get("accountNum");
+
         String startdate = (String) requestJsonHashMap.get("startdate");
+        startdate = startdate.substring(0, startdate.length()-6);
+        System.out.println("getBankingDaily startDate : " + startdate);
+
         String enddate = (String) requestJsonHashMap.get("enddate");
+        enddate = enddate.substring(0, enddate.length()-6);
+        System.out.println("getBankingDaily endDate : " + enddate);
 
         map.put("accountNum",accountNum);
         map.put("startDate",startdate);
         map.put("endDate",enddate);
 
         List<BankingVO> rvo = assetService.getBanking(map);
-
-        for(BankingVO b : rvo) {
-            System.out.println(b);
-        }
 
         if (rvo != null) { //거래 내역 있으면
             return new ResponseEntity(rvo, HttpStatus.OK);
