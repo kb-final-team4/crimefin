@@ -1,7 +1,7 @@
 <template>
     
     <v-card-text v-model="showResultModal" class="total">
-    <div v-if="resultData == '위험'">
+    <div v-if="resultData == 1">
       <v-col >
           <div class="resultTitle">AI 분석 결과</div>
       </v-col>
@@ -28,35 +28,8 @@
         </v-col>
       </v-row>
     </div>
-    
-    <div v-if="resultData == '주의'">
-      <v-col >
-          <div class="resultTitle">AI 분석 결과</div>
-      </v-col>
-      <v-row class="resultContent">
-        <v-col cols="7" class="left-section bordered" >
-      
-          <div>
-            <img src="../assets/warning.png" alt="Warning Icon" class="icon">
-            <p>AI 분석 결과, 해당 내용은 <b>피싱 주의</b>로 의심됩니다.</p>
-          </div>
-
-        </v-col>
-    
-        <v-col cols="5" class="right-section">
-
-          <div class="sol  mx-auto my-auto">
-            <p>
-              해당 범죄 관련<br> <b>대응 메뉴얼</b>을 제공해드리고 있어요.<br>확인하시겠어요?<br>
-              <v-btn @click="navigateToManual(phishingtype)"  color="#14274E">메뉴얼 보기</v-btn>
-            </p>
-          </div>
-          <v-card-actions><v-spacer/><v-btn @click="closeModal()" color="#14274E">닫기</v-btn></v-card-actions>
-
-        </v-col>
-      </v-row>
-    </div>
-    <div v-if="resultData == '안전'">
+  
+    <div v-if="resultData == 0">
       <v-col >
           <div class="resultTitle">AI 분석 결과</div>
       </v-col>
