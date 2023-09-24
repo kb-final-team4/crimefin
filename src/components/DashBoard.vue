@@ -55,6 +55,7 @@
               <div class="chart-wrap mx-auto">
                 <div id="chart1">
                   <apexcharts
+                    ref="donutChart"
                     id="myChart1"
                     type="donut"
                     width="280px"
@@ -614,7 +615,7 @@ export default {
 
   created() {
     this.getTotalAccountList();
-    this.getBankingDaily();
+    //this.getBankingDaily();
   },
   mounted() {},
   methods: {
@@ -868,38 +869,6 @@ export default {
           console.log("nickNameArr: ", this.nickNameArr);
 
           this.accountChartOptions.labels = this.nickNameArr;
-          //console.log("labels 배열 : ", this.accountChartOptions.labels);
-
-          //this.accountChartOptions.labels = new Array(this.nickNameArr.length);
-          //for (let i = 0; i < this.nickNameArr.length; i++)
-          //console.log("nickname 배열 : ", this.nickNameArr[i]);
-          //this.accountChartOptions.labels[i] = this.nickNameArr[i];
-
-          // this.accountChartOptions.legend = {
-          //   position: "right",
-          //   offsetY: 0,
-          //   height: 230,
-          //   labels: {
-          //     useSeriesColors: false, // 범례 색상을 데이터 포인트 색상과 동일하게 사용하지 않도록 설정
-          //     colors: this.nickNameArr, // 범례 항목의 이름을 this.nickNameArr의 값으로 설정
-          //   },
-          // };
-
-          // this.accountChartOptions.series = this.nickNameArr.map(
-          //   (name, index) => {
-          //     return {
-          //       name: name,
-          //       data: this.nickNameArr, // 실제 데이터 포인트 값을 여기에 넣으세요
-          //     };
-          //   }
-          // );
-
-          // this.accountChartOptions.series = this.nickNameArr.map((name, index) => {
-          //   return {
-          //     name: name,
-          //     data: this.nickNameArr, // 실제 데이터 포인트 값을 여기에 넣으세요
-          //   };
-          // });
 
           let total = 0;
           for (let i = 0; i < this.balanceArr.length; i++)
@@ -910,9 +879,9 @@ export default {
             this.balancePercentageArr[j] =
               parseFloat(parseInt(this.balanceArr[j]) / total) * 100;
 
-          this.accountSeries = this.balancePercentageArr;
+          this.accountSeries = this.balancePercentageArr; // 데이터 붙여줌
 
-          console.log("length: ", this.accountNumArr.length);
+          //console.log("length: ", this.accountNumArr.length);
 
           this.accountInfoList = new Array(this.accountNumArr.length);
           this.accountInfosList = new Array(this.accountNumArr.length);
@@ -953,57 +922,25 @@ export default {
             ];
           }
 
-          console.log(
-            "getTotalAccountList accountInfosList " + this.accountInfosList
-          );
+          //console.log("getTotalAccountList accountInfosList " + this.accountInfosList);
 
-          // 서버 응답 데이터를 accounts에 저장
-          //this.rvo = response.data;
-          //console.log("데이터 가져오기 성공!!!: ", rvo);
+          for(let f = 0; f<this.nickNameArr.length; f++){
+            this.accountChartOptions.labels[f] = this.nickNameArr[f];
+          }
+          this.accountChartOptions.labels = this.nickNameArr;
+          //console.log("도넛그래프 범례 : ", this.accountChartOptions.labels);
+
+          this.$refs.donutChart.refresh();
         })
         .catch((error) => {
-          console.error("데이터를 가져오는 중 오류 발생:", error);
+          console.error("getTotalAccountList() 에러 : " ,error);
         });
 
       //console.log("test!!!!!!!!!!!!", accounts);
     },
     getBankingDaily() {
-      console.log("accountNumArr iIIIIs : ", this.accountNumArr);
-
-      //제일 잔고 많은 계좌번호 가져오기
-      var url =
-        "http://localhost:9999/asset/dashboard/main?memberId=" + this.memberId;
-
-      var mainAccountNum;
-
-      axios
-        .get(url)
-        .then((response) => {
-          console.log("데이터 가져오기 성공: ", response);
-
-          mainAccountNum = response.data;
-          console.log("제일 잔고 많은 계좌번호: ", mainAccountNum);
-        })
-        .catch((error) => {
-          console.error("데이터를 가져오는 중 오류 발생:", error);
-        })
-        .finally(() => {
-          // axios 요청이 완료된 후에 mainAccountNum 값을 사용할 수 있음
-          console.log("계좌번호 체크 : ", mainAccountNum);
-
-          // mainAccountNum을 이용한 다른 작업을 수행할 수 있음
-          if (mainAccountNum !== undefined) {
-            // mainAccountNum을 사용한 작업
-          } else {
-            // mainAccountNum이 정의되지 않은 경우 처리
-          }
-        });
-
       var data = {
-        //memberId: this.memberId,
-        // accountNum: this.accountNumDropdown,
-        //accountNum: mainAccountNum,
-        accountNum: "9991111",
+        accountNum: this.accountNumDropdown,
         startdate: this.bankingStartDate,
         enddate: this.bankingEndDate,
       };
@@ -1045,11 +982,12 @@ export default {
             this.bankingWithdrawlToList[i] = bankings[i].withdrawalTo;
           console.log("bankingWithdrawlToList: ", this.bankingWithdrawlToList);
 
-          this.bankingChartOptions.xaxis.categories = this.bankingDateList;
-          console.log(
-            "getBankingDaily bankingChartOptions.xaxis.categories : " +
-              this.bankingChartOptions.xaxis.categories
-          );
+          //this.bankingChartOptions.xaxis.categories = this.bankingDateList;
+          this.bankingChartOptions.xaxis.categories = new Array(this.bankingDateList.length);
+          for(let i = 0; i< this.bankingDateList.length; i++){
+            this.bankingChartOptions.xaxis.categories[i] = this.bankingDateList[i];
+          }
+          console.log("getBankingDaily bankingChartOptions.xaxis.categories : " + this.bankingChartOptions.xaxis.categories);
 
           this.bankingBalanceList = new Array(bankings.length);
           for (let i = 0; i < this.bankingBalanceList.length; i++)
@@ -1061,15 +999,22 @@ export default {
           }
           //console.log("getBankingDaily bankingSeries.data before"+ this.bankingSeries.data);
           this.bankingSeries.data = this.bankingBalanceList;
-          console.log(
-            "getBankingDaily bankingSeries.data after" + this.bankingSeries.data
+          /*this.bankingSeries.data = new Array(this.bankingDateList.length);
+          for(let i = 0; i< this.bankingDateList.length; i++){
+            this.bankingChartOptions.data[i] = this.bankingBalanceList[i];
+          }*/
+          console.log(  "getBankingDaily bankingSeries.data after" + this.bankingSeries.data);
+
+          this.$refs.bankingChart.updateSeries([{
+            data: this.bankingBalanceList
+          }]);
+          this.$refs.bankingChart.updateOptions({
+                xaxis: {
+                  categories: this.bankingDateList
+                }
+              }
           );
-
-          //this.$ref.bankingChart.refresh();
-
-          this.$nextTick(() => {
-            this.$refs.bankingChart.refresh();
-          });
+          //this.$refs.bankingChart.render();
 
           this.bankingInfoList = new Array(this.bankingDateList.length);
 
@@ -1085,7 +1030,7 @@ export default {
                 this.bankingBalanceList[i];
             }
             //출금
-            else {
+            else if(this.bankingWithdrawlList[i]!=null) {
               this.bankingInfoList[i] =
                 this.bankingDateList[i] +
                 " " +
@@ -1098,210 +1043,8 @@ export default {
           }
         })
         .catch((error) => {
-          console.log("에러 발생");
+          console.log(error);
         });
-
-      //console.log("getBankingDaily accountNumDropdown " + data.accountNum);
-      //console.log("getBankingDaily startdate" + data.startdate); //controller에서는 substring해서 쓰면 될듯
-      //console.log("getBankingDaily enddate" + data.enddate);
-
-      //테스트 데이타 백에서 넘어오는거 보고 수정하기
-      // this.bankingDateList = [
-      //       "2023-09-10",
-      //       "2023-09-11",
-      //       "2023-09-12",
-      //       "2023-09-13",
-      //       "2023-09-14",
-      //       "2023-09-15",
-      //     ];
-      //     this.bankingDepositList = [
-      //       "20000",
-      //       null,
-      //       "40000",
-      //       null,
-      //       "20000",
-      //       null,
-      //     ];
-      //     this.bankingDepositNameList = [
-      //       "cys",
-      //       null,
-      //       "cys2",
-      //       null,
-      //       "cys3",
-      //       null,
-      //     ];
-      //     this.bankingWithdrawlList = [
-      //       null,
-      //       "10000",
-      //       null,
-      //       "20000",
-      //       null,
-      //       "1000000",
-      //     ];
-      //     this.bankingWithdrawlToList = [
-      //       null,
-      //       "ocl",
-      //       null,
-      //       "ocl2",
-      //       null,
-      //       "나쁜놈",
-      //     ];
-
-      //     this.bankingChartOptions.xaxis.categories = this.bankingDateList;
-      //     console.log(
-      //       "getBankingDaily bankingChartOptions.xaxis.categories : " +
-      //         this.bankingChartOptions.xaxis.categories
-      //     );
-
-      //     this.bankingBalanceList = [
-      //       "1020000",
-      //       "1010000",
-      //       "1050000",
-      //       "1030000",
-      //       "1050000",
-      //       "50000",
-      //     ];
-      //     for (let j = 0; j < this.bankingBalanceList.length; j++) {
-      //       this.bankingBalanceList[j] = parseInt(this.bankingBalanceList[j]);
-      //     }
-      //     //console.log("getBankingDaily bankingSeries.data before"+ this.bankingSeries.data);
-      //     this.bankingSeries.data = this.bankingBalanceList;
-      //     console.log(
-      //       "getBankingDaily bankingSeries.data after" + this.bankingSeries.data
-      //     );
-
-      /*this.bankingInfosList = new Array(4);
-      this.bankingInfosList[0] = new Array(this.bankingDateList.length);
-      this.bankingInfosList[1] = new Array(this.bankingDateList.length);
-      this.bankingInfosList[2] = new Array(this.bankingDateList.length);
-      this.bankingInfosList[3] = new Array(this.bankingDateList.length);
-
-      for (let i = 0; i < this.bankingDateList.length; i++) {
-        this.bankingInfosList[0][i] = this.bankingDateList[i];
-        this.bankingInfosList[3][i] = this.bankingBalanceList[i];
-        //오른쪽차트 아래에 표기하는 곳
-        //입금
-        if (this.bankingDepositList[i] != null) {
-          this.bankingInfosList[1][i] = this.bankingDepositNameList[i];
-          this.bankingInfosList[2][i] = this.bankingDepositList[i];
-        }
-        //출금
-        else {
-          this.bankingInfosList[1][i] = this.bankingWithdrawlToList[i];
-          this.bankingInfosList[2][i] = this.bankingWithdrawlList[i];
-        }
-      }*/
-
-      // this.bankingInfoList = new Array(this.bankingDateList.length);
-
-      // for (let i = 0; i < this.bankingDateList.length; i++) {
-      //   if (this.bankingDepositList[i] != null) {
-      //     this.bankingInfoList[i] =
-      //       this.bankingDateList[i] +
-      //       " " +
-      //       this.bankingDepositNameList[i] +
-      //       " +" +
-      //       this.bankingDepositList[i] +
-      //       " " +
-      //       this.bankingBalanceList[i];
-      //   }
-      //   //출금
-      //   else {
-      //     this.bankingInfoList[i] =
-      //       this.bankingDateList[i] +
-      //       " " +
-      //       this.bankingWithdrawlToList[i] +
-      //       " -" +
-      //       this.bankingWithdrawlList[i] +
-      //       " " +
-      //       this.bankingBalanceList[i];
-      //   }
-      // }
-
-      /*var initurl = "http://localhost:9999/asset/dashboard/init";
-
-      axios.get(initurl)
-          .then(response => {
-            this.bankingDateList = new Array(response.data.length);
-            this.bankingDepositList = new Array(response.data.length);
-            this.bankingDepositNameList = new Array(response.data.length);
-            this.bankingWithdrawlList = new Array(response.data.length);
-            this.bankingWithdrawlToList = new Array(response.data.length);
-            this.bankingBalanceList = new Array(response.data.length);
-
-            for(let i = 0; i<response.data.length; i++){
-              this.bankingDateList[i] = response.data[i].bankingDate;
-              this.bankingDepositList[i] = response.data[i].deposit;
-              this.bankingDepositNameList[i] = response.data[i].depositName;
-              this.bankingWithdrawlList[i] = response.data[i].withdrawal;
-              this.bankingWithdrawlToList[i] = response.data[i].withdrawalTo;
-              this.bankingBalanceList[i] = response.data[i].balance;
-            }
-
-            this.bankingChartOptions.xaxis.categories = this.bankingDateList;
-            console.log("getBankingDaily bankingChartOptions.xaxis.categories : " + this.bankingChartOptions.xaxis.categories);
-
-            for(let j = 0; j < this.bankingBalanceList.length; j++){
-              this.bankingBalanceList[j] = parseInt(this.bankingBalanceList[j]);
-            }
-            //console.log("getBankingDaily bankingSeries.data before"+ this.bankingSeries.data);
-            this.bankingSeries.data = this.bankingBalanceList;
-            console.log("getBankingDaily bankingSeries.data after"+ this.bankingSeries.data);
-
-            this.bankingInfoList = new Array(this.bankingDateList.length);
-            for(let i = 0; i<this.bankingDateList.length; i++){
-              //오른쪽차트 아래에 표기하는 곳
-              //입금
-              if(this.bankingDepositList[i] != null){
-                this.bankingInfoList[i] = this.bankingDateList[i]+" 입금 "+this.bankingDepositNameList[i]+" +"+this.bankingDepositList[i]+"원 잔고 : "+this.bankingBalanceList[i];
-              }
-              //출금
-              else{
-                this.bankingInfoList[i] = this.bankingDateList[i]+" 출금 "+this.bankingWithdrawlToList[i]+" -"+this.bankingWithdrawlList[i]+"원 잔고 : "+this.bankingBalanceList[i];
-              }
-            }
-          })
-          .catch(error => {
-
-          });*/
-      //차트 리렌더링 -- 안됨
-      /*console.log("ApexCharts exec start");
-      console.log("ApexCharts exec this.bankingBalanceList " +this.bankingBalanceList );
-      console.log("ApexCharts exec this.bankingDateList "+this.bankingDateList);*/
-      //console.log("ApexCharts re-rendering : rightChart "+document.getElementById("bankingchart1"));
-      /*var rightChart = new ApexCharts(document.getElementById("bankingchart1"), this.bankingChartOptions);
-      //rightChart.destroy();
-      rightChart.updateSeries({
-        data : this.bankingBalanceList
-      });
-      rightChart.updateOptions({
-        xaxis: {
-          categories: this.bankingDateList
-        }
-      });
-      rightChart.render();*/
-      /*ApexCharts.exec("bankingchart1", "updateOptions", {
-        chartOptions: {
-          xaxis: {
-            categories: this.bankingDateList
-          }
-        }
-      });
-      ApexCharts.exec("bankingchart1", "updateSeries", {
-        series : {
-          name : "balance",
-          data :  this.bankingBalanceList
-        }
-      });*/
-
-      //대시보드 백 완성되면 여기 풀기
-      /*axios.post(url, data)
-          .then(response => {
-
-          })
-          .catch(error => {
-            console.error(error);
-          });*/
     },
     // 모달 창을 닫는 메서드
     closeSuccessModal() {
@@ -1338,24 +1081,6 @@ v-app {
   padding: 20px;
 }
 
-.outer-bg2 {
-  width: 200%;
-  height: 350%;
-  background: #102c57;
-  position: fixed;
-  padding: 40px;
-  margin-bottom: 30px;
-}
-
-.outer-bg3 {
-  width: 200%;
-  height: 350%;
-  background: #102c57;
-  position: fixed;
-  padding: 40px;
-  margin-bottom: 30px;
-}
-
 .modal-bg {
   position: fixed;
   top: 50%;
@@ -1373,43 +1098,6 @@ v-app {
   height: 400px;
 
   /* padding: 30px; */
-}
-
-.modal-bg2 {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  background: #dac0a3;
-  border-radius: 8px;
-  width: 790px;
-
-  padding-bottom: 30px;
-  padding-left: 50px;
-}
-
-.modal-bg3 {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  background: #dac0a3;
-  border-radius: 8px;
-  width: 790px;
-
-  padding-bottom: 30px;
 }
 
 .t-field {
