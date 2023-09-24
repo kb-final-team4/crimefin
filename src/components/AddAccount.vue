@@ -150,6 +150,8 @@
 </template>
 <script>
 import AppBar from '../views/AppBar.vue';
+import axios from "axios";
+
 export default {
     components: {
       AppBar, // 상단바 컴포넌트를 등록합니다.
@@ -164,18 +166,80 @@ export default {
         // 다른 아이템을 필요에 따라 추가할 수 있습니다.
       ],
 
-        user: {
-        accountId: '',
-        bankName:'',
-        accountNum:'',
-        authNumConfirm:'',
-        accountNickname:'',
-        accountLimit:'',
-        },
+        
+      accountId: '',
+      bankName:'',
+      accountNum:'',
+      authNumConfirm:'',
+      isAuthenticated: false, // 인증 여부
+      accountNickname:'',
+      accountLimit:'',
       };
-
-      
     },
+    methods:{
+      authenticateAccount() {
+        console.log(11);
+        try {
+          // 여기에서 백엔드와 통신하여 입금자명 인증을 수행합니다.
+          const response = axios.post("http://localhost:9999/asset/auth", {
+            bankName: this.bankName,
+            accountNum: this.accountNum,
+          });
+
+          console.log(response);
+          // 인증이 성공하면 isAuthenticated 값을 true로 설정합니다.
+          if (response.status === 200) {
+            //this.isAuthenticated = true;
+            alert("계좌 정보가 성공적으로 인증되었습니다.");
+          } else {
+            // 인증 실패 시 메시지를 표시하거나 다른 처리를 수행할 수 있습니다.
+            alert("계좌 정보를 확인하세요. 인증에 실패했습니다.");
+          }
+        } catch (error) {
+          console.error("계좌 인증 중 오류 발생:", error);
+          // 오류 처리를 원하는 대로 수행할 수 있습니다.
+        }
+      },
+      confirmAuthNum() {
+        console.log(22);
+        axios
+          .get("http://localhost:9999/asset/auth/confirm", {
+            params: {
+              authNumConfirm: this.authNumConfirm,
+            },
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              alert("입금자명 확인 성공");
+              this.isAuthenticated = true;
+            } else {
+              alert("입금자명이 틀립니다!");
+            }
+          })
+          .catch((error) => {
+            console.error("입금자명 찾기 오류", error);
+          });
+      },
+      registAccount() {
+        try {
+          const response = axios.post("http://localhost:9999/asset/regist", {
+            accountNickname: this.accountNickname,
+            accountLimit: this.accountLimit,
+            isAuthenticated: this.isAuthenticated,
+            accountNum: this.accountNum,
+          });
+          console.log(response);
+          if (response.status === 200) {
+            alert("계좌 생성 완료");
+          } else {
+            alert("계좌 생성 오류 발생");
+          }
+        } catch (error) {
+          console.error("입금자 명이 일치하지 않습니다.!!", error);
+          alert("계좌 등록 중 오류 발생");
+        }
+      },
+    }
 }
 </script>
 <style>
@@ -190,5 +254,9 @@ export default {
     }
     .card{
         margin-left:150px;
+    }
+    .button{
+        position:fixed;
+        left:90px;
     }
 </style>
