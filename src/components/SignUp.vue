@@ -44,8 +44,17 @@
       <!-- <label for="phone">전화번호</label> -->
       <v-col cols="2" >
         <v-text-field label="전화번호" id="phone" v-model="user.phone" required outlined></v-text-field>
+        <v-btn variant="tonal" type="button" @click="requestVerificationCode" class="btn-verificate" >인증번호 받기</v-btn>
       </v-col>
     </v-row>
+      
+    <v-row justify="center" class="pa-0">
+      <v-col cols="2" >
+        <v-text-field label="인증번호 입력" id="verification" class="verification" v-model="verification" required outlined></v-text-field>
+        <v-btn variant="tonal" type="button" @click="confirmVerficationCode" class="btn-permit">확인</v-btn>
+      </v-col>
+     </v-row>
+
 
     <v-row justify="center" class="pa-0">
       <!-- <label for="phone">전화번호</label> -->
@@ -127,6 +136,8 @@
           sex:'',
           messageOk:'1',
         },
+        verificationcode:'',
+        verification:'',
         isRegistered: false,
         zonecode: ""
       };
@@ -173,6 +184,56 @@ methods: {
         }
       }).open();
   },
+  //인증 번호 요청
+  async requestVerificationCode(){
+      try{
+        const response = await axios.post('http://localhost:9999/user/sendNum',{
+          memberId: this.user.memberId,
+          phone:this.user.phone,
+        },
+        {
+          withCredentials:true
+        });
+
+        if(response.status===200){
+          console.log(response);
+          //this.memberId = memberId;
+          console.log("아이디는 " + this.user.memberId);
+          alert('인증번호를 받았습니다:'+this.verificationcode);
+        }else{
+          alert('인증번호를 받을 수 없습니다.');
+        }
+
+      }catch(error){
+        console.error('인증번호 요청 중 오류 발생:',error);
+        alert('인증번호 요청 중 오류 발생');
+      }
+    },
+    //인증번호 확인
+    async confirmVerficationCode() {
+        axios.get('http://localhost:9999/user/checkNum', {
+          params:{
+            authNum:this.verification,
+          },
+          withCredentials:true
+        })
+          .then((response)=>{
+            if (response.status === 200) {
+              alert('인증 번호 확인 성공');
+              // 아이디를 찾았을 때 foundUserId에 값을 설정하고 모달 창을 보이도록 상태 변수 설정
+              //this.foundUserId = this.userId;
+              this.modal4=true;
+            }
+            else {
+              alert('인증번호가 틀립니다');
+            }
+            console.log('인증번호 확인 성공', response);
+          })
+          .catch((error)=>{
+            console.error('인증번호 찾기 오류', error);
+          });
+    },
+    
   registerUser(){
       var joinUser = {
           memberId: this.user.memberId,

@@ -28,6 +28,8 @@ import ChangeInfo from "../components/ChangeInfo";
 import ChangePassword from "../components/ChangePassword.vue";
 import MemberResign from "../components/MemberResign.vue";
 
+import AddAccount from "../components/AddAccount.vue";
+import DeleteAccount from "../components/DeleteAccount.vue"
 
 // AppBar 컴포넌트 경로 설정
 
@@ -144,6 +146,16 @@ const routes = [
     path: '/memberresign',
     name: 'MemberResign',
     component: MemberResign
+  },
+  {
+    path: '/addaccount',
+    name: 'AddAccount',
+    component: AddAccount
+  },
+  {
+    path:'/deleteaccount',
+    name: 'DeleteAccount',
+    component: DeleteAccount
   }
 ]
 
