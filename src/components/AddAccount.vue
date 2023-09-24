@@ -266,7 +266,7 @@ export default {
         margin-left:150px;
     }
     .button{
-        position:fixed;
-        left:90px;
+        position: fixed;
+        left:-720px;
     }
 </style>
