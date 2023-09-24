@@ -37,19 +37,20 @@
                             </v-card>
                         </v-col> 
                         <v-col cols="10" style="height: 1000px;">
-                            <v-card class="no-shadow">
+                            <!-- <v-card> -->
                                 
                                 <div class="modal-bg2">
             <h4
               class="v-card__title text-center"
               v-bind:style="{ color: 'gray' }"
+              style="margin-left: 170px"
             >
               계좌 등록
             </h4>
             <!-- <v-card> -->
                 <div class="card">
               <v-row>
-                <v-col cols="8">
+                <v-col cols="12">
                   <v-text-field
                     v-model="accountId"
                     label="아이디"
@@ -59,7 +60,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="8">
+                <v-col cols="12">
                   <v-text-field
                     v-model="bankName"
                     label="은행명"
@@ -69,7 +70,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="8">
+                <v-col cols="12">
                   <v-text-field
                     v-model="accountNum"
                     label="계좌번호"
@@ -82,6 +83,7 @@
                     variant="tonal"
                     class="button"
                     @click="authenticateAccount"
+                    style="margin-left: 1110px;"
                     >인증</v-btn
                   >
                 
@@ -89,7 +91,7 @@
 
               <v-row>
                 <!-- <div v-if="isAuthenticated"> -->
-                <v-col cols="8">
+                <v-col cols="12">
                   <v-text-field
                     v-model="authNumConfirm"
                     label="입금자명"
@@ -98,12 +100,12 @@
                   ></v-text-field>
                 </v-col>
                 
-                  <v-btn class="button" @click="confirmAuthNum">확인</v-btn>
+                  <v-btn class="button" @click="confirmAuthNum" style="margin-left: 1110px;">확인</v-btn>
                 
                 <!-- </div> -->
               </v-row>
               <v-row>
-                <v-col cols="8">
+                <v-col cols="12">
                   <v-text-field
                     v-model="accountNickname"
                     label="계좌별명"
@@ -113,7 +115,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="8">
+                <v-col cols="12">
                   <v-text-field
                     v-model="accountLimit"
                     label="limit"
@@ -131,16 +133,16 @@
                 type="button"
                 @click="registAccount"
                 class="btn-close"
-                style="margin-right: 30px"
+                style="margin-left: 170px"
                 >등록</v-btn
               >
             </v-row>
           </div>
 
-                                <div v-if="isRegistered">
+                                <!-- <div v-if="isRegistered">
                                     <p>계좌가 등록되었습니다!</p>
-                                </div>
-                            </v-card>
+                                </div> -->
+                            <!-- </v-card> -->
                         </v-col>   
                     </v-row>
                  </v-container>
@@ -255,18 +257,23 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    border: 4px solid #444766; /* 테두리 스타일, 두께 및 색상 설정 */
+    padding:45px;
+    padding-right: 200px;
+    
+    margin-left: 100px;
+
     }
     .no-shadow {
         box-shadow: none !important;
     }
-    .button {
-        margin-right: 1000px;
-    }
+
     .card{
         margin-left:150px;
     }
     .button{
         position: fixed;
-        left:-720px;
+        left:-680px;
     }
 </style>

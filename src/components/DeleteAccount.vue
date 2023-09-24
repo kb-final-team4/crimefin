@@ -46,7 +46,7 @@
             </h4>
             <!-- <v-card> -->
               <v-row>
-                <v-col cols="10">
+                <v-col cols="12">
                   <v-text-field
                     v-model="memberId"
                     label="아이디"
@@ -56,7 +56,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="10">
+                <v-col cols="12">
                   <v-text-field
                     v-model="bankName"
                     label="은행명"
@@ -66,7 +66,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="10">
+                <v-col cols="12">
                   <v-text-field
                     v-model="accountNum"
                     label="계좌번호"
@@ -83,16 +83,10 @@
                 type="button"
                 @click="deleteAccount"
                 class="btn-close"
-                style="margin-right: 30px"
+                
                 >삭제</v-btn
               >
-              <v-btn
-                variant="tonal"
-                type="button"
-                @click="modal3 = false"
-                class="btn-close"
-                >닫기</v-btn
-              >
+              
             </v-row>
           </div>
                             
@@ -147,5 +141,12 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    border: 4px solid #444766; 
+    padding:45px;
+    padding-left: 80px;
+    padding-right:80px;
+    margin-right: 30px;
+    margin-left: 30px;
     }
 </style>
