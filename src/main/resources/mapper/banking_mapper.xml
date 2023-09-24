@@ -39,4 +39,12 @@
 			AND (b.BANKING_DATE BETWEEN SYSDATE - 14 AND SYSDATE)
 		</if>
 	</select>
+
+	<!--limit 이상 거래 내역 조회-->
+	<select id = "getLimitBanking" resultType="bankingVO">
+		SELECT b.*
+		FROM banking b
+				 INNER JOIN account a ON b.account_num = a.account_num
+		WHERE b.withdrawal > a.limit
+	</select>
 </mapper>

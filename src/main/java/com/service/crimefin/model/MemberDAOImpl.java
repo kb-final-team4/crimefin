@@ -55,4 +55,9 @@ public class MemberDAOImpl implements MemberDAO {
         return sqlSession.selectOne(NS + "isExistMemberId", memberId);
     }
 
+    @Override
+    public MemberVO findMemberById(String memberId) {
+        return sqlSession.selectOne(NS+"findMemberById", memberId);
+    }
+
 }

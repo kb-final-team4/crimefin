@@ -102,6 +102,69 @@ public class AssetController {
         }
     }
 
+    @PostMapping("/asset/regist")
+    public ResponseEntity isValidAccount(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request)throws Exception{
+        System.out.println("최종 폼 요청 들어옴");
+        boolean isAuthenticated = (boolean)requestJsonHashMap.get("isAuthenticated");
+        HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
+        MemberVO memberVO = (MemberVO) session.getAttribute("userInfo");
+        String memberId = memberVO.getMemberId();
+        String accountNum = (String) requestJsonHashMap.get("accountNum");
+        String NickName = (String)requestJsonHashMap.get("accountNickname");
+        String Limit = (String)requestJsonHashMap.get("accountLimit");
+
+        if(isAuthenticated){ //사용자 인증이 완료 (닉네임, limit 업데이트)
+            AccountVO accountVO = new AccountVO();
+            accountVO.setMemberId(memberId);
+            accountVO.setAccountNum(accountNum);
+            accountVO.setNickName(NickName);
+            accountVO.setLimit(Integer.parseInt(Limit));
+
+            int result = assetService.updateNickNameAndLimit(accountVO);
+
+            if(result != 0){
+
+                return new ResponseEntity(memberId, HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            }
+
+        }
+        else{
+            assetService.deleteBanking(accountNum); //먼저 해당 계좌 번호의 거래 이력 삭제
+            int result = assetService.deleteAccount(accountNum); //계좌 삭제
+
+            if(result != 0){
+                return new ResponseEntity(memberId, HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            }
+        }
+    }
+
+    @DeleteMapping("/asset")
+    public ResponseEntity deleteAccount(@RequestBody HashMap<String, Object>requestJsonHashMap, HttpServletRequest request)throws Exception{
+        System.out.println("계좌 삭제 요청");
+
+        HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
+        MemberVO memberVO = (MemberVO) session.getAttribute("userInfo");
+        String memberId = memberVO.getMemberId();
+        String bankName = (String)requestJsonHashMap.get("bankName");
+        String accountNum=(String)requestJsonHashMap.get("accountNum");
+
+        assetService.deleteBanking(accountNum);
+        int result = assetService.deleteAccount(accountNum);
+        if(result != 0){
+            return new ResponseEntity(memberId, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+    }
+
+
     @GetMapping(value = "/asset/dashboard")
     public ResponseEntity getAccounts(HttpServletRequest request) throws Exception{
         System.out.println("대시보드 계좌 조회 요청 들어옴");

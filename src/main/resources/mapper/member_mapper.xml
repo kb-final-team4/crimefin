@@ -69,4 +69,11 @@
 		WHERE member_id LIKE #{VALUE}
 	</select>
 
+	<!--아이디로 회원 정보 찾기 (알림 서비스에서 사용하기 위해)-->
+	<select id="findMemberById" parameterType="String" resultType="memberVO">
+		SELECT *
+		FROM member
+		WHERE member_id=#{VALUE}
+	</select>
+
 </mapper>

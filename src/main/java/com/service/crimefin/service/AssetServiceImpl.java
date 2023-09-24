@@ -37,6 +37,11 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
+    public void deleteLimitBanking(String bankingId) {
+        accountDAO.deleteLimitBanking(bankingId);
+    }
+
+    @Override
     public int deleteAccount(String accountNum) {
         return accountDAO.deleteAccount(accountNum);
     }
@@ -55,6 +60,16 @@ public class AssetServiceImpl implements AssetService {
     @Override
     public List<BankingVO> getMaxBalanceBanking(String memberId) {
         return bankingDAO.getMaxBalanceBanking(memberId);
+    }
+
+    @Override
+    public List<BankingVO> getLimitBanking() {
+        return bankingDAO.getLimitBanking();
+    }
+
+    @Override
+    public AccountVO findByAccountNum(String accountNum) {
+        return accountDAO.findByAccountNum(accountNum);
     }
 
 }

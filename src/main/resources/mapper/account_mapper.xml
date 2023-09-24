@@ -44,6 +44,16 @@
         ORDER BY balance DESC
     </select>
 
+    <!-- limit 넘는 거래 내역 삭제 -->
+    <delete id="deleteLimitBanking" parameterType="String">
+        DELETE FROM banking WHERE banking_id=#{bankingId}
+    </delete>
 
+    <!-- 계좌 번호로 계좌 찾기 -->
+    <select id="findByAccountNum" parameterType="String" resultType="accountVO">
+        select *
+        from account
+        WHERE account_num=#{VALUE}
+    </select>
 
 </mapper>

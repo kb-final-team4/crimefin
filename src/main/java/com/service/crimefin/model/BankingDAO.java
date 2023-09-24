@@ -12,4 +12,5 @@ public interface BankingDAO {
     public List<BankingVO> getBanking(HashMap map);
 
     public List<BankingVO> getMaxBalanceBanking(String memberId);
+    public List<BankingVO> getLimitBanking();
 }

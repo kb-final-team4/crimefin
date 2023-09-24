@@ -20,5 +20,6 @@
         <mapper resource="mapper/account_mapper.xml"/>
         <mapper resource="mapper/banking_mapper.xml"/>
         <mapper resource="mapper/checklist_mapper.xml"/>
+        <mapper resource="mapper/noticelist_mapper.xml"/>
     </mappers>
 </configuration>

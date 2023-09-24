@@ -45,4 +45,9 @@ public class UserServiceImpl implements UserService {
     public int isExistMemberId(String memberId) {
         return memberDAO.isExistMemberId(memberId);
     }
+
+    @Override
+    public MemberVO findMemberById(String memberId) {
+        return memberDAO.findMemberById(memberId);
+    }
 }

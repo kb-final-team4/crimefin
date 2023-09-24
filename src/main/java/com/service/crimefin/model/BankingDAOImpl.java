@@ -30,4 +30,9 @@ public class BankingDAOImpl implements BankingDAO {
         return sqlSession.selectList(NS+"getMaxBalanceBanking", memberId);
     }
 
+    @Override
+    public List<BankingVO> getLimitBanking() {
+        return sqlSession.selectList(NS+"getLimitBanking");
+    }
+
 }

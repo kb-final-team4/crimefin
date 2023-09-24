@@ -11,4 +11,6 @@ public interface UserService {
     public int updateMemberPassword(MemberVO memberVO);
     public int deleteMember(MemberVO memberVO);
     public int isExistMemberId(String memberId);
+
+    public MemberVO findMemberById(String memberId);
 }
