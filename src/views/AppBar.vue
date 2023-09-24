@@ -27,7 +27,7 @@
           <v-list>
             <v-list-item @click="goTo('ChangeInfo')" >마이페이지</v-list-item>
             <v-list-item @click="goTo('DashBoard')" >자산/대시보드</v-list-item>
-            <v-list-item @click="Logout()" >로그아웃</v-list-item>
+            <v-list-item @click="logout()" >로그아웃</v-list-item>
           </v-list>
         </v-menu>
       </v-col>
@@ -51,8 +51,10 @@
         this.$router.push({ name: pageName });
         this.menuOpen = false; 
       },
-      Logout() {
-        this.menuOpen = false; 
+      logout() {
+        this.menuOpen = false;
+        this.$session.destroy();
+        this.goTo('InitPage');
       },
       toggleMenu() {
         this.menuOpen = !this.menuOpen;
