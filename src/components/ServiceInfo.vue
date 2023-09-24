@@ -254,7 +254,4 @@ export default {
   padding-top: 50px;
   padding-bottom: 80px;
 }
-#btm-container{
-
-}
 </style>
