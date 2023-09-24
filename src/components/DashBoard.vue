@@ -55,6 +55,7 @@
               <div class="chart-wrap mx-auto">
                 <div id="chart1">
                   <apexcharts
+                    ref="donutChart"
                     id="myChart1"
                     type="donut"
                     width="280px"
@@ -868,38 +869,7 @@ export default {
           console.log("nickNameArr: ", this.nickNameArr);
 
           this.accountChartOptions.labels = this.nickNameArr;
-          //console.log("labels 배열 : ", this.accountChartOptions.labels);
-
-          //this.accountChartOptions.labels = new Array(this.nickNameArr.length);
-          //for (let i = 0; i < this.nickNameArr.length; i++)
-          //console.log("nickname 배열 : ", this.nickNameArr[i]);
-          //this.accountChartOptions.labels[i] = this.nickNameArr[i];
-
-          // this.accountChartOptions.legend = {
-          //   position: "right",
-          //   offsetY: 0,
-          //   height: 230,
-          //   labels: {
-          //     useSeriesColors: false, // 범례 색상을 데이터 포인트 색상과 동일하게 사용하지 않도록 설정
-          //     colors: this.nickNameArr, // 범례 항목의 이름을 this.nickNameArr의 값으로 설정
-          //   },
-          // };
-
-          // this.accountChartOptions.series = this.nickNameArr.map(
-          //   (name, index) => {
-          //     return {
-          //       name: name,
-          //       data: this.nickNameArr, // 실제 데이터 포인트 값을 여기에 넣으세요
-          //     };
-          //   }
-          // );
-
-          // this.accountChartOptions.series = this.nickNameArr.map((name, index) => {
-          //   return {
-          //     name: name,
-          //     data: this.nickNameArr, // 실제 데이터 포인트 값을 여기에 넣으세요
-          //   };
-          // });
+          this.$refs.donutChart.refresh();
 
           let total = 0;
           for (let i = 0; i < this.balanceArr.length; i++)
