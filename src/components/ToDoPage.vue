@@ -156,8 +156,8 @@ export default {
 
       policeMapDesc: false,
       bankMapDesc: false,
-      isManual: false,
-      isMap: true,
+      isManual: true,
+      isMap: false,
       isChecklist: false,
       //카카오맵 객체 담아올 변수
       kmap: null,
