@@ -53,7 +53,8 @@
                 </v-col>
                 <v-col cols="8" >
                 <v-text-field label="인증번호 입력" id="verification" class="verification" v-model="verification" required outlined></v-text-field>
-                <v-btn variant="tonal" type="button" @click="confirmVerficationCode" class="btn-permit">확인</v-btn>
+                <v-btn variant="tonal" type="button" @click="confirmVerficationCode" class="btn-permit" style="margin-right: 30px">확인</v-btn>
+                <v-btn variant="tonal" type="button" @click="modal2=false" class="btn-permit">닫기</v-btn>
                 </v-col>
                 <!-- 실제 실행시킬 떄는 @click="navigate" 로 바꾸기 -->
             </div>
@@ -438,6 +439,7 @@ nav{
 
 .title{
     justify-content: center;
+    margin-top:15px;
 }
 
 
