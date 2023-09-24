@@ -207,77 +207,6 @@
           </v-col>
         </v-row> 
         </v-container> 
-              <!-- <v-row no-gutters>
-                <div class="row justify-space-around">
-                  <v-card
-                    v-bind:style="{ background: '#27374D' }"
-                    class="mx-auto"
-                    width="300"
-                    height="300"
-                    tile
-                  >
-                    <v-col>
-                      <div class="text-center v-card__title white--text justify-center">
-                        1. 스팸 번호 판단
-                      </div>
-                      <div class="v-card__text white--text">
-                        &nbsp;&nbsp;저희가 자체적으로 생성한 피싱 번호 데이터베이스를 이용하여
-                        사용자는 번호를 입력하기만 하면 그 번호가 피싱과 연관된 스팸 번호인지 바로
-                        알 수 있습니다.
-                      </div>
-                    </v-col>
-                  </v-card>
-                  <v-card
-                    v-bind:style="{ background: '#526D82' }"
-                    class="mx-auto white--text"
-                    width="300"
-                    height="300"
-                    tile
-                  >
-                    <v-col>
-                      <div class="text-center v-card__title justify-center">2. 피싱 링크 판단</div>
-                      <div class="v-card__text">
-                        &nbsp;&nbsp;VirusTotal API를 활용해서 당신의 문자나 카카오톡으로 온 수상한
-                        링크가 스팸인지 안전한지 대신 판단해드립니다.
-                      </div>
-                    </v-col>
-                  </v-card>
-                  <v-card
-                    v-bind:style="{ background: '#526D82' }"
-                    class="mx-auto white--text"
-                    width="300"
-                    height="300"
-                    tile
-                  >
-                    <v-col>
-                      <div class="text-center v-card__title justify-center">3.AI 분석</div>
-                      <div class="v-card__text">
-                        &nbsp;&nbsp;스팸 번호 판단과 피싱 링크 판단으로도 판별이 되지 않으면, 현재
-                        고객님의 상황을 서술하여 주시면 저희가 인공지능을 활용한 자연어 처리 및
-                        분석으로 해당 내용이 피싱과 연관되었는지 분석해드립니다.
-                      </div>
-                    </v-col>
-                  </v-card>
-                  <v-card
-                    v-bind:style="{ background: '#526D82' }"
-                    class="mx-auto white--text"
-                    width="300"
-                    height="300"
-                    tile
-                  >
-                    <v-col>
-                      <div class="text-center v-card__title justify-center">
-                        4. 각종 애프터 케어
-                      </div>
-                      <div class="v-card__text">
-                        &nbsp;&nbsp;상황 분석 이후 고객님께 매뉴얼 제공하고 맞춤형 체크리스트를
-                        생성합니다. 또한 개인 주소를 기반으로 은행과 경찰서를 찾아주는 스마트 지도
-                        서비스, 피싱 예방을 위해 간단한 체험관도 제공해드리고 있습니다.
-                      </div>
-                    </v-col>
-                  </v-card>
-                </div>
-              </v-row> -->
             </v-col>
           </v-row> 
         </v-col>
@@ -289,7 +218,7 @@
 
 <script>
 import AppBar from '../views/AppBar.vue'; // 상단바 컴포넌트 import
-import Footer from '../views/Footer.vue';
+import Footer from '../views/Footer.vue'; // 푸터 컴포넌트 import
 import AOS from 'aos';
 import AnimatedNumber from 'animated-number-vue';
 import { Carousel, Slide } from 'vue-carousel';
