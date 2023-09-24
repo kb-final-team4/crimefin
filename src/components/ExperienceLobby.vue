@@ -62,7 +62,7 @@ export default {
 } */
 
 .exp-card{
-  background : #e6edf7;
+  background : #F1F6F9 ;
   padding: 20px;
   border-radius: 20px;
 }
