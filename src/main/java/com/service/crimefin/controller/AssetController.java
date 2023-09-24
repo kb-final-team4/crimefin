@@ -120,6 +120,27 @@ public class AssetController {
         }
     }
 
+    @GetMapping(value = "/asset/dashboard/main")
+    public ResponseEntity getMainAccount(HttpServletRequest request) throws Exception{
+        System.out.println("대시보드 메인 계좌 조회 요청 들어옴");
+        HttpSession session = request.getSession(false); //세션이 있으면 기존 세션 반환, 세션 없으면 null 반환
+        MemberVO memberVO = (MemberVO) session.getAttribute("userInfo");
+        String memberId = memberVO.getMemberId();
+
+        List<AccountVO> rvo = assetService.getAccounts(memberId);
+
+        for(AccountVO a : rvo) System.out.println(a); //확인용
+
+        String mainAccountNum = rvo.get(0).getAccountNum();
+        System.out.println("메인 계좌 확인 : " + mainAccountNum);
+
+        if (rvo != null) { //계좌 있으면
+            return new ResponseEntity(mainAccountNum, HttpStatus.OK);
+        } else { //계좌 없으면
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+    }
+
     @PostMapping("/asset/dashboard/time")
     public ResponseEntity getBanking(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request) throws Exception{
         HashMap map = new HashMap();
@@ -132,6 +153,10 @@ public class AssetController {
         map.put("endDate",enddate);
 
         List<BankingVO> rvo = assetService.getBanking(map);
+
+        for(BankingVO b : rvo) {
+            System.out.println(b);
+        }
 
         if (rvo != null) { //거래 내역 있으면
             return new ResponseEntity(rvo, HttpStatus.OK);
