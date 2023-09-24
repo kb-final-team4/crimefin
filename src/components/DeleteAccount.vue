@@ -121,7 +121,7 @@ export default {
       ],
 
         user: {
-        accountId: '',
+        memberId:'',
         bankName:'',
         accountNum:'',
         authNumConfirm:'',
