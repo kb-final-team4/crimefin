@@ -20,10 +20,10 @@
           <v-flex>
             <v-col>
               <v-row>
-                <div class="white--text text-h6 mx-auto" v-show="policeMapDesc">
+                <div class="text-h6 mx-auto" v-show="policeMapDesc">
                   주변의 경찰서를 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
                 </div>
-                <div class="white--text text-h6 mx-auto" v-show="bankMapDesc">
+                <div class="text-h6 mx-auto" v-show="bankMapDesc">
                   주변의 은행을 보여드리고 있습니다. 마우스 휠로 확대/축소 하세요.
                 </div>
               </v-row>
