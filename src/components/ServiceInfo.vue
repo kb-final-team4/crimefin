@@ -202,7 +202,16 @@
           </v-col>
           <v-col cols="6">
             <div class="text-center">
-              <img src="/path/to/image.jpg" alt="이미지" width="200" height="200" />
+              <img src="../assets/service_info1.png" alt="이미지1" width="400" height="250" />
+              <br>
+            </div>
+            <div class="text-center">
+              <img src="../assets/service_info3.png" alt="이미지1" width="400" height="250" />
+              <br>
+            </div>
+            <div class="text-center">
+              <img src="../assets/service_info4.png" alt="이미지1" width="400" height="250" />
+              <br>
             </div>
           </v-col>
         </v-row> 

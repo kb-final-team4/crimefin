@@ -40,8 +40,8 @@
                     ref="donutChart"
                     id="myChart1"
                     type="donut"
-                    width="280px"
-                    height="200"
+                    width="250px"
+                    height="200px"
                     :options="accountChartOptions"
                     :series="accountSeries"
                   ></apexcharts>
