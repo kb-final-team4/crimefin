@@ -128,6 +128,7 @@
             <!-- </v-card> -->
             <br />
             <v-row class="d-flex justify-end">
+              <router-link to="/main">
               <v-btn
                 variant="tonal"
                 type="button"
@@ -136,6 +137,7 @@
                 style="margin-left: 170px"
                 >등록</v-btn
               >
+              </router-link>
             </v-row>
           </div>
 

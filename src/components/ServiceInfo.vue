@@ -209,10 +209,7 @@
               <img src="../assets/service_info3.png" alt="이미지1" width="400" height="250" />
               <br>
             </div>
-            <div class="text-center">
-              <img src="../assets/service_info4.png" alt="이미지1" width="400" height="250" />
-              <br>
-            </div>
+
           </v-col>
         </v-row> 
         </v-container> 
