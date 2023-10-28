@@ -101,7 +101,6 @@ Crime-Fin 카카오톡 맞춤형 긴급 알림을 수신해 자신의 자산 알
 </div>
 
 ---
-
 # 🧐 Trouble Shooting
 
 ## 💻 Front-End
@@ -250,4 +249,3 @@ Back-End가 알아서 역직렬화 하도록 DTO를 만드는 방법을 탐색
 웹페이지에 해당 요청이 기계가 아닌 사람임을 알려주기 위해 **headers**에 **'User-Agent'**를 명시하여
 
 요청 전송
-
