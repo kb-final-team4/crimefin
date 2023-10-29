@@ -227,9 +227,9 @@ Vue.js의 특정 기능인 모달창 구현과 데이터 전달 방식에 대한
 
 **👨‍💻해결 방안 탐색**
 
-1. Spring 공식 dcument를 보며 `HttpServletRequest` 와 `HttpSession` 에 대해서 공부
+1. Spring 공식 document를 보며 `HttpServletRequest` 와 `HttpSession` 에 대해서 공부
 2. Front-End 와 Back-End의 포트번호가 달라 CORS를 설정하는 코드에 문제가 발생할것이라고 예상. 
-   따라서 CORS 코드 부분 수정
+   따라서 CORS(Cross-Origin Resource Sharing) 코드 부분 수정
 
 
 **👍해결**
