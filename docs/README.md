@@ -68,18 +68,12 @@
 <div>
 <img src="https://github.com/kb-final-team4/crimefin/assets/33799946/092b0f9a-0409-4969-a229-477ca8d25b09">
 <p>번호를 입력하고 조회합니다.</p>
-<p>통화 번호 조회 결과</p>
-<img src="https://github.com/kb-final-team4/crimefin/assets/33799946/061aa2a1-a6db-4e22-90a4-d7e416cf65fb">
-<p>문자 번호 조회 결과</p>
-<img src="https://github.com/kb-final-team4/crimefin/assets/33799946/e69e4819-ead3-41b9-a0cd-c2936aca1e0c">
 </div>
 
 ### 스팸 링크 조회
 <div>
 <img src="https://github.com/kb-final-team4/crimefin/assets/33799946/63a08450-d39b-421f-af25-72be7d85c639">
 <p>의심스러운 사이트 링크를 조회할 수 있습니다.</p>
-<p>결과</p>
-<img src="https://github.com/kb-final-team4/crimefin/assets/33799946/813b4a09-afc9-48cf-a35e-8d8bf4a28919">
 </div>
 
 ### 대응 방안 상세보기
@@ -109,8 +103,6 @@
 <img src="https://github.com/kb-final-team4/crimefin/assets/33799946/4a182052-b3a6-44b2-9f13-5c0daa5b0aa9">
 <p>스팸으로 의심되는 문자 번호를 조회해본 후 해당 번호가 기록에 존재하지 않는다고 했을 때,
 해당 문자의 내용을 인공지능을 이용한 문맥 분석으로 해당 문자가 금융 피싱 사기에 연루되었는지를 판단할 수 있습니다.</p>
-<p>결과</p>
-<img src="https://github.com/kb-final-team4/crimefin/assets/33799946/6bba5d98-e894-4590-88cd-b1f6a3e7608e">
 </div>
 
 ### 유사 사례 검색
@@ -129,7 +121,6 @@ Crime-Fin 카카오톡 맞춤형 긴급 알림을 수신해 자신의 자산 알
 <div>
 <img src="https://github.com/kb-final-team4/crimefin/assets/33799946/97f5263b-e9de-4df0-b00e-c5d453c224d9">
 <img src="https://github.com/kb-final-team4/crimefin/assets/33799946/59c54ac6-5caf-4cfa-aef9-731568c5a7f2">
-<img src="https://github.com/kb-final-team4/crimefin/assets/33799946/12bd96c2-3e8f-49e9-b720-bba6e9e1381c">
 </div>
 
 ### 실시간 위험 알림
