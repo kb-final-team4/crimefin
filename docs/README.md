@@ -1,3 +1,64 @@
+# 💰🚨 Crime-Fin ( 금융 범죄 예방 및 대응 플랫폼)
+&nbsp; Crime-Fin은 **금융 범죄(보이스피싱, 스미싱 등)에 대한 대응과 예방**을 위한 서비스를 제공합니다. 
+
+&nbsp; 전화번호와 링크조회, AI 분석을 통해 **범죄 여부를 신속하고 정확하게 판단**하며, 이와 관련된 **대응 방안을 제시**하여 사용자들이 금융 범죄로부터 안전하게 보호될 수 있도록 합니다.  또한 자산 관리 기능과 이상치 알림 기능을 통해 **사용자의 금융 활동을 모니터링**하고, **위험한 상황이 발생하면 즉각적으로 사용자에게 알림**을 보냅니다. 디지털 체험관을 통해 사용자들이 **금융 범죄에 대해 어떻게 예방하고 대응해야 하는지에 대한 교육**을 받을 수 있습니다.
+
+# 🗓️ Period
+2023년 8월 25일 ~ 9월 25일 (1개월간)
+
+# 🤝 Member
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/0woogie"><img src="https://avatars.githubusercontent.com/u/80441481?v=4" width="100px;" alt=""/><br /><sub><b> 맹영욱 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/kangyuseok"><img src="https://avatars.githubusercontent.com/u/111121447?v=4" width="100px;" alt=""/><br /><sub><b> 강유석 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/merrykang"><img src="https://avatars.githubusercontent.com/u/121994108?v=4" width="100px;" alt=""/><br /><sub><b> 강혜리 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/seohee99"><img src="https://avatars.githubusercontent.com/u/53520867?v=4" width="100px;" alt=""/><br /><sub><b> 박서희 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/joareum"><img src="https://avatars.githubusercontent.com/u/43288938?v=4" width="100px;" alt=""/><br /><sub><b> 조아름 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/Austin-Choi"><img src="https://avatars.githubusercontent.com/u/33799946?v=4" width="100px;" alt=""/><br /><sub><b> 최윤서 </b></sub></a><br /></td>
+    </tr>
+  </tbody>
+</table>
+
+# ⚙️ Stacks
+## ✔️ Environment 
+![IntelliJ](https://img.shields.io/badge/IntelliJ-000000.svg?&style=for-the-badge&logo=IntelliJ%20IDEA&logoColor=white)
+![VSCode](https://img.shields.io/badge/VSCode-007ACC.svg?&style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white)
+![Colab](https://img.shields.io/badge/Colab-F9AB00.svg?&style=for-the-badge&logo=Google%20Colab&logoColor=white)
+![GitHub](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)
+
+## ✔️ Front-End
+![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D.svg?&style=for-the-badge&logo=Vue.js&logoColor=white)
+
+## ✔️ Back-End
+![Spring](https://img.shields.io/badge/Spring-6DB33F.svg?&style=for-the-badge&logo=Spring&logoColor=white)
+
+## ✔️ AI
+![Python](https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688.svg?&style=for-the-badge&logo=FastAPI&logoColor=white)
+
+
+## ✔️ Database
+![Oracle](https://img.shields.io/badge/Oracle-F80000.svg?&style=for-the-badge&logo=Oracle&logoColor=white)
+
+## ✔️ Communication
+![Git](https://img.shields.io/badge/Git-F05032.svg?&style=for-the-badge&logo=Git&logoColor=white)
+![Notion](https://img.shields.io/badge/Notion-181717.svg?&style=for-the-badge&logo=Notion&logoColor=white)
+
+# 📜 Outputs
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><img src= "" width=500px;" alt=""/><br /><sub><b> Usecase Diagram </b></sub><br /></td>
+      <td align="center"><img src= "https://github.com/kb-final-team4/crimefin/assets/53520867/3912bdde-36d9-4b6f-ad33-10adfaca7cf3" width=500px;" alt=""/><br /><sub><b> Front UI </b></sub><br /></td>
+    </tr>
+    <tr>
+      <td align="center"><img src= "https://github.com/kb-final-team4/crimefin/assets/53520867/d30a0819-426f-4ce0-b538-76554a201494" width=500px; alt=""/><br/><sub><b> API 명세 </b></sub><br/></td>
+      <td align="center"><img src= "https://github.com/kb-final-team4/crimefin/assets/53520867/9c989f0e-8c41-4986-967a-cd35c475ae79" width=500px;" alt=""/><br /><sub><b> DB Modeling </b></sub><br/></td>
+    </tr>
+  </tbody>
+</table>
+
 # 🛠 핵심기능
 ## 금융 피싱 사기 긴급 대처
 - 스미싱 : [번호 조회](#스미싱-및-보이스-피싱-번호-조회), [AI 문자 분석](#ai-문자-분석), [대응 방안 상세보기](#대응-방안-상세보기) 의 순서로 안내합니다.
