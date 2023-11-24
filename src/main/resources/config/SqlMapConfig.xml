@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>
+
+    <typeAliases>
+        <package name="com.service.crimefin.domain"/>
+    </typeAliases>
+
+
+    <mappers>
+        <mapper resource="mapper/member_mapper.xml"/>
+        <mapper resource="mapper/phishinginfo_mapper.xml"/>
+        <mapper resource="mapper/history_mapper.xml"/>
+        <mapper resource="mapper/account_mapper.xml"/>
+        <mapper resource="mapper/banking_mapper.xml"/>
+        <mapper resource="mapper/checklist_mapper.xml"/>
+        <mapper resource="mapper/noticelist_mapper.xml"/>
+    </mappers>
+</configuration>
