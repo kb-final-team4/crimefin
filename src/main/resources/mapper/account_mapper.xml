@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.account.mapper">
+    <!--계좌 등록-->
+    <insert id="insertAccount" parameterType="accountVO">
+        INSERT INTO ACCOUNT(
+            account_num,
+            member_id,
+            bank_name,
+            balance,
+            limit,
+            nickname
+        )
+        VALUES
+            (#{accountNum},#{memberId},#{bankName},#{balance},#{limit},#{nickName})
+    </insert>
+
+    <!-- 거래 삭제   -->
+    <delete id="deleteBanking" parameterType="String">
+        DELETE FROM banking WHERE account_num = #{accountNum}
+    </delete>
+
+    <!-- 계좌 삭제 -->
+    <delete id="deleteAccount" parameterType="String">
+        DELETE FROM account WHERE account_num = #{accountNum}
+    </delete>
+
+
+    <!-- 계좌 닉네임, limit 업데이트   -->
+    <update id="updateNickNameAndLimit" parameterType="accountVO">
+        UPDATE account
+        SET nickname=#{nickName}, limit=#{limit}
+        WHERE account_num=#{accountNum}
+    </update>
+
+
+    <!-- 계좌 리스트 -->
+    <select id="getAccounts" parameterType="String" resultType="accountVO">
+        select bank_name, account_num, balance, nickname
+        FROM ACCOUNT
+        WHERE member_id = #{VALUE}
+        ORDER BY balance DESC
+    </select>
+
+    <!-- limit 넘는 거래 내역 삭제 -->
+    <delete id="deleteLimitBanking" parameterType="String">
+        DELETE FROM banking WHERE banking_id=#{bankingId}
+    </delete>
+
+    <!-- 계좌 번호로 계좌 찾기 -->
+    <select id="findByAccountNum" parameterType="String" resultType="accountVO">
+        select *
+        from account
+        WHERE account_num=#{VALUE}
+    </select>
+
+</mapper>
