@@ -43,7 +43,9 @@ public class UserController {
         MemberVO memberVO = new MemberVO();
         memberVO.setMemberId(memberId);
         memberVO.setPassword(password);
+        System.out.println("memberVO: "+memberVO);
         MemberVO rvo = userService.login(memberVO);
+        System.out.println("rvo: " + rvo);
 
         if (rvo != null) { //로그인 성공
             HttpSession session = request.getSession(true);
