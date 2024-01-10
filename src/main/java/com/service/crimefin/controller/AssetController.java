@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:9999" }, allowCredentials = "true")
+@CrossOrigin(origins = { "http://13.125.225.44:3000", "http://13.125.225.44:9999" }, allowCredentials = "true")
 @RestController
 public class AssetController {
 
