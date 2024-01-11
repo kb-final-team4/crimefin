@@ -151,4 +151,5 @@ p {
 
 .image-container img {
   width: 20%;
+}
 </style>
