@@ -76,7 +76,7 @@ public class PhishingController {
         RestTemplate restTemplate = new RestTemplate();
 
         // FastAPI 서버 URL과 엔드포인트로 변경되어야 합니다.
-        String fastApiUrl = "http://localhost:8000/predict";
+        String fastApiUrl = "http://13.125.225.44:8000/predict";
         System.out.println("fast api 서버와 연결 성공");
 
         // POST 요청을 보냅니다.
