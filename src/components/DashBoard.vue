@@ -562,15 +562,7 @@ export default {
       bankingSeries: [
         {
           name: "잔고",
-          //data: [100000, 41000, 35000, 51000, 49000, 62000, 69000, 91000, 148000]
-          data: [
-            "1020000",
-            "1010000",
-            "1050000",
-            "1030000",
-            "1050000",
-            "50000",
-          ],
+          data: [],
         },
       ],
       bankingChartOptions: {
@@ -595,23 +587,14 @@ export default {
         },
         //여기 수정하기 x축 값
         xaxis: {
-          //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-          categories: [
-            "2023-09-10",
-            "2023-09-11",
-            "2023-09-12",
-            "2023-09-13",
-            "2023-09-14",
-            "2023-09-15",
-          ],
+          categories: [],
         },
       },
     };
   },
-
   created() {
     this.getTotalAccountList();
-    this.getBankingDaily();
+    //this.getBankingDaily();
   },
   mounted() {},
   methods: {
@@ -1033,64 +1016,33 @@ export default {
       axios
         .get(url)
         .then((response) => {
-          console.log("데이터 가져오기 성공: ", response);
+          //console.log("데이터 가져오기 성공: ", response);
 
           accounts = response.data;
-          console.log("accounts 길이: ", accounts);
+          //console.log("accounts 길이: ", accounts);
 
           this.accountNumArr = new Array(accounts.length);
           for (let i = 0; i < this.accountNumArr.length; i++)
             this.accountNumArr[i] = accounts[i].accountNum;
-          console.log("accountNumArr: ", this.accountNumArr);
+          //console.log("accountNumArr: ", this.accountNumArr);
 
           this.bankNameArr = new Array(accounts.length);
           for (let i = 0; i < this.bankNameArr.length; i++)
             this.bankNameArr[i] = accounts[i].bank;
-          console.log("bankNameArr: ", this.bankNameArr);
+          //console.log("bankNameArr: ", this.bankNameArr);
 
           this.balanceArr = new Array(accounts.length);
           for (let i = 0; i < this.balanceArr.length; i++)
             this.balanceArr[i] = accounts[i].balance;
-          console.log("balanceArr: ", this.balanceArr);
+          //console.log("balanceArr: ", this.balanceArr);
 
           this.nickNameArr = new Array(accounts.length);
           for (let i = 0; i < this.nickNameArr.length; i++)
             this.nickNameArr[i] = accounts[i].nickName;
-          console.log("nickNameArr: ", this.nickNameArr);
+          //console.log("nickNameArr: ", this.nickNameArr);
 
           this.accountChartOptions.labels = this.nickNameArr;
-          //console.log("labels 배열 : ", this.accountChartOptions.labels);
-
-          //this.accountChartOptions.labels = new Array(this.nickNameArr.length);
-          //for (let i = 0; i < this.nickNameArr.length; i++)
-          //console.log("nickname 배열 : ", this.nickNameArr[i]);
-          //this.accountChartOptions.labels[i] = this.nickNameArr[i];
-
-          // this.accountChartOptions.legend = {
-          //   position: "right",
-          //   offsetY: 0,
-          //   height: 230,
-          //   labels: {
-          //     useSeriesColors: false, // 범례 색상을 데이터 포인트 색상과 동일하게 사용하지 않도록 설정
-          //     colors: this.nickNameArr, // 범례 항목의 이름을 this.nickNameArr의 값으로 설정
-          //   },
-          // };
-
-          // this.accountChartOptions.series = this.nickNameArr.map(
-          //   (name, index) => {
-          //     return {
-          //       name: name,
-          //       data: this.nickNameArr, // 실제 데이터 포인트 값을 여기에 넣으세요
-          //     };
-          //   }
-          // );
-
-          // this.accountChartOptions.series = this.nickNameArr.map((name, index) => {
-          //   return {
-          //     name: name,
-          //     data: this.nickNameArr, // 실제 데이터 포인트 값을 여기에 넣으세요
-          //   };
-          // });
+          this.$refs.donutChart.refresh();
 
           let total = 0;
           for (let i = 0; i < this.balanceArr.length; i++)
@@ -1101,9 +1053,9 @@ export default {
             this.balancePercentageArr[j] =
               parseFloat(parseInt(this.balanceArr[j]) / total) * 100;
 
-          this.accountSeries = this.balancePercentageArr;
+          this.accountSeries = this.balancePercentageArr; // 데이터 붙여줌
 
-          console.log("length: ", this.accountNumArr.length);
+          //console.log("length: ", this.accountNumArr.length);
 
           this.accountInfoList = new Array(this.accountNumArr.length);
           this.accountInfosList = new Array(this.accountNumArr.length);
@@ -1144,16 +1096,125 @@ export default {
             ];
           }
 
-          console.log(
-            "getTotalAccountList accountInfosList " + this.accountInfosList
-          );
+          //console.log("getTotalAccountList accountInfosList " + this.accountInfosList);
 
-          // 서버 응답 데이터를 accounts에 저장
-          //this.rvo = response.data;
-          //console.log("데이터 가져오기 성공!!!: ", rvo);
+          for (let f = 0; f < this.nickNameArr.length; f++) {
+            this.accountChartOptions.labels[f] = this.nickNameArr[f];
+          }
+          this.accountChartOptions.labels = this.nickNameArr;
+          //console.log("도넛그래프 범례 : ", this.accountChartOptions.labels);
+
+          this.$refs.donutChart.refresh();
         })
         .catch((error) => {
-          console.error("데이터를 가져오는 중 오류 발생:", error);
+          console.error("getTotalAccountList() 에러 : ", error);
+        });
+
+      //console.log("test!!!!!!!!!!!!", accounts);
+    },
+    getBankingDaily() {
+      var data = {
+        accountNum: this.accountNumDropdown,
+        startdate: this.bankingStartDate,
+        enddate: this.bankingEndDate,
+      };
+
+      console.log("accountNum 확인해보기 : ", data);
+      var url = "http://localhost:9999/asset/dashboard/time";
+
+      var bankings;
+
+      axios
+        .post(url, data)
+        .then((response) => {
+          console.log("banking 내역 가져오기 : ", response);
+
+          bankings = response.data;
+
+          this.bankingDateList = new Array(bankings.length);
+          for (let i = 0; i < this.bankingDateList.length; i++)
+            this.bankingDateList[i] = bankings[i].bankingDate;
+          console.log("bankingDateList: ", this.bankingDateList);
+
+          this.bankingDepositList = new Array(bankings.length);
+          for (let i = 0; i < this.bankingDepositList.length; i++)
+            this.bankingDepositList[i] = bankings[i].deposit;
+          console.log("bankingDepositList: ", this.bankingDepositList);
+
+          this.bankingDepositNameList = new Array(bankings.length);
+          for (let i = 0; i < this.bankingDepositNameList.length; i++)
+            this.bankingDepositNameList[i] = bankings[i].depositName;
+          console.log("bankingDepositNameList: ", this.bankingDepositNameList);
+
+          this.bankingWithdrawlList = new Array(bankings.length);
+          for (let i = 0; i < this.bankingWithdrawlList.length; i++)
+            this.bankingWithdrawlList[i] = bankings[i].withdrawal;
+          console.log("bankingWithdrawlList: ", this.bankingWithdrawlList);
+
+          this.bankingWithdrawlToList = new Array(bankings.length);
+          for (let i = 0; i < this.bankingWithdrawlToList.length; i++)
+            this.bankingWithdrawlToList[i] = bankings[i].withdrawalTo;
+          console.log("bankingWithdrawlToList: ", this.bankingWithdrawlToList);
+
+          console.log(
+            "getBankingDaily bankingChartOptions.xaxis.categories : " +
+              this.bankingChartOptions.xaxis.categories
+          );
+
+          this.bankingBalanceList = new Array(bankings.length);
+          for (let i = 0; i < this.bankingBalanceList.length; i++)
+            this.bankingBalanceList[i] = bankings[i].balance;
+          console.log("bankingBalanceList: ", this.bankingBalanceList);
+
+          for (let j = 0; j < this.bankingBalanceList.length; j++) {
+            this.bankingBalanceList[j] = parseInt(this.bankingBalanceList[j]);
+          }
+
+          this.$refs.bankingChart.updateSeries([
+            {
+              data: this.bankingBalanceList,
+            },
+          ]);
+          this.$refs.bankingChart.updateOptions({
+            xaxis: {
+              categories: this.bankingDateList,
+            },
+          });
+
+          this.bankingInfoList = new Array(this.bankingDateList.length);
+
+          for (let i = 0; i < this.bankingDateList.length; i++) {
+            if (this.bankingDepositNameList[i] != null) {
+              console.log("getBankingList for문 안 위 i " + i);
+              this.bankingInfoList[i] =
+                this.bankingDateList[i] +
+                " " +
+                this.bankingDepositNameList[i] +
+                " +" +
+                this.bankingDepositList[i] +
+                " " +
+                this.bankingBalanceList[i];
+            }
+            //출금
+            else if (this.bankingWithdrawlToList[i] != null) {
+              console.log("getBankingList for문 안 아래 i " + i);
+              this.bankingInfoList[i] =
+                this.bankingDateList[i] +
+                " " +
+                this.bankingWithdrawlToList[i] +
+                " -" +
+                this.bankingWithdrawlList[i] +
+                " " +
+                this.bankingBalanceList[i];
+            }
+          }
+          console.log(
+            "getBankingList bankingInfoList : ",
+            this.bankingInfoList
+          );
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
     // 모달 창을 닫는 메서드
@@ -1164,6 +1225,73 @@ export default {
     getImgUrl(bank) {
       var images = require.context("../assets/", false, /\.png$/);
       return images("./" + bank + ".png");
+    },
+    parseNumstrToKorean(numStr) {
+      class Stack {
+        constructor() {
+          this.storage = {};
+          this.top = 0;
+        }
+        size() {
+          return Object.keys(this.storage).length;
+        }
+        push(element) {
+          this.storage[this.top] = element;
+          this.top += 1;
+        }
+        pop() {
+          // 빈 스택에 에러처리
+          if (Object.keys(this.storage).length === 0) {
+            return;
+          }
+
+          const result = this.storage[this.top - 1];
+          delete this.storage[this.top - 1];
+          this.top -= 1;
+
+          return result;
+        }
+      }
+      numStr = numStr.toString();
+      console.log("numtoKOR numstr", numStr);
+      //들어온 String형의 숫자를 한글자씩 자른다
+      var splitedStr = numStr.split("");
+      //그리고 각자 숫자로 변환해준다.
+      for (let i = 0; i < splitedStr.length; i++) {
+        splitedStr[i] = parseInt(splitedStr[i]);
+      }
+      this.numKorStack = new Stack();
+      //뒤에서부터 스택에 push
+      for (let j = splitedStr.length - 1; j >= 0; j--) {
+        this.numKorStack.push(splitedStr[j]);
+      }
+      var strrst = null;
+      while (this.numKorStack.top !== 0) {
+        var rst = this.numKorStack.pop();
+
+        if (rst === 1) strrst = "1";
+        else if (rst === 2) strrst = "2";
+        else if (rst === 3) strrst = "3";
+        else if (rst === 4) strrst = "4";
+        else if (rst === 5) strrst = "5";
+        else if (rst === 6) strrst = "6";
+        else if (rst === 7) strrst = "7";
+        else if (rst === 8) strrst = "8";
+        else if (rst === 9) strrst = "9";
+
+        if (rst !== 0) {
+          //천백십 더해주기
+          if (this.numKorStack.size() % 4 === 3) strrst += "천";
+          else if (this.numKorStack.size() % 4 === 2) strrst += "백";
+          else if (this.numKorStack.size() % 4 === 1) strrst += "십";
+        }
+        //만억조 더해주기
+        if (this.numKorStack.size() / 4 === 1) strrst += "만";
+        else if (this.numKorStack.size() / 4 === 2) strrst += "억";
+        else if (this.numKorStack.size() / 4 === 3) strrst += "조";
+      }
+      console.log("numtoKOR", strrst);
+      return strrst;
     },
   },
 };
@@ -1184,29 +1312,12 @@ v-app {
   overflow-y: auto;
 }
 .outer-bg {
-  width: 200%;
-  height: 200%;
-  background: #102c57;
   position: fixed;
-  padding: 20px;
-}
-
-.outer-bg2 {
-  width: 200%;
-  height: 350%;
-  background: #102c57;
-  position: fixed;
-  padding: 40px;
-  margin-bottom: 30px;
-}
-
-.outer-bg3 {
-  width: 200%;
-  height: 350%;
-  background: #102c57;
-  position: fixed;
-  padding: 40px;
-  margin-bottom: 30px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .modal-bg {
@@ -1226,62 +1337,6 @@ v-app {
   height: 400px;
 
   /* padding: 30px; */
-}
-
-.modal-bg2 {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  background: #dac0a3;
-  border-radius: 8px;
-  width: 790px;
-
-  padding-bottom: 30px;
-  padding-left: 50px;
-}
-
-.modal-bg3 {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  background: #dac0a3;
-  border-radius: 8px;
-  width: 790px;
-
-  padding-bottom: 30px;
-}
-
-.t-field {
-  width: 550px;
-  background-color: white;
-  margin-top: 0%;
-  padding-left: 40px;
-}
-
-.t-field3 {
-  width: 550px;
-  background-color: white;
-  margin-top: 0%;
-  padding-left: 100px;
-}
-
-.button {
-  position: absolute;
-  margin-top: 5px;
 }
 .noscroll-content::-webkit-scrollbar {
   display: none;

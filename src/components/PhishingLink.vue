@@ -46,6 +46,10 @@
       </v-card>
       <br /><br /><br />
     </v-main>
+    <!-- 스피너 -->
+    <div v-if="isLoading" class="loading-overlay">
+      <div class="spinner"></div>
+    </div>
 
     <v-dialog v-model="showResultModal" width="70%">
       <PhishingLinkResult
@@ -147,5 +151,4 @@ p {
 
 .image-container img {
   width: 20%;
-}
 </style>

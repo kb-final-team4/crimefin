@@ -73,7 +73,7 @@ export default {
       return {
         items: [
         { title: "회원정보 수정", to: "/changeinfo", icon: "mdi-pencil" },
-        { title: "비밀번호 변경", to: "/delete-password", icon: "mdi-lock" },
+        { title: "비밀번호 변경", to: "/changepassword", icon: "mdi-lock" },
         { title: "회원탈퇴", to: "/memberresign", icon: "mdi-close" }
 
         // 다른 아이템을 필요에 따라 추가할 수 있습니다.
