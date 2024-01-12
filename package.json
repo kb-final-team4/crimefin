@@ -32,7 +32,8 @@
     "vue-ssr-carousel": "^2.3.3",
     "vue-template-compiler": "^2.6.14",
     "vuetify": "^3.4.10",
-    "vuetify-loader": "^1.7.0"
+    "vuetify-loader": "^1.7.0",
+    "webpack-plugin-vuetify": "^3.0.1"
   },
   "eslintConfig": {
     "root": true,
