@@ -39,6 +39,7 @@ public class UserController {
         String memberId = (String) requestJsonHashMap.get("memberId");
         String password = (String) requestJsonHashMap.get("password");
         System.out.println("id : "+ memberId + " pw : "+ password + "  깃헙 액션 CI 테스트 진짜 성공!!!!!!");
+        System.out.println("0112: 깃헙 액션 CD 테스트 진짜 성공!!!!!!");
 
         MemberVO memberVO = new MemberVO();
         memberVO.setMemberId(memberId);
