@@ -1,0 +1,65 @@
+name: Vue CI/CD
+
+on:
+  push:
+    branches: [ "main", "dev-FE" ]
+  pull_request:
+    branches: [ "main", "dev-FE" ]
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      #1. Node.js & Docker setting
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      #2. Vue.js application build 
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Vue.js app
+        run: npm run build
+
+      #3. Docker hub login 
+      - name: Docker login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      #4. Docker build & push 
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}:fe
+
+  CD:
+    needs: [ CI ]
+    runs-on: ubuntu-latest
+
+    #5. The latest docker image pull & container run 
+    steps:
+      - name: Docker image pull and Container run 
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOYMENT_HOST }}
+          username: ${{ secrets.DEPLOYMENT_USERNAME }}
+          password: ${{ secrets.DEPLOYMENT_PASSWORD }}
+          script: |
+            docker stop crimefin-was-fe
+            docker rm crimefin-was-fe
+            docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}:fe
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}:fe
+            docker run -d -p 3000:80 \
+            --name crimefin-was-fe ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}:fe
