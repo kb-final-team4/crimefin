@@ -22,8 +22,8 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       #2. Vue.js application build 
-      - name: Delete node_modules folder
-        run: rm -rf node_modules
+      - name: Clear npm cache
+        run: npm cache clean --force
 
       - name: Install dependencies
         run: npm ci
