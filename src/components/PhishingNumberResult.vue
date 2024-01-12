@@ -1,5 +1,6 @@
 <template>
-  <v-card-text v-model="showResultModal" class="total">
+  <v-card-text :value="showResultModal" @input="$emit('update:showResultModal', $event)">
+  <!--<v-card-text v-model="showResultModal" class="total">-->
 
     <!-- 보이스 피싱 :: 스팸 번호 -->
     <div v-if="phishingtype == 'Phone' && responsedata">

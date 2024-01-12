@@ -1,5 +1,6 @@
 <template>
-  <v-card-text v-model="showResultModal" class="total">
+  <v-card-text :value="showResultModal" @input="$emit('update:showResultModal', $event)">
+  <!--<v-card-text v-model="showResultModal" class="total">-->
     <div v-if="resultData == 1">
       <v-col >
           <div class="resultTitle">링크 분석 결과</div>

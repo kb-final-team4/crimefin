@@ -11,4 +11,10 @@ module.exports = defineConfig({
     proxy: "http://13.125.225.44:9999",
     port: 3000,
   },
+
+  // CI 위한 vuetify 플러그인 설정
+  pluginOptions: {
+    vuetify: {
+    },
+  },
 });

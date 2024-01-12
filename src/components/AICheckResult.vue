@@ -1,5 +1,6 @@
 <template>
-  <v-card-text v-model="showResultModal" class="total">
+  <!--<v-card-text v-model="showResultModal" class="total">-->
+  <v-card-text :value="showResultModal" @input="$emit('update:showResultModal', $event)">
     <div v-if="resultData == 1">
       <v-col>
         <div class="resultTitle">AI 분석 결과</div>
