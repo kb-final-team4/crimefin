@@ -38,7 +38,7 @@ public class UserController {
     public ResponseEntity login(@RequestBody HashMap<String, Object> requestJsonHashMap, HttpServletRequest request) throws Exception{
         String memberId = (String) requestJsonHashMap.get("memberId");
         String password = (String) requestJsonHashMap.get("password");
-        System.out.println("id : "+ memberId + " pw : "+ password);
+        System.out.println("id : "+ memberId + " pw : "+ password + "깃헙 액션 CI 테스트 성공!!!!!!");
 
         MemberVO memberVO = new MemberVO();
         memberVO.setMemberId(memberId);
