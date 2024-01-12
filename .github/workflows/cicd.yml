@@ -62,5 +62,6 @@ jobs:
             docker stop crimefin-was
             docker rm crimefin-was
             docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
+            doker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
             docker run -d -p 9999:9999 \
             --name crimefin-was ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
